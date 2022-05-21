@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_main_btm_nav_home"
+        android:icon="@drawable/ic_menu_item_1"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:checkable="true"
+        android:title="@string/main_btm_nav_item_1" />
+
+    <item
+        android:id="@+id/menu_main_btm_nav_search"
+        android:icon="@drawable/ic_menu_item_2"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:checkable="true"
+        android:title="@string/main_btm_nav_item_2" />
+
+    <item
+        android:id="@+id/menu_main_btm_nav_favorite"
+        android:icon="@drawable/ic_menu_item_3"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:checkable="true"
+        android:title="@string/main_btm_nav_item_3" />
+    <item
+        android:id="@+id/menu_main_btm_nav_orderlist"
+        android:icon="@drawable/ic_menu_item_4"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:checkable="true"
+        android:title="@string/main_btm_nav_item_4" />
+
+    <item
+        android:id="@+id/menu_main_btm_nav_myeats"
+        android:icon="@drawable/ic_menu_item_5"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:checkable="true"
+        android:title="@string/main_btm_nav_item_5" />
+
+</menu>
