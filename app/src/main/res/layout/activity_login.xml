@@ -1,6 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/login_constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/login_quit_btn"
+            android:layout_width="28dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_cp_login_quit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/login_cp_logo"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_cp_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_constraintLayout" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/login_email_edt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginHorizontal="15dp"
+        android:background="@drawable/login_edt_color"
+        android:hint="쿠팡 아이디(이메일) 입력"
+        android:paddingLeft="85dp"
+        android:paddingRight="50dp"
+        android:paddingVertical="13dp"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="normal"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_cp_logo" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/login_email_clear_bnt"
+        android:layout_width="22dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:adjustViewBounds="true"
+        android:visibility="invisible"
+        android:src="@drawable/ic_cp_login_email_clear"
+        app:layout_constraintBottom_toBottomOf="@+id/login_email_edt"
+        app:layout_constraintEnd_toEndOf="@+id/login_email_edt"
+        app:layout_constraintTop_toTopOf="@+id/login_email_edt" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/login_eamil_front_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="@string/login_email_front_txt"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/login_email_edt"
+        app:layout_constraintStart_toStartOf="@+id/login_email_edt"
+        app:layout_constraintTop_toTopOf="@+id/login_email_edt" />
+
+    <LinearLayout
+        android:id="@+id/login_pwd_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="15dp"
+        android:background="@drawable/login_edt_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_email_edt">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/login_pwd_front_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_gravity="center_vertical"
+            android:text="@string/login_pwd_front_txt"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintBottom_toBottomOf="@+id/login_pwd_layout"
+            app:layout_constraintEnd_toEndOf="@+id/login_pwd_layout"
+            app:layout_constraintStart_toStartOf="@+id/login_pwd_layout"
+            app:layout_constraintTop_toBottomOf="@+id/login_email_edt" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayoutStyle"
+            android:theme="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="14dp"
+            app:passwordToggleEnabled="true"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="비밀번호 입력"
+                android:singleLine="true"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:textStyle="normal"
+                android:inputType="textPassword"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="15dp"
+        android:background="@drawable/login_btn"
+        android:gravity="center"
+        android:paddingVertical="14dp"
+        android:text="@string/login_btn"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_pwd_layout" />
+
+    <LinearLayout
+        android:id="@+id/login_signup_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_btn">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/login_find_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_find_id"
+            android:textColor="@color/cp_login_text"
+            android:textSize="14sp"
+            android:textStyle="normal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:text="|"
+            android:textColor="@color/cp_gray1"
+            android:textSize="14sp"
+            android:textStyle="normal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/login_find_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_find_pwd"
+            android:textColor="@color/cp_login_text"
+            android:textSize="14sp"
+            android:textStyle="normal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:text="|"
+            android:textColor="@color/cp_gray1"
+            android:textSize="14sp"
+            android:textStyle="normal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/login_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_signup"
+            android:textColor="@color/cp_login_btn"
+            android:textSize="14sp"
+            android:textStyle="normal" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

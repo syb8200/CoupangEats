@@ -12,6 +12,14 @@
     <color name="main_btm_nav_unselected">#919FAC</color>
 
     <color name="cp_gray1">#E5E5E5</color>
+    <color name="cp_gray2">#BABFC7</color>
+    <color name="cp_gray3">#DFE2E7</color>
+    <color name="cp_gray4">#FAFAFA</color>
 
+    <color name="cp_login_btn">#00AFFE</color>
+    <color name="cp_login_text">#464F58</color>
+
+    <color name="cp_signup_selected">#396AF1</color>
+    <color name="cp_signup_wrong">#DE263F</color>
 
 </resources>

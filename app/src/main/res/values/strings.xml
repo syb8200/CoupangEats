@@ -7,5 +7,13 @@
     <string name="main_btm_nav_item_4">주문내역</string>
     <string name="main_btm_nav_item_5">My이츠</string>
 
+    <string name="login_email_front_txt">이메일</string>
+    <string name="login_pwd_front_txt">비밀번호</string>
+    <string name="login_btn">로그인</string>
+    <string name="login_find_id">아이디 찾기</string>
+    <string name="login_find_pwd">비밀번호 찾기</string>
+    <string name="login_signup">회원가입</string>
 
+    <string name="signup_title">회원가입</string>
+    <string name="signup_info_txt">회원정보를 입력해주세요</string>
 </resources>
