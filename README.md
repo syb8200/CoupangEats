@@ -16,7 +16,7 @@
 4) Login : 진행률 50%
 5) Signup : 진행률 0%
    
-- 개발 도중 발생한 이슈
+- 개발 도중 발생한 이슈   
 : Login에서 TextInputLayout 밒 TextInputEditText를 사용하면서 어려움이 있었음   
 : TextInputLayout을 커스텀 하는 중에 변경사항이 반영이 안되는 이슈 발생   
 : 해결) 이 부분에 대해서 style과 theme을 동시에 사용함으로써 해결   
