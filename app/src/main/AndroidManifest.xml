@@ -22,9 +22,7 @@
 
         <activity android:name=".src.MainActivity"/>
         <activity android:name=".src.signup.SignupActivity"/>
-
         <activity android:name=".src.favorite.FavoriteActivity"/>
-
 
     </application>
 
