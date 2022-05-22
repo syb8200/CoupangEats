@@ -23,5 +23,6 @@
     <color name="cp_signup_selected">#396AF1</color>
     <color name="cp_signup_wrong">#DE263F</color>
     <color name="cp_signup_complete_btn">#0075E9</color>
+    <color name="cp_signup_complete_hint">#107E25</color>
 
 </resources>

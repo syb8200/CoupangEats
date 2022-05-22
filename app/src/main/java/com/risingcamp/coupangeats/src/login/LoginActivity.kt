@@ -8,6 +8,7 @@ import android.view.View
 import com.risingcamp.coupangeats.R
 import com.risingcamp.coupangeats.config.BaseActivity
 import com.risingcamp.coupangeats.databinding.ActivityLoginBinding
+import com.risingcamp.coupangeats.src.MainActivity
 import com.risingcamp.coupangeats.src.signup.SignupActivity
 
 class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate) {
@@ -16,8 +17,9 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
         setEmailClearBtn()
         setPwdFocus()
-        Login()
-        GoSignup()
+        login()
+        goSignup()
+        goHome()
     }
 
     fun setEmailClearBtn(){
@@ -56,24 +58,31 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
         })
     }
 
-    fun Login(){
+    fun login(){
         binding.loginBtn.setOnClickListener {
-            if(binding.loginEmailEdt.text!!.contains("@")){
+            if(binding.loginEmailEdt.text!!.contains("@") && binding.loginEmailEdt.text!!.isNotEmpty() && binding.loginPwdEdt.text!!.isNotEmpty()){
                 showCustomToast("로그인 성공!")
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+
             } else{
                 showCustomToast("로그인 실패...")
             }
         }
     }
 
-    fun GoSignup(){
+    fun goSignup(){
         binding.loginSignup.setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
         }
     }
 
-
-
+    fun goHome(){
+        binding.loginQuitBtn.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+    }
 
 }

@@ -20,11 +20,13 @@
     <string name="signup_pwd_hint_1">영문/숫자/특수문자 2가지 이상 조합 (8~20자)</string>
     <string name="signup_pwd_hint_2">3개 이상 연속되거나 동일한 문자/숫자 제외</string>
     <string name="signup_pwd_hint_3">아이디(이메일) 제외</string>
+    <string name="signup_pwd_hint_4">사용 가능한 비밀번호입니다.</string>
     <string name="signup_name_wrong_hint">이름을 정확히 입력하세요.</string>
     <string name="signup_phone_wrong_hint">휴대폰 번호를 정확하게 입력하세요.</string>
     <string name="signup_terms_txt">쿠팡 서비스약관에 동의해주세요</string>
     <string name="signup_terms_all_agree_txt">모두 동의합니다.</string>
     <string name="signup_terms_all_agree_detail">동의에는 필수 및 선택 목적(광고성 정보 수신 포함)에 대한 동의가<br/>포함되어 있으며, 선택 목적의 동의를 거부하시는 경우에도 서비스<br/>이용이 가능합니다.</string>
+    <string name="signup_terms_warn">필수 항목에 모두 동의해주세요</string>
     <string name="signup_terms_txt_1">[필수] 만 14세 이상입니다</string>
     <string name="signup_terms_txt_2">[필수] 쿠팡 이용약관 동의</string>
     <string name="signup_terms_txt_3">[필수] 전자금융거래 이용약관 동의</string>

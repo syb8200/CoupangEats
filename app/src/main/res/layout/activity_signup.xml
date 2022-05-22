@@ -57,6 +57,7 @@
         app:layout_constraintTop_toBottomOf="@+id/signup_constraintLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/signup_total_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="40dp">
@@ -122,6 +123,7 @@
                             android:background="@color/cp_gray2" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/signup_email_edt"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_marginRight="2dp"
@@ -138,10 +140,22 @@
 
             </LinearLayout>
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/signup_email_complete"
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_signup_email_complete"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/signup_email_layout"
+                app:layout_constraintEnd_toEndOf="@+id/signup_email_layout"
+                app:layout_constraintTop_toTopOf="@+id/signup_email_layout" />
+
             <View
                 android:id="@+id/signup_email_line"
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="2dp"
                 android:layout_marginHorizontal="15dp"
                 android:background="@color/cp_signup_selected"
                 android:visibility="invisible"
@@ -212,6 +226,7 @@
                         app:boxStrokeWidthFocused="0dp">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/signup_pwd_edt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@android:color/transparent"
@@ -228,10 +243,33 @@
 
             </LinearLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/signup_pwd_complete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:visibility="invisible"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/signup_pwd_layout"
+                app:layout_constraintEnd_toEndOf="@+id/signup_pwd_layout"
+                app:layout_constraintTop_toTopOf="@+id/signup_pwd_layout">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_signup_email_complete"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <View
                 android:id="@+id/signup_pwd_line"
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="2dp"
                 android:layout_marginHorizontal="15dp"
                 android:background="@color/cp_signup_selected"
                 android:visibility="invisible"
@@ -256,7 +294,8 @@
                     android:layout_width="13dp"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/ic_signup_pwd_hint_1" />
+                    android:src="@drawable/ic_signup_pwd_hint_1"
+                    android:tint="@color/cp_signup_wrong"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/signup_pwd_hint_txt_1"
@@ -264,7 +303,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:text="@string/signup_pwd_hint_1"
-                    android:textColor="@color/cp_gray5"
+                    android:textColor="@color/cp_signup_wrong"
                     android:textSize="11sp"
                     android:textStyle="normal"
                     app:layout_constraintStart_toStartOf="parent"
@@ -289,7 +328,8 @@
                     android:layout_width="13dp"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/ic_signup_pwd_hint_1" />
+                    android:src="@drawable/ic_signup_pwd_hint_1"
+                    android:tint="@color/cp_signup_wrong"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/signup_pwd_hint_txt_2"
@@ -297,7 +337,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:text="@string/signup_pwd_hint_2"
-                    android:textColor="@color/cp_gray5"
+                    android:textColor="@color/cp_signup_wrong"
                     android:textSize="11sp"
                     android:textStyle="normal"
                     app:layout_constraintStart_toStartOf="parent"
@@ -322,7 +362,8 @@
                     android:layout_width="13dp"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/ic_signup_pwd_hint_1" />
+                    android:src="@drawable/ic_signup_pwd_hint_1"
+                    android:tint="@color/cp_signup_wrong"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/signup_pwd_hint_txt_3"
@@ -330,7 +371,41 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:text="@string/signup_pwd_hint_3"
-                    android:textColor="@color/cp_gray5"
+                    android:textColor="@color/cp_signup_wrong"
+                    android:textSize="11sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/signup_pwd_line" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/signup_pwd_hint_layout_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="30dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signup_pwd_hint_layout_3">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/signup_pwd_hint_img_4"
+                    android:layout_width="13dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_signup_email_complete"
+                    android:tint="@color/cp_signup_complete_hint"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/signup_pwd_hint_txt_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:text="@string/signup_pwd_hint_4"
+                    android:textColor="@color/cp_signup_complete_hint"
                     android:textSize="11sp"
                     android:textStyle="normal"
                     app:layout_constraintStart_toStartOf="parent"
@@ -349,7 +424,7 @@
                 android:background="@drawable/signup_edt_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signup_pwd_hint_layout_3">
+                app:layout_constraintTop_toBottomOf="@+id/signup_pwd_hint_layout_4">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -374,6 +449,7 @@
                         android:background="@color/cp_gray2" />
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/signup_name_edt"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginRight="2dp"
@@ -390,10 +466,22 @@
 
             </LinearLayout>
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/signup_name_complete"
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_signup_email_complete"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/signup_name_layout"
+                app:layout_constraintEnd_toEndOf="@+id/signup_name_layout"
+                app:layout_constraintTop_toTopOf="@+id/signup_name_layout" />
+
             <View
                 android:id="@+id/signup_name_line"
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="2dp"
                 android:layout_marginHorizontal="15dp"
                 android:background="@color/cp_signup_selected"
                 android:visibility="invisible"
@@ -451,12 +539,14 @@
                         android:background="@color/cp_gray2" />
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/signup_phone_edt"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginRight="2dp"
                         android:background="@drawable/signup_edt"
                         android:hint="휴대폰 번호"
                         android:inputType="number"
+                        android:maxLength="11"
                         android:paddingVertical="15dp"
                         android:paddingLeft="8dp"
                         android:textColor="@color/black"
@@ -467,10 +557,22 @@
 
             </LinearLayout>
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/signup_phone_complete"
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_signup_email_complete"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/signup_phone_layout"
+                app:layout_constraintEnd_toEndOf="@+id/signup_phone_layout"
+                app:layout_constraintTop_toTopOf="@+id/signup_phone_layout" />
+
             <View
                 android:id="@+id/signup_phone_line"
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="2dp"
                 android:layout_marginHorizontal="15dp"
                 android:background="@color/cp_signup_selected"
                 android:visibility="invisible"
@@ -559,6 +661,34 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/signup_terms_all_agree_layout" />
 
+            <LinearLayout
+                android:id="@+id/signup_terms_warn_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signup_terms_all_agree_detail">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="15dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_signup_terms_warn" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:text="@string/signup_terms_warn"
+                    android:textColor="@color/cp_signup_wrong"
+                    android:textSize="12sp"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
             <View
                 android:id="@+id/signup_terms_box"
                 android:layout_width="match_parent"
@@ -568,7 +698,7 @@
                 android:background="@drawable/signup_edt_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signup_terms_all_agree_detail" />
+                app:layout_constraintTop_toBottomOf="@+id/signup_terms_warn_layout" />
 
             <LinearLayout
                 android:id="@+id/signup_terms"
