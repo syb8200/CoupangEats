@@ -11,29 +11,40 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.risingcamp.coupangeats.R
+import com.risingcamp.coupangeats.config.ApplicationClass.Companion.X_ACCESS_TOKEN
+import com.risingcamp.coupangeats.config.ApplicationClass.Companion.sSharedPreferences
 import com.risingcamp.coupangeats.config.BaseActivity
 import com.risingcamp.coupangeats.databinding.ActivitySignupBinding
 import com.risingcamp.coupangeats.src.login.LoginActivity
+import com.risingcamp.coupangeats.src.signup.models.PostSignupRequest
+import com.risingcamp.coupangeats.src.signup.models.SignupResponse
+
+class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding::inflate), SignupInterface {
+
+    var email : String? = null
+    var password : String? = null
+    var name : String? = null
+    var phone : String? = null
+    var agreements : MutableList<Boolean> = mutableListOf()
 
 
-var check_all = true
-var check_1 = true
-var check_2 = true
-var check_3 = true
-var check_4 = true
-var check_5 = true
-var check_6 = true
-var check_7 = true
-var check_8 = true
-var check_9 = true
-var check_10 = true
-var click_signup = true
+    var check_all = false
+    var check_1 = false
+    var check_2 = false
+    var check_3 = false
+    var check_4 = false
+    var check_5 = false
+    var check_6 = false
+    var check_7 = false
+    var check_8 = false
+    var check_9 = false
+    var check_10 = false
 
-var check_sum = 0
-var check_necessary_sum = 0
+    var check_sum = 0
+    var check_necessary_sum = 0
 
+    var jwt : String? = null
 
-class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding::inflate) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -211,38 +222,38 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
 
     fun termsAllAgree(){
         binding.signupTermsAllAgreeLayout.setOnClickListener {
-            if(check_all == true){
+            if(check_all == false){
                 setTermsAllChecked()
-                check_sum = 7
+                check_sum = 10
                 check_necessary_sum = 5
-                check_all = false
-                check_1 = false
-                check_2 = false
-                check_3 = false
-                check_4 = false
-                check_5 = false
-                check_6 = false
-                check_7 = false
-                check_8 = false
-                check_9 = false
-                check_10 = false
+                check_all = true
+                check_1 = true
+                check_2 = true
+                check_3 = true
+                check_4 = true
+                check_5 = true
+                check_6 = true
+                check_7 = true
+                check_8 = true
+                check_9 = true
+                check_10 = true
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
             } else{
-                if(check_all == false){
+                if(check_all == true){
                     setTermsAllNotChecked()
                     check_sum = 0
                     check_necessary_sum = 0
-                    check_all = true
-                    check_1 = true
-                    check_2 = true
-                    check_3 = true
-                    check_4 = true
-                    check_5 = true
-                    check_6 = true
-                    check_7 = true
-                    check_8 = true
-                    check_9 = true
-                    check_10 = true
+                    check_all = false
+                    check_1 = false
+                    check_2 = false
+                    check_3 = false
+                    check_4 = false
+                    check_5 = false
+                    check_6 = false
+                    check_7 = false
+                    check_8 = false
+                    check_9 = false
+                    check_10 = false
                     Log.d("체크썸","$check_sum / $check_necessary_sum")
                 }
             }
@@ -279,29 +290,29 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
 
     fun termsAgree(){
         binding.signupTermsLine1.setOnClickListener {
-            if(check_1==true){
+            if(check_1==false){
                 binding.signupTermsCheckbox1.setImageResource(R.drawable.ic_signup_terms_agree_2)
                 check_sum += 1
                 check_necessary_sum += 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_1 = false
+                check_1 = true
                 checkSum10()
             } else{
                 binding.signupTermsCheckbox1.setImageResource(R.drawable.ic_signup_terms_agree_1)
                 check_sum -= 1
                 check_necessary_sum -= 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_1 = true
+                check_1 = false
                 checkSum10()
             }
         }
         binding.signupTermsLine2.setOnClickListener {
-            if(check_2==true){
+            if(check_2==false){
                 binding.signupTermsCheckbox2.setImageResource(R.drawable.ic_signup_terms_agree_2)
                 check_sum += 1
                 check_necessary_sum += 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_2 = false
+                check_2 = true
                 checkSum10()
 
             } else{
@@ -309,17 +320,17 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
                 check_sum -= 1
                 check_necessary_sum -= 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_2 = true
+                check_2 = false
                 checkSum10()
             }
         }
         binding.signupTermsLine3.setOnClickListener {
-            if(check_3==true){
+            if(check_3==false){
                 binding.signupTermsCheckbox3.setImageResource(R.drawable.ic_signup_terms_agree_2)
                 check_sum += 1
                 check_necessary_sum += 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_3 = false
+                check_3 = true
                 checkSum10()
 
             } else{
@@ -327,17 +338,17 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
                 check_sum -= 1
                 check_necessary_sum -= 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_3 = true
+                check_3 = false
                 checkSum10()
             }
         }
         binding.signupTermsLine4.setOnClickListener {
-            if(check_4==true){
+            if(check_4==false){
                 binding.signupTermsCheckbox4.setImageResource(R.drawable.ic_signup_terms_agree_2)
                 check_sum += 1
                 check_necessary_sum += 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_4 = false
+                check_4 = true
                 checkSum10()
 
             } else{
@@ -345,17 +356,17 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
                 check_sum -= 1
                 check_necessary_sum -= 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_4 = true
+                check_4 = false
                 checkSum10()
             }
         }
         binding.signupTermsLine5.setOnClickListener {
-            if(check_5==true){
+            if(check_5==false){
                 binding.signupTermsCheckbox5.setImageResource(R.drawable.ic_signup_terms_agree_2)
                 check_sum += 1
                 check_necessary_sum += 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_5 = false
+                check_5 = true
                 checkSum10()
 
             } else{
@@ -363,138 +374,140 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
                 check_sum -= 1
                 check_necessary_sum -= 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_5 = true
+                check_5 = false
                 checkSum10()
             }
         }
         binding.signupTermsLine6.setOnClickListener {
-            if(check_6==true){
+            if(check_6==false){
                 binding.signupTermsCheckbox6.setImageResource(R.drawable.ic_signup_terms_agree_2)
-                binding.signupTermsCheckbox7.setImageResource(R.drawable.ic_signup_terms_agree_2)
-                binding.signupTermsCheckbox8.setImageResource(R.drawable.ic_signup_terms_agree_2)
-                binding.signupTermsCheckbox9.setImageResource(R.drawable.ic_signup_terms_agree_2)
-                binding.signupTermsCheckbox10.setImageResource(R.drawable.ic_signup_terms_agree_2)
-                check_sum += 5
+                //binding.signupTermsCheckbox7.setImageResource(R.drawable.ic_signup_terms_agree_2)
+                //binding.signupTermsCheckbox8.setImageResource(R.drawable.ic_signup_terms_agree_2)
+                //binding.signupTermsCheckbox9.setImageResource(R.drawable.ic_signup_terms_agree_2)
+                //binding.signupTermsCheckbox10.setImageResource(R.drawable.ic_signup_terms_agree_2)
+                check_sum += 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_6 = false
-                check_7 = false
-                check_8 = false
-                check_9 = false
-                check_10 = false
+                check_6 = true
+                //check_7 = false
+                //check_8 = false
+                //check_9 = false
+                //check_10 = false
                 checkSum10()
             } else{
                 binding.signupTermsCheckbox6.setImageResource(R.drawable.ic_signup_terms_agree_1)
-                binding.signupTermsCheckbox7.setImageResource(R.drawable.ic_signup_terms_agree_1)
-                binding.signupTermsCheckbox8.setImageResource(R.drawable.ic_signup_terms_agree_1)
-                binding.signupTermsCheckbox9.setImageResource(R.drawable.ic_signup_terms_agree_1)
-                binding.signupTermsCheckbox10.setImageResource(R.drawable.ic_signup_terms_agree_1)
-                check_sum -= 5
+                //binding.signupTermsCheckbox7.setImageResource(R.drawable.ic_signup_terms_agree_1)
+                //binding.signupTermsCheckbox8.setImageResource(R.drawable.ic_signup_terms_agree_1)
+                //binding.signupTermsCheckbox9.setImageResource(R.drawable.ic_signup_terms_agree_1)
+                //binding.signupTermsCheckbox10.setImageResource(R.drawable.ic_signup_terms_agree_1)
+                check_sum -= 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_6 = true
-                check_7 = true
-                check_8 = true
-                check_9 = true
-                check_10 = true
+                check_6 = false
+                //check_7 = true
+                //check_8 = true
+                //check_9 = true
+                //check_10 = true
                 checkSum10()
             }
         }
         binding.signupTermsLine7.setOnClickListener {
-            if(check_7==true){
+            if(check_7==false){
                 binding.signupTermsCheckbox7.setImageResource(R.drawable.ic_signup_terms_agree_2)
-                binding.signupTermsCheckbox8.setImageResource(R.drawable.ic_signup_terms_agree_2)
-                binding.signupTermsCheckbox9.setImageResource(R.drawable.ic_signup_terms_agree_2)
-                binding.signupTermsCheckbox10.setImageResource(R.drawable.ic_signup_terms_agree_2)
-                check_sum += 4
+                //binding.signupTermsCheckbox8.setImageResource(R.drawable.ic_signup_terms_agree_2)
+                //binding.signupTermsCheckbox9.setImageResource(R.drawable.ic_signup_terms_agree_2)
+                //binding.signupTermsCheckbox10.setImageResource(R.drawable.ic_signup_terms_agree_2)
+                check_sum += 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_7 = false
-                check_8 = false
-                check_9 = false
-                check_10 = false
+                check_7 = true
+                //check_8 = false
+                //check_9 = false
+                //check_10 = false
                 checkSum10()
             } else{
                 binding.signupTermsCheckbox7.setImageResource(R.drawable.ic_signup_terms_agree_1)
-                binding.signupTermsCheckbox8.setImageResource(R.drawable.ic_signup_terms_agree_1)
-                binding.signupTermsCheckbox9.setImageResource(R.drawable.ic_signup_terms_agree_1)
-                binding.signupTermsCheckbox10.setImageResource(R.drawable.ic_signup_terms_agree_1)
-                check_sum -= 4
+                //binding.signupTermsCheckbox8.setImageResource(R.drawable.ic_signup_terms_agree_1)
+                //binding.signupTermsCheckbox9.setImageResource(R.drawable.ic_signup_terms_agree_1)
+                //binding.signupTermsCheckbox10.setImageResource(R.drawable.ic_signup_terms_agree_1)
+                check_sum -= 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_7 = true
-                check_8 = true
-                check_9 = true
-                check_10 = true
+                check_7 = false
+                //check_8 = true
+                //check_9 = true
+                //check_10 = true
                 checkSum10()
             }
         }
         binding.signupTermsLine8.setOnClickListener {
-            if(check_8==true){
+            if(check_8==false){
                 binding.signupTermsCheckbox8.setImageResource(R.drawable.ic_signup_terms_agree_2)
                 check_sum += 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_8 = false
+                check_8 = true
                 checkSum10()
             } else{
                 binding.signupTermsCheckbox8.setImageResource(R.drawable.ic_signup_terms_agree_1)
                 check_sum -= 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_8 = true
+                check_8 = false
                 checkSum10()
             }
         }
         binding.signupTermsLine9.setOnClickListener {
-            if(check_9==true){
+            if(check_9==false){
                 binding.signupTermsCheckbox9.setImageResource(R.drawable.ic_signup_terms_agree_2)
                 check_sum += 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_9 = false
+                check_9 = true
                 checkSum10()
             } else{
                 binding.signupTermsCheckbox9.setImageResource(R.drawable.ic_signup_terms_agree_1)
                 check_sum -= 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_9 = true
+                check_9 = false
                 checkSum10()
             }
         }
         binding.signupTermsLine10.setOnClickListener {
-            if(check_10==true){
+            if(check_10==false){
                 binding.signupTermsCheckbox10.setImageResource(R.drawable.ic_signup_terms_agree_2)
                 check_sum += 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_10 = false
+                check_10 = true
                 checkSum10()
             } else{
                 binding.signupTermsCheckbox10.setImageResource(R.drawable.ic_signup_terms_agree_1)
                 check_sum -= 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
-                check_10 = true
+                check_10 = false
                 checkSum10()
             }
         }
     }
 
     fun checkSum10(){
-        if(check_sum == 10){
+        if(check_sum == 10 || check_necessary_sum == 5){
             binding.signupTermsAllAgreeCheckbox.setImageResource(R.drawable.ic_signup_terms_agree_2)
-        } else if(check_sum < 10){
+        } else if(check_sum < 10 || check_necessary_sum < 5){
             binding.signupTermsAllAgreeCheckbox.setImageResource(R.drawable.ic_signup_terms_agree_1)
         }
     }
 
-    fun checkSum5(){
-        if(check_necessary_sum==5){
-            binding.signupTermsWarnLayout.visibility = View.GONE
-            if(check_sum == 10){
-                binding.signupTermsAllAgreeCheckbox.setImageResource(R.drawable.ic_signup_terms_agree_2)
-            }
-
-        }
-    }
 
     fun setSignupBtn(){
         binding.signupComplete.setOnClickListener {
             if(check_necessary_sum == 5){
+
+                val email = binding.signupEmailEdt.text.toString()
+                val password = binding.signupPwdEdt.text.toString()
+                val name = binding.signupNameEdt.text.toString()
+                val phone = binding.signupPhoneEdt.text.toString()
+                val agreements = arrayListOf(check_1, check_2, check_3, check_4, check_5, check_6, check_7, check_8, check_9, check_10)
+
+                val postRequest = PostSignupRequest(email = email, password = password,name = name, phone = phone, agreements = agreements)
+                SignupService(this).tryPostSignup(postRequest)
+
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
+
             }else if(check_necessary_sum < 5){
                 binding.signupTermsWarnLayout.visibility = View.VISIBLE
             }
@@ -506,5 +519,18 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
+    }
+
+
+
+
+    override fun onPostSignupSuccess(response: SignupResponse) {
+        jwt = response.result.jwt
+        sSharedPreferences.edit().putString(X_ACCESS_TOKEN, response.result.jwt).apply()
+        Log.d("jwt", "$jwt")
+    }
+
+    override fun onPostSignupFailure(message: String) {
+        Log.d("오류", "오류: $message")
     }
 }

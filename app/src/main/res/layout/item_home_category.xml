@@ -3,13 +3,14 @@
     android:id="@+id/item_home_category_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:paddingHorizontal="10dp"
     android:gravity="center"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/item_home_category_img"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:background="@color/cp_gray1"/>
 
     <androidx.appcompat.widget.AppCompatTextView

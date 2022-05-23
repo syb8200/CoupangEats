@@ -4,6 +4,7 @@
     package="com.risingcamp.coupangeats">
 
     <application
+        android:name=".config.ApplicationClass"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Coupangeats">
 
-        <activity android:name=".src.MainActivity"
+        <activity android:name=".src.splash.Splash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +21,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".src.login.LoginActivity"/>
         <activity android:name=".src.signup.SignupActivity"/>
+        <activity android:name=".src.MainActivity"/>
         <activity android:name=".src.favorite.FavoriteActivity"/>
 
     </application>
