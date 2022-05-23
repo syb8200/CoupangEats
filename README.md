@@ -47,3 +47,20 @@
 : 코어 - dev/prod 서버 구축 완료 (아침 9시까지)   
 : 노바 - 홈 Fragment UI 완성 및 회원가입/로그인 API 연동   
    
+   
+   >**2022.05.23.(월) - 진행상황**
+   
+- 진행상황
+1) Login : 진행률 80%
+2) Signup : 진행률 90%
+3) Home : 진행률 30%
+   
+- 개발 도중 발생한 이슈   
+: 회원가입 API 연동을 하면서, sRetrofit has not been initialized, getJwt() on a null object reference 오류 두 번 발생   
+: 해결) Manifest의 application 내에 android:name을 써주고, 비밀번호 입력 시 영어/숫자/특수문자 포함해서 입력하니 오류 해결  
+   
+- 1차 피드백   
+: 화면 공유가 되지 않아 영상으로 대체 (영상에 못 보여드린 부분은 추가적으로 설명 붙임 / UI 피드백은 아직 받지 못함)   
+: 계획한 것보다는 진도가 조금 느린 상황, 생산성을 높이는 데에 집중 필요   
+: API가 나오자마자 쓸 수 있도록 준비둘 것   
+   
