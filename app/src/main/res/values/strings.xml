@@ -40,4 +40,30 @@
     <string name="signup_complete">동의하고 가입하기</string>
     <string name="signup_rights">ⒸCoupang Corp. All rights reserved.</string>
 
+    <string name="home_top_banner_all_event">이벤트 전체보기</string>
+    <string name="home_res_title">골라먹는 맛집</string>
+    <string name="home_res_option_all_menu">전체 메뉴</string>
+    <string name="home_res_option_1">추천순</string>
+    <string name="home_res_option_2">치타배달</string>
+    <string name="home_res_option_3">배달비</string>
+    <string name="home_res_option_4">최소주문</string>
+    <string name="home_res_option_5">포장</string>
+    <string name="home_res_option_6">할인쿠폰</string>
+    <string name="home_res_option_7">주류</string>
+    <string name="home_btm_recommend_title">아직 뭘 먹을지 고민이신가요?</string>
+    <string name="home_btm_recommend_sub_title">메뉴 고민을 끝낼 쿠팡이츠의 맛집 리스트</string>
+    <string name="home_btm_recommend_1">이츠 추천</string>
+    <string name="home_btm_recommend_2">리뷰 최고</string>
+    <string name="home_btm_recommend_3">주문 많은</string>
+    <string name="home_btm_info_1">쿠팡(주) | 대표이사 : 박대준</string>
+    <string name="home_btm_info_2">사업자 등록번호 : 120-88-00767 | 통신판매업신고 : 2017-</string>
+    <string name="home_btm_info_3">서울송파-0680 | 서울시 송파구 송파대로 570</string>
+    <string name="home_btm_info_4">쿠팡이츠 고객센터: 1670-9827| 이메일 문의:</string>
+    <string name="home_btm_info_5">eatshelp@coupang.com |</string>
+    <string name="home_btm_info_6">쿠팡은 통신판매중개자로서 통신판매의 당사자가 아니며, 판매자가</string>
+    <string name="home_btm_info_7">등록한 상품 정보, 상품의 품질 및 거래에 대해서 일체의 책임을 지지</string>
+    <string name="home_btm_info_8">않습니다. 이용약관 및 개인정보 처리방침| 호스팅 서비스제공자: 쿠팡(주)</string>
+    <string name="home_btm_info_9">|</string>
+    <string name="home_btm_info_10">사업자정보확인</string>
+
 </resources>

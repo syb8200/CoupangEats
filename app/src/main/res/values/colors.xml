@@ -16,6 +16,7 @@
     <color name="cp_gray3">#DFE2E7</color>
     <color name="cp_gray4">#FAFAFA</color>
     <color name="cp_gray5">#888888</color>
+    <color name="cp_gray6">#F5F6F8</color>
 
     <color name="cp_login_btn">#00AFFE</color>
     <color name="cp_login_text">#464F58</color>
@@ -24,5 +25,10 @@
     <color name="cp_signup_wrong">#DE263F</color>
     <color name="cp_signup_complete_btn">#0075E9</color>
     <color name="cp_signup_complete_hint">#107E25</color>
+
+    <color name="cp_home_indicator">#73212B35</color>
+    <color name="cp_home_floating_btn">#80FFFFFF</color>
+
+    <color name="cp_item_home_res_pack">#212B35</color>
 
 </resources>
