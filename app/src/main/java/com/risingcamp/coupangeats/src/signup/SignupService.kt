@@ -1,8 +1,9 @@
 package com.risingcamp.coupangeats.src.signup
 
 import com.risingcamp.coupangeats.config.ApplicationClass
-import com.risingcamp.coupangeats.src.signup.models.PostSignupRequest
-import com.risingcamp.coupangeats.src.signup.models.SignupResponse
+import com.risingcamp.coupangeats.src.signup.models.getUsersEmail.GetUsersEmailResponse
+import com.risingcamp.coupangeats.src.signup.models.postSignup.PostSignupRequest
+import com.risingcamp.coupangeats.src.signup.models.postSignup.SignupResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,4 +27,24 @@ class SignupService(val signupInterface: SignupInterface) {
 
         })
     }
+
+    fun tryGetUsersEmail(email : String){
+        val signupRetrofitInterface = ApplicationClass.sRetrofit.create(SignupRetrofitInterface::class.java)
+        signupRetrofitInterface.getUsersEmail(email).enqueue(object : Callback<GetUsersEmailResponse> {
+            override fun onResponse(
+                call: Call<GetUsersEmailResponse>,
+                response: Response<GetUsersEmailResponse>
+            ) {
+                signupInterface.onGetUsersEmailSuccess(response.body() as GetUsersEmailResponse)
+            }
+
+            override fun onFailure(call: Call<GetUsersEmailResponse>, t: Throwable) {
+                signupInterface.onGetUsersEmailFailure(t.message ?: "통신 오류")
+            }
+
+        })
+
+    }
+
+
 }

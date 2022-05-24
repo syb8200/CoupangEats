@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="20dp"
+    android:background="@color/white">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/login_btm_sheet_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/login_btm_sheet_title"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/login_btm_sheet_sub_title_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="지금 로그인하고"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_btm_sheet_title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/login_btm_sheet_sub_title_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="무료배달과 기간 한정 쿠폰"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_btm_sheet_sub_title_1" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/login_btm_sheet_sub_title_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="혜택 놓치지 마세요."
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toEndOf="@+id/login_btm_sheet_sub_title_2"
+        app:layout_constraintTop_toTopOf="@+id/login_btm_sheet_sub_title_2" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/login_btm_sheet_simple_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/dialog_login_btm_sheet_simple_login"
+        android:gravity="center"
+        android:paddingVertical="14dp"
+        android:text="@string/login_btm_sheet_simple_login"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_btm_sheet_sub_title_2" />
+
+    <TextView
+        android:id="@+id/login_btm_sheet_email_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/dialog_login_btm_sheet_email_login"
+        android:gravity="center"
+        android:paddingVertical="14dp"
+        android:text="@string/login_btm_sheet_email_login"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_btm_sheet_simple_login" />
+
+    <LinearLayout
+        android:id="@+id/login_btm_sheet_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_btm_sheet_email_login">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/login_btm_sheet_signup_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_btm_sheet_signup_hint"
+            android:textColor="@color/cp_gray2"
+            android:textSize="13sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/login_btm_sheet_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/login_btm_sheet_signup"
+            android:textColor="@color/cp_signup_complete_btn"
+            android:textSize="13sp"
+            android:textStyle="normal" />
+
+
+    </LinearLayout>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

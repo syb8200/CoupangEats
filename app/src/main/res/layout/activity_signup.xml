@@ -163,7 +163,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/signup_email_wrong_hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -177,6 +177,53 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/signup_email_line" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/signup_already_have_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/signup_already_have_email"
+                android:textColor="@color/cp_signup_wrong"
+                android:textSize="11sp"
+                android:textStyle="normal"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signup_email_wrong_hint" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/signup_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="8dp"
+                android:paddingVertical="9dp"
+                android:paddingHorizontal="40dp"
+                android:background="@drawable/signup_edt_layout"
+                android:text="@string/signup_login"
+                android:textColor="@color/cp_signup_complete_btn"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signup_already_have_email" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/signup_find_pwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="3dp"
+                android:paddingVertical="9dp"
+                android:paddingHorizontal="40dp"
+                android:background="@drawable/signup_edt_layout"
+                android:text="@string/signup_find_pwd"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:textColor="@color/cp_signup_complete_btn"
+                app:layout_constraintStart_toEndOf="@id/signup_login"
+                app:layout_constraintTop_toBottomOf="@+id/signup_already_have_email"/>
 
             <LinearLayout
                 android:id="@+id/signup_pwd_layout"
@@ -189,7 +236,7 @@
                 android:background="@drawable/signup_edt_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signup_email_wrong_hint">
+                app:layout_constraintTop_toBottomOf="@+id/signup_find_pwd">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -594,6 +641,51 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/signup_phone_line" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/signup_already_have_phone_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="8dp"
+                android:text="abcd@naver.com"
+                android:textColor="@color/cp_signup_wrong"
+                android:textSize="11sp"
+                android:textStyle="normal"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signup_phone_wrong_hint" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/signup_already_have_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="4dp"
+                android:text="@string/signup_already_have_phone"
+                android:textColor="@color/cp_signup_wrong"
+                android:textSize="11sp"
+                android:textStyle="normal"
+                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@+id/signup_already_have_phone_email"
+                app:layout_constraintTop_toBottomOf="@+id/signup_phone_wrong_hint" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/signup_auth_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="8dp"
+                android:paddingVertical="9dp"
+                android:paddingHorizontal="40dp"
+                android:background="@drawable/signup_edt_layout"
+                android:text="@string/signup_auth_phone"
+                android:textColor="@color/cp_signup_complete_btn"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signup_already_have_phone" />
+
             <View
                 android:id="@+id/signup_mid_line"
                 android:layout_width="match_parent"
@@ -603,7 +695,7 @@
                 android:background="@color/cp_gray1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signup_phone_wrong_hint" />
+                app:layout_constraintTop_toBottomOf="@+id/signup_auth_phone" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/signup_terms_txt"

@@ -214,5 +214,21 @@
 
     </LinearLayout>
 
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@android:style/ButtonBar"
+        android:id="@+id/login_false_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cp_login_false_hint"
+        android:gravity="center"
+        android:paddingVertical="25dp"
+        android:text="아이디는 이메일주소 형식으로 입력해주세요"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

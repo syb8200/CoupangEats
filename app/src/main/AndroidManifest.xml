@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Coupangeats">
 
-        <activity android:name=".src.splash.Splash"
+        <activity android:name=".src.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,9 +21,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".src.login.LoginActivity"/>
+        <activity android:name=".src.login.LoginActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".src.signup.SignupActivity"/>
-        <activity android:name=".src.MainActivity"/>
         <activity android:name=".src.favorite.FavoriteActivity"/>
 
     </application>

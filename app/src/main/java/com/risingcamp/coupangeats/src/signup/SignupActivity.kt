@@ -16,17 +16,13 @@ import com.risingcamp.coupangeats.config.ApplicationClass.Companion.sSharedPrefe
 import com.risingcamp.coupangeats.config.BaseActivity
 import com.risingcamp.coupangeats.databinding.ActivitySignupBinding
 import com.risingcamp.coupangeats.src.login.LoginActivity
-import com.risingcamp.coupangeats.src.signup.models.PostSignupRequest
-import com.risingcamp.coupangeats.src.signup.models.SignupResponse
+import com.risingcamp.coupangeats.src.signup.models.getUsersEmail.GetUsersEmailResponse
+import com.risingcamp.coupangeats.src.signup.models.postSignup.PostSignupRequest
+import com.risingcamp.coupangeats.src.signup.models.postSignup.SignupResponse
 
 class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding::inflate), SignupInterface {
 
-    var email : String? = null
-    var password : String? = null
-    var name : String? = null
-    var phone : String? = null
-    var agreements : MutableList<Boolean> = mutableListOf()
-
+    var isUserExit : Boolean = true
 
     var check_all = false
     var check_1 = false
@@ -63,6 +59,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
             binding.signupEmailLine.visibility = View.VISIBLE
 
             if(gainFocus){
+                binding.signupEmailComplete.visibility = View.GONE
             } else{
 
                 if(binding.signupEmailEdt.length()==0){
@@ -71,6 +68,15 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
                     binding.signupEmailWrongHint.visibility = View.VISIBLE
                 } else{
                     hideKeyboard()
+                    /*
+                    if(isUserExist == true){
+                        binding.signupEmailLine.setBackgroundColor(Color.parseColor("#DE263F"))
+                        binding.signupAlreadyHaveEmail.visibility = View.VISIBLE
+                        binding.signupLogin.visibility = View.VISIBLE
+                        binding.signupFindPwd.visibility = View.VISIBLE
+                    }
+                     */
+
                     if(binding.signupEmailEdt.text!!.contains("@")){
                         binding.signupEmailComplete.visibility = View.VISIBLE
                         binding.signupEmailWrongHint.visibility = View.GONE
@@ -90,15 +96,34 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
             binding.signupPwdLine.visibility = View.VISIBLE
 
             if(getFocus){
+                binding.signupPwdHintLayout1.visibility = View.VISIBLE
+                binding.signupPwdHintImg1.imageTintList = ColorStateList.valueOf(Color.parseColor("#888888"))
+                binding.signupPwdHintTxt1.setTextColor(Color.parseColor("#888888"))
+
+                binding.signupPwdHintLayout2.visibility = View.VISIBLE
+                binding.signupPwdHintImg2.imageTintList = ColorStateList.valueOf(Color.parseColor("#888888"))
+                binding.signupPwdHintTxt2.setTextColor(Color.parseColor("#888888"))
+
+                binding.signupPwdHintLayout3.visibility = View.VISIBLE
+                binding.signupPwdHintImg3.imageTintList = ColorStateList.valueOf(Color.parseColor("#888888"))
+                binding.signupPwdHintTxt3.setTextColor(Color.parseColor("#888888"))
+
+
                 binding.signupPwdEdt.addTextChangedListener(object: TextWatcher{
                     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                     }
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                         hideKeyboard()
                         binding.signupPwdLine.setBackgroundColor(Color.parseColor("#DE263F"))
-                        binding.signupPwdHintLayout1.visibility = View.VISIBLE
-                        binding.signupPwdHintLayout2.visibility = View.VISIBLE
-                        binding.signupPwdHintLayout3.visibility = View.VISIBLE
+
+                        binding.signupPwdHintImg1.imageTintList = ColorStateList.valueOf(Color.parseColor("#DE263F"))
+                        binding.signupPwdHintTxt1.setTextColor(Color.parseColor("#DE263F"))
+
+                        binding.signupPwdHintImg2.imageTintList = ColorStateList.valueOf(Color.parseColor("#DE263F"))
+                        binding.signupPwdHintTxt2.setTextColor(Color.parseColor("#DE263F"))
+
+                        binding.signupPwdHintImg3.imageTintList = ColorStateList.valueOf(Color.parseColor("#DE263F"))
+                        binding.signupPwdHintTxt3.setTextColor(Color.parseColor("#DE263F"))
 
                         if(binding.signupPwdEdt.text!=binding.signupEmailEdt.text && binding.signupPwdEdt.length()!=0){
                             binding.signupPwdHintImg2.setImageResource(R.drawable.ic_signup_email_complete)
@@ -172,6 +197,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
             binding.signupNameLine.visibility = View.VISIBLE
 
             if(getFocus){
+                binding.signupNameComplete.visibility = View.GONE
             } else{
                 hideKeyboard()
                 if(binding.signupNameEdt.length()==0){
@@ -191,6 +217,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
             binding.signupPhoneLine.visibility = View.VISIBLE
 
             if(getFocus){
+                binding.signupPhoneComplete.visibility = View.GONE
             } else{
                 hideKeyboard()
                 if(binding.signupPhoneEdt.length()!=0 && binding.signupPhoneEdt.text!!.startsWith("010") && binding.signupPhoneEdt.length()==11){
@@ -381,58 +408,30 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
         binding.signupTermsLine6.setOnClickListener {
             if(check_6==false){
                 binding.signupTermsCheckbox6.setImageResource(R.drawable.ic_signup_terms_agree_2)
-                //binding.signupTermsCheckbox7.setImageResource(R.drawable.ic_signup_terms_agree_2)
-                //binding.signupTermsCheckbox8.setImageResource(R.drawable.ic_signup_terms_agree_2)
-                //binding.signupTermsCheckbox9.setImageResource(R.drawable.ic_signup_terms_agree_2)
-                //binding.signupTermsCheckbox10.setImageResource(R.drawable.ic_signup_terms_agree_2)
                 check_sum += 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
                 check_6 = true
-                //check_7 = false
-                //check_8 = false
-                //check_9 = false
-                //check_10 = false
                 checkSum10()
             } else{
                 binding.signupTermsCheckbox6.setImageResource(R.drawable.ic_signup_terms_agree_1)
-                //binding.signupTermsCheckbox7.setImageResource(R.drawable.ic_signup_terms_agree_1)
-                //binding.signupTermsCheckbox8.setImageResource(R.drawable.ic_signup_terms_agree_1)
-                //binding.signupTermsCheckbox9.setImageResource(R.drawable.ic_signup_terms_agree_1)
-                //binding.signupTermsCheckbox10.setImageResource(R.drawable.ic_signup_terms_agree_1)
                 check_sum -= 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
                 check_6 = false
-                //check_7 = true
-                //check_8 = true
-                //check_9 = true
-                //check_10 = true
                 checkSum10()
             }
         }
         binding.signupTermsLine7.setOnClickListener {
             if(check_7==false){
                 binding.signupTermsCheckbox7.setImageResource(R.drawable.ic_signup_terms_agree_2)
-                //binding.signupTermsCheckbox8.setImageResource(R.drawable.ic_signup_terms_agree_2)
-                //binding.signupTermsCheckbox9.setImageResource(R.drawable.ic_signup_terms_agree_2)
-                //binding.signupTermsCheckbox10.setImageResource(R.drawable.ic_signup_terms_agree_2)
                 check_sum += 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
                 check_7 = true
-                //check_8 = false
-                //check_9 = false
-                //check_10 = false
                 checkSum10()
             } else{
                 binding.signupTermsCheckbox7.setImageResource(R.drawable.ic_signup_terms_agree_1)
-                //binding.signupTermsCheckbox8.setImageResource(R.drawable.ic_signup_terms_agree_1)
-                //binding.signupTermsCheckbox9.setImageResource(R.drawable.ic_signup_terms_agree_1)
-                //binding.signupTermsCheckbox10.setImageResource(R.drawable.ic_signup_terms_agree_1)
                 check_sum -= 1
                 Log.d("체크썸","$check_sum / $check_necessary_sum")
                 check_7 = false
-                //check_8 = true
-                //check_9 = true
-                //check_10 = true
                 checkSum10()
             }
         }
@@ -484,13 +483,12 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
     }
 
     fun checkSum10(){
-        if(check_sum == 10 || check_necessary_sum == 5){
+        if(check_sum == 10){
             binding.signupTermsAllAgreeCheckbox.setImageResource(R.drawable.ic_signup_terms_agree_2)
-        } else if(check_sum < 10 || check_necessary_sum < 5){
+        } else if(check_sum < 10){
             binding.signupTermsAllAgreeCheckbox.setImageResource(R.drawable.ic_signup_terms_agree_1)
         }
     }
-
 
     fun setSignupBtn(){
         binding.signupComplete.setOnClickListener {
@@ -521,9 +519,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
         }
     }
 
-
-
-
+//------------------------------------------------------------------------------------------------------------------------------------------------
     override fun onPostSignupSuccess(response: SignupResponse) {
         jwt = response.result.jwt
         sSharedPreferences.edit().putString(X_ACCESS_TOKEN, response.result.jwt).apply()
@@ -532,5 +528,14 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
 
     override fun onPostSignupFailure(message: String) {
         Log.d("오류", "오류: $message")
+    }
+
+
+    override fun onGetUsersEmailSuccess(emailResponse: GetUsersEmailResponse) {
+
+    }
+
+    override fun onGetUsersEmailFailure(message: String) {
+
     }
 }

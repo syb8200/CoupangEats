@@ -2,6 +2,9 @@ package com.risingcamp.coupangeats.src.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -9,9 +12,14 @@ import com.risingcamp.coupangeats.R
 import com.risingcamp.coupangeats.config.BaseActivity
 import com.risingcamp.coupangeats.databinding.ActivityLoginBinding
 import com.risingcamp.coupangeats.src.MainActivity
+import com.risingcamp.coupangeats.src.login.models.LoginResponse
 import com.risingcamp.coupangeats.src.signup.SignupActivity
 
-class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate) {
+class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate),LoginInterface {
+
+    val Login = 1
+    var loginThread : LoginThread? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -60,14 +68,69 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
     fun login(){
         binding.loginBtn.setOnClickListener {
-            if(binding.loginEmailEdt.text!!.contains("@") && binding.loginEmailEdt.text!!.isNotEmpty() && binding.loginPwdEdt.text!!.isNotEmpty()){
-                showCustomToast("로그인 성공!")
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
 
-            } else{
-                showCustomToast("로그인 실패...")
+            if(binding.loginEmailEdt.length()==0 && binding.loginPwdEdt.length()==0){
+                binding.loginFalseHint.text = "아이디를 입력해주세요"
+                loginThread = LoginThread()
+                LoginThread().start()
+
+            } else{ //둘중 하나라도 뭐가 적혀있을 때
+                if(binding.loginEmailEdt.text!!.contains("@") == false){
+                    binding.loginFalseHint.text = "아이디는 이메일주소 형식으로 입력해주세요"
+                    loginThread = LoginThread()
+                    LoginThread().start()
+                } else{
+                    if(binding.loginPwdEdt.text!!.isEmpty()){
+                        binding.loginFalseHint.text = "비밀번호를 입력해주세요"
+                        loginThread = LoginThread()
+                        LoginThread().start()
+                    }
+                }
+
+                if(binding.loginPwdEdt.text!!.isNotEmpty() && binding.loginEmailEdt.text!!.isEmpty()){
+                    binding.loginFalseHint.text = "아이디를 입력해주세요"
+                    loginThread = LoginThread()
+                    LoginThread().start()
+                }
+
+                if(binding.loginEmailEdt.text!!.contains("@") && binding.loginEmailEdt.text!!.isNotEmpty() && binding.loginPwdEdt.text!!.isNotEmpty()){
+                    //로그인 api로 정보 일치하는지 확인 후 main으로 이동, 일치하지 않으면 dialog
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                }
+
             }
+        }
+
+    }
+
+    //[로그인 버튼]
+    //LoginHandler
+    private val login_handler = object: Handler(Looper.getMainLooper()){
+        override fun handleMessage(msg: Message) {
+            when(msg.what) {
+                Login -> {
+                    binding.loginFalseHint.visibility = View.VISIBLE
+                    binding.loginFalseHint.postDelayed({
+                        binding.loginFalseHint.visibility = View.INVISIBLE
+                    },3000)
+                }
+            }
+        }
+    }
+    //LoginThread
+    inner class LoginThread : Thread() {
+        var run = true
+        override fun run() {
+            while (run){
+
+                val msg = Message()
+                msg.what = Login
+                login_handler.sendMessage(msg)
+
+                run = false
+            }
+            super.run()
         }
     }
 
@@ -83,6 +146,16 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+    }
+
+
+
+    override fun onPostLoginSuccess(response: LoginResponse) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onPostLoginFailure(message: String) {
+        TODO("Not yet implemented")
     }
 
 }

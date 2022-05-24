@@ -14,15 +14,26 @@
     <string name="login_find_pwd">비밀번호 찾기</string>
     <string name="login_signup">회원가입</string>
 
+    <string name="login_btm_sheet_title">이츠 시작하기</string>
+    <string name="login_btm_sheet_simple_login">쿠팡 앱으로 간편 로그인</string>
+    <string name="login_btm_sheet_email_login">쿠팡 아이디(이메일)로 로그인</string>
+    <string name="login_btm_sheet_signup_hint">아직 회원이 아니신가요?</string>
+    <string name="login_btm_sheet_signup">회원가입</string>
+
     <string name="signup_title">회원가입</string>
     <string name="signup_info_txt">회원정보를 입력해주세요</string>
     <string name="signup_email_wrong_hint">이메일을 입력하세요.</string>
+    <string name="signup_already_have_email">이미 가입된 이메일 주소입니다. 다른 이메일을 입력하여 주세요.</string>
+    <string name="signup_login">로그인</string>
+    <string name="signup_find_pwd">비밀번호 찾기</string>
     <string name="signup_pwd_hint_1">영문/숫자/특수문자 2가지 이상 조합 (8~20자)</string>
     <string name="signup_pwd_hint_2">3개 이상 연속되거나 동일한 문자/숫자 제외</string>
     <string name="signup_pwd_hint_3">아이디(이메일) 제외</string>
     <string name="signup_pwd_hint_4">사용 가능한 비밀번호입니다.</string>
     <string name="signup_name_wrong_hint">이름을 정확히 입력하세요.</string>
     <string name="signup_phone_wrong_hint">휴대폰 번호를 정확하게 입력하세요.</string>
+    <string name="signup_already_have_phone">아이디(이메일)로 가입된 휴대폰 번호입니다.</string>
+    <string name="signup_auth_phone">휴대폰 인증</string>
     <string name="signup_terms_txt">쿠팡 서비스약관에 동의해주세요</string>
     <string name="signup_terms_all_agree_txt">모두 동의합니다.</string>
     <string name="signup_terms_all_agree_detail">동의에는 필수 및 선택 목적(광고성 정보 수신 포함)에 대한 동의가<br/>포함되어 있으며, 선택 목적의 동의를 거부하시는 경우에도 서비스<br/>이용이 가능합니다.</string>
@@ -65,5 +76,7 @@
     <string name="home_btm_info_8">않습니다. 이용약관 및 개인정보 처리방침| 호스팅 서비스제공자: 쿠팡(주)</string>
     <string name="home_btm_info_9">|</string>
     <string name="home_btm_info_10">사업자정보확인</string>
+
+    <string name="item_home_horizontal_list_footer_txt">더보기</string>
 
 </resources>

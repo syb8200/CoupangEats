@@ -91,6 +91,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
                 android:background="@color/cp_gray1"
+                app:isInfinite="true"
+                app:autoScroll="true"
+                app:scrollInterval="5000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -229,13 +232,12 @@
                 android:paddingHorizontal="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_horizontal_list_layout"
-                tools:listitem="@layout/item_home_horizontal_list"/>
+                app:layout_constraintTop_toBottomOf="@+id/home_horizontal_list_layout" />
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/home_mid_banner_vp"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@color/cp_gray1"
                 app:layout_constraintEnd_toEndOf="parent"

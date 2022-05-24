@@ -20,6 +20,7 @@
 
     <color name="cp_login_btn">#00AFFE</color>
     <color name="cp_login_text">#464F58</color>
+    <color name="cp_login_false_hint">#484848</color>
 
     <color name="cp_signup_selected">#396AF1</color>
     <color name="cp_signup_wrong">#DE263F</color>

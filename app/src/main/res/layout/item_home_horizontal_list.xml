@@ -2,30 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="10dp"
-    android:gravity="center"
+    android:paddingHorizontal="0dp"
+    android:layout_marginHorizontal="10dp"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/item_home_horizontal_list_img"
         android:layout_width="110dp"
         android:layout_height="110dp"
+        android:layout_gravity="center"
         android:background="@color/cp_gray1"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/item_home_horizontal_list_name"
-        android:layout_width="110dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="음식점 이름"
         android:textStyle="bold"
-        android:textSize="13sp"
+        android:textSize="14sp"
         android:textColor="@color/black"
         android:maxLines="1"
         android:ellipsize="end"/>
 
     <LinearLayout
-        android:layout_width="110dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:gravity="center_vertical"
@@ -41,7 +42,6 @@
             android:id="@+id/item_home_horizontal_list_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="1dp"
             android:text="0.0"
             android:textSize="11sp"
             android:textStyle="normal"
@@ -50,7 +50,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
+            android:layout_marginLeft="1dp"
             android:text="("
             android:textColor="@color/black"
             android:textStyle="normal"
@@ -76,7 +76,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
+            android:layout_marginHorizontal="3dp"
             android:text="•"
             android:textColor="@color/black"
             android:textStyle="normal"
@@ -102,7 +102,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="110dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:paddingBottom="15dp"
@@ -133,8 +133,6 @@
             android:textColor="@color/black"
             android:textStyle="normal"
             android:textSize="11sp" />
-
-
 
     </LinearLayout>
 

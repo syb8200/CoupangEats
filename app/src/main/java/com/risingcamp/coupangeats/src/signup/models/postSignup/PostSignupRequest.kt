@@ -1,4 +1,4 @@
-package com.risingcamp.coupangeats.src.signup.models
+package com.risingcamp.coupangeats.src.signup.models.postSignup
 
 import com.google.gson.annotations.SerializedName
 
