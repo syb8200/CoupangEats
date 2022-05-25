@@ -320,11 +320,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_res_title">
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:gravity="center_vertical">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/home_res_option_all_menu"
@@ -332,26 +331,69 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:background="@color/cp_gray6"
-                        android:gravity="center"
                         android:drawableRight="@drawable/ic_signup_terms_detail_resize"
-                        android:paddingVertical="7dp"
+                        android:gravity="center"
                         android:paddingHorizontal="5dp"
+                        android:paddingVertical="7dp"
                         android:text="@string/home_res_option_all_menu"
                         android:textColor="@color/black"
+                        android:textSize="13sp"
                         android:textStyle="bold"
-                        android:textSize="13sp"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <View
+                        android:id="@+id/home_res_option_line"
                         android:layout_width="1dp"
                         android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
                         android:background="@color/cp_gray6"
-                        android:layout_marginHorizontal="5dp"/>
+                        android:layout_marginHorizontal="5dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/home_res_option_all_menu"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/home_res_option_refresh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:background="@drawable/home_chip"
+                        android:drawableLeft="@drawable/ic_home_option_refresh_resize"
+                        android:drawablePadding="4dp"
+                        android:paddingVertical="7dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="25dp"
+                        android:text="@string/home_res_option_0"
+                        android:textSize="14sp"
+                        android:textStyle="normal"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/home_res_option_line"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/home_res_option_refresh_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/cp_home_res_option_checked"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintHorizontal_bias="0.86"
+                        app:layout_constraintBottom_toBottomOf="@+id/home_res_option_refresh"
+                        app:layout_constraintEnd_toEndOf="@+id/home_res_option_refresh"
+                        app:layout_constraintStart_toEndOf="@+id/home_res_option_line"
+                        app:layout_constraintTop_toTopOf="parent" />
+
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/home_res_option_recommend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
+                        android:layout_marginLeft="5dp"
                         android:gravity="center"
                         android:background="@drawable/home_chip"
                         android:drawableRight="@drawable/ic_home_option_detail_resize"
@@ -361,13 +403,16 @@
                         android:text="@string/home_res_option_1"
                         android:textSize="14sp"
                         android:textStyle="normal"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/home_res_option_refresh"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/home_res_option_cheetah"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginLeft="5dp"
                         android:gravity="center"
                         android:background="@drawable/home_chip"
                         android:drawableLeft="@drawable/ic_home_option_cheetah_resize"
@@ -377,12 +422,16 @@
                         android:text="@string/home_res_option_2"
                         android:textSize="14sp"
                         android:textStyle="normal"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/home_res_option_recommend"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/home_res_option_delivery_fee"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
                         android:gravity="center"
                         android:background="@drawable/home_chip"
                         android:drawableRight="@drawable/ic_home_option_detail_resize"
@@ -392,13 +441,16 @@
                         android:text="@string/home_res_option_3"
                         android:textSize="14sp"
                         android:textStyle="normal"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/home_res_option_cheetah"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/home_res_option_min_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginLeft="5dp"
                         android:gravity="center"
                         android:background="@drawable/home_chip"
                         android:drawableRight="@drawable/ic_home_option_detail_resize"
@@ -408,12 +460,16 @@
                         android:text="@string/home_res_option_4"
                         android:textSize="14sp"
                         android:textStyle="normal"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/home_res_option_delivery_fee"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/home_res_option_pack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
                         android:gravity="center"
                         android:background="@drawable/home_chip"
                         android:paddingVertical="7dp"
@@ -421,13 +477,16 @@
                         android:text="@string/home_res_option_5"
                         android:textSize="14sp"
                         android:textStyle="normal"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/home_res_option_min_price"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/home_res_option_coupon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginLeft="5dp"
                         android:gravity="center"
                         android:background="@drawable/home_chip"
                         android:paddingVertical="7dp"
@@ -435,23 +494,31 @@
                         android:text="@string/home_res_option_6"
                         android:textSize="14sp"
                         android:textStyle="normal"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/home_res_option_pack"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/home_res_option_drink"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:background="@drawable/home_chip"
+                        android:layout_marginLeft="5dp"
                         android:layout_marginRight="15dp"
-                        android:paddingVertical="7dp"
+                        android:background="@drawable/home_chip"
+                        android:gravity="center"
                         android:paddingHorizontal="13dp"
+                        android:paddingVertical="7dp"
                         android:text="@string/home_res_option_7"
+                        android:textColor="@color/black"
                         android:textSize="14sp"
                         android:textStyle="normal"
-                        android:textColor="@color/black" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/home_res_option_coupon"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </HorizontalScrollView>
 

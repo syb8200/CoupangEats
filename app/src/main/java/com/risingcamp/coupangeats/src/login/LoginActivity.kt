@@ -1,6 +1,10 @@
 package com.risingcamp.coupangeats.src.login
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,16 +13,21 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import com.risingcamp.coupangeats.R
+import com.risingcamp.coupangeats.config.ApplicationClass
 import com.risingcamp.coupangeats.config.BaseActivity
 import com.risingcamp.coupangeats.databinding.ActivityLoginBinding
 import com.risingcamp.coupangeats.src.MainActivity
 import com.risingcamp.coupangeats.src.login.models.LoginResponse
+import com.risingcamp.coupangeats.src.login.models.PostLoginRequest
 import com.risingcamp.coupangeats.src.signup.SignupActivity
+import com.risingcamp.coupangeats.src.signup.SignupService
+import com.risingcamp.coupangeats.src.signup.models.postSignup.PostSignupRequest
 
 class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate),LoginInterface {
 
     val Login = 1
     var loginThread : LoginThread? = null
+    var jwt : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +77,14 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
     fun login(){
         binding.loginBtn.setOnClickListener {
+            val email = binding.loginEmailEdt.text.toString()
+            val password = binding.loginPwdEdt.text.toString()
+
+            val postRequest = PostLoginRequest(email = email, password = password)
+            LoginService(this).tryPostLogin(postRequest)
+
+            var shared = ApplicationClass.sSharedPreferences.getString("X-ACCESS-TOKEN",null).toString()
+
 
             if(binding.loginEmailEdt.length()==0 && binding.loginPwdEdt.length()==0){
                 binding.loginFalseHint.text = "아이디를 입력해주세요"
@@ -95,8 +112,18 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
                 if(binding.loginEmailEdt.text!!.contains("@") && binding.loginEmailEdt.text!!.isNotEmpty() && binding.loginPwdEdt.text!!.isNotEmpty()){
                     //로그인 api로 정보 일치하는지 확인 후 main으로 이동, 일치하지 않으면 dialog
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
+                    if(shared == jwt){
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    } else{
+                        val builder = AlertDialog.Builder(this)
+                        builder.setMessage("입력하신 아이디 또는 비밀번호가 일치하지 않습니다.")
+                            .setPositiveButton("확인",
+                            DialogInterface.OnClickListener { dialogInterface, id ->
+                            })
+                        builder.show()
+                    }
+
                 }
 
             }
@@ -151,11 +178,11 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
 
     override fun onPostLoginSuccess(response: LoginResponse) {
-        TODO("Not yet implemented")
+        jwt = response.result.jwt
     }
 
     override fun onPostLoginFailure(message: String) {
-        TODO("Not yet implemented")
+
     }
 
 }

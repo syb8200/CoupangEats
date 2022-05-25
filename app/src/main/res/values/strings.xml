@@ -54,6 +54,7 @@
     <string name="home_top_banner_all_event">이벤트 전체보기</string>
     <string name="home_res_title">골라먹는 맛집</string>
     <string name="home_res_option_all_menu">전체 메뉴</string>
+    <string name="home_res_option_0">초기화</string>
     <string name="home_res_option_1">추천순</string>
     <string name="home_res_option_2">치타배달</string>
     <string name="home_res_option_3">배달비</string>
@@ -78,5 +79,29 @@
     <string name="home_btm_info_10">사업자정보확인</string>
 
     <string name="item_home_horizontal_list_footer_txt">더보기</string>
+
+    <string name="item_home_option_recommend_title">매장 정렬</string>
+    <string name="item_home_option_recommend_1">추천순</string>
+    <string name="item_home_option_recommend_2">주문많은순</string>
+    <string name="item_home_option_recommend_3">가까운순</string>
+    <string name="item_home_option_recommend_4">별점높은순</string>
+    <string name="item_home_option_recommend_5">신규매장순</string>
+
+    <string name="item_home_option_delivery_title">배달비</string>
+    <string name="item_home_option_delivery_sub_status">더 멀리있는 매장까지 볼 수 있어요!</string>
+    <string name="item_home_option_delivery_1">무료배달</string>
+    <string name="item_home_option_delivery_2">1,000</string>
+    <string name="item_home_option_delivery_3">2,000</string>
+    <string name="item_home_option_delivery_4">3,000</string>
+    <string name="item_home_option_delivery_5">전체</string>
+    <string name="item_home_option_delivery_ok">적용하기</string>
+
+    <string name="item_home_option_min_price_title">최소주문</string>
+    <string name="item_home_option_min_price_1">5,000</string>
+    <string name="item_home_option_min_price_2">10,000</string>
+    <string name="item_home_option_min_price_3">12,000</string>
+    <string name="item_home_option_min_price_4">15,000</string>
+    <string name="item_home_option_min_price_5">전체</string>
+    <string name="item_home_option_min_price_ok">적용하기</string>
 
 </resources>

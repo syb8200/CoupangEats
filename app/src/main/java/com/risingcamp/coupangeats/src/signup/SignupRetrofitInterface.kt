@@ -1,5 +1,6 @@
 package com.risingcamp.coupangeats.src.signup
 
+import com.risingcamp.coupangeats.src.signup.models.GetUsersPhone.GetUsersPhoneResponse
 import com.risingcamp.coupangeats.src.signup.models.getUsersEmail.GetUsersEmailResponse
 import com.risingcamp.coupangeats.src.signup.models.postSignup.PostSignupRequest
 import com.risingcamp.coupangeats.src.signup.models.postSignup.SignupResponse
@@ -18,6 +19,8 @@ interface SignupRetrofitInterface {
     fun getUsersEmail(@Query("email") email : String
     ) : Call<GetUsersEmailResponse>
 
-
+    @GET("app/users")
+    fun getUsersPhone(@Query("phone") phone : String
+    ) : Call<GetUsersPhoneResponse>
 
 }

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/item_home_option_delivery_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingVertical="15dp"
+        android:text="@string/item_home_option_delivery_title"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/item_home_option_delivery_close"
+        android:layout_width="22dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="25dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_cp_login_quit"
+        app:layout_constraintBottom_toBottomOf="@+id/item_home_option_delivery_title"
+        app:layout_constraintEnd_toEndOf="@+id/item_home_option_delivery_title"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/item_home_option_delivery_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="조절했을 때 반응"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_home_option_delivery_title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/item_home_option_delivery_sub_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:text="@string/item_home_option_delivery_sub_status"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_home_option_delivery_status" />
+
+    <github.hongbeomi.dividerseekbar.DividerSeekBar
+        android:id="@+id/item_home_option_delivery_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="25dp"
+        android:max="4"
+        android:thumb="@drawable/item_home_option_delivery_thumb"
+        app:dividerActiveMode="target"
+        app:dividerTextInterval="1"
+        app:dividerSeaLineStrokeWidth="@dimen/dp_2"
+        app:dividerSeaLineColor="@color/cp_gray1"
+        app:dividerTextColor="@color/white"
+        app:dividerStrokeWidth="@dimen/dp_2"
+        app:dividerColor="@color/cp_gray1"
+        app:dividerTextSize="13sp"
+        app:dividerActivatedTargetValue="1"
+        app:dividerThumbActivatedDrawable="@drawable/item_home_option_delivery_thumb"
+        app:dividerThumbDefaultDrawable="@drawable/item_home_option_delivery_thumb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_home_option_delivery_sub_status" />
+
+    <LinearLayout
+        android:id="@+id/item_home_option_delivery_txt_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_home_option_delivery_seekbar">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_home_option_delivery_txt_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/item_home_option_delivery_1"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:textStyle="normal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_home_option_delivery_txt_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/item_home_option_delivery_2"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:textStyle="normal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_home_option_delivery_txt_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/item_home_option_delivery_3"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:textStyle="normal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_home_option_delivery_txt_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/item_home_option_delivery_4"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:textStyle="normal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_home_option_delivery_txt_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/item_home_option_delivery_5"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:textStyle="normal" />
+    </LinearLayout>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/item_home_option_delivery_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/login_btn"
+        android:gravity="center"
+        android:paddingVertical="14dp"
+        android:text="@string/item_home_option_delivery_ok"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_home_option_delivery_txt_layout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

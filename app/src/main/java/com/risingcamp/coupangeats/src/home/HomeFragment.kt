@@ -1,16 +1,25 @@
 package com.risingcamp.coupangeats.src.home
 
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
+import android.app.Activity
+import android.content.ClipData
+import android.os.*
+import android.util.Log
 import android.view.*
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 import com.risingcamp.coupangeats.R
 import com.risingcamp.coupangeats.config.BaseFragment
+import com.risingcamp.coupangeats.databinding.ActivityMainBinding
 import com.risingcamp.coupangeats.databinding.FragmentHomeBinding
+import com.risingcamp.coupangeats.src.MainActivity
+import com.risingcamp.coupangeats.src.search.SearchFragment
 
 data class categoryList(val categoryImg:Int, val categoryTxt:String)
 
@@ -19,14 +28,24 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     lateinit var adapter : TopBannerAdapter
     lateinit var adapter2 : MidBannerAdapter
 
-    var currentPosition = 0
-    var currentPosition2 = 0
-
     private var homeTopBannerHandler = HomeTopBannerHandler()
     private var homeMidBannerHandler = HomeMidBannerHandler()
 
     private val intervalTime = 5000.toLong()
 
+    var currentPosition = 0
+    var currentPosition2 = 0
+
+    var option_recommend : Boolean? = null
+    var option_cheetah : Boolean? = null
+    var option_delivery : Boolean? = null
+    var option_min_price : Boolean? = null
+    var option_pack : Boolean? = null
+    var option_coupon : Boolean? = null
+    var option_drink : Boolean? = null
+
+
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -36,6 +55,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         setHorizontalResList()
         setMidBanner()
         setVerticalResList()
+        setEndlessList()
+        setFabBtn()
 
     }
 
@@ -181,9 +202,117 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
         //상단 옵션
         binding.homeResOptionAllMenu.setOnClickListener {
+        }
+
+        binding.homeResOptionRefresh.setOnClickListener {
 
         }
 
+        binding.homeResOptionRecommend.setOnClickListener {
+            val bottomSheet = BottomSheetDialog(requireContext())
+            bottomSheet.setContentView(R.layout.dialog_home_option_recommend)
+            bottomSheet.setCanceledOnTouchOutside(true)
+            bottomSheet.create()
+            bottomSheet.show()
+
+            var recommend_close = bottomSheet.findViewById<ImageView>(R.id.item_home_option_recommend_close)
+            var recommend_1 = bottomSheet.findViewById<TextView>(R.id.item_home_option_recommend_1)
+            var recommend_1_check = bottomSheet.findViewById<ImageView>(R.id.item_home_option_recommend_1_check)
+            var recommend_2 = bottomSheet.findViewById<TextView>(R.id.item_home_option_recommend_2)
+            var recommend_2_check = bottomSheet.findViewById<ImageView>(R.id.item_home_option_recommend_2_check)
+            var recommend_3 = bottomSheet.findViewById<TextView>(R.id.item_home_option_recommend_3)
+            var recommend_3_check = bottomSheet.findViewById<ImageView>(R.id.item_home_option_recommend_3_check)
+            var recommend_4 = bottomSheet.findViewById<TextView>(R.id.item_home_option_recommend_4)
+            var recommend_4_check = bottomSheet.findViewById<ImageView>(R.id.item_home_option_recommend_4_check)
+            var recommend_5 = bottomSheet.findViewById<TextView>(R.id.item_home_option_recommend_5)
+            var recommend_5_check = bottomSheet.findViewById<ImageView>(R.id.item_home_option_recommend_5_check)
+        }
+
+        binding.homeResOptionCheetah.setOnClickListener {
+
+        }
+
+        binding.homeResOptionDeliveryFee.setOnClickListener {
+            val bottomSheet = BottomSheetDialog(requireContext())
+            bottomSheet.setContentView(R.layout.dialog_home_option_delivery)
+            bottomSheet.setCanceledOnTouchOutside(true)
+            bottomSheet.create()
+            bottomSheet.show()
+
+
+        }
+
+        binding.homeResOptionMinPrice.setOnClickListener {
+            val bottomSheet = BottomSheetDialog(requireContext())
+            bottomSheet.setContentView(R.layout.dialog_home_option_min_price)
+            bottomSheet.setCanceledOnTouchOutside(true)
+            bottomSheet.create()
+            bottomSheet.show()
+        }
+
+        binding.homeResOptionPack.setOnClickListener {
+
+        }
+
+        binding.homeResOptionCoupon.setOnClickListener {
+
+        }
+
+        binding.homeResOptionDrink.setOnClickListener {
+
+        }
+
+    }
+
+    fun setEndlessList(){
+        binding.homeResList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                //화면에 보이는 마지막 아이템의 position
+                val lastVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
+                //어댑터에 등록된 아이템의 총 개수 -1 (하단에서 마지막까지 다 뿌려졌는지 확인)
+                val itemTotalCount = recyclerView.adapter!!.itemCount-1
+
+                Log.d("position", "$lastVisibleItemPosition")
+
+                //스크롤이 끝에 도달했는지 확인(최하단:1, 최상단:-1)
+                if(!binding.homeResList.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount){
+
+                }
+
+            }
+        })
+    }
+
+    fun setData(){
+        dtoList = intent
+    }
+
+
+
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun setFabBtn(){
+        binding.homeFloatingBtn.visibility = View.INVISIBLE
+
+        binding.homeScroll.setOnScrollChangeListener { view, scrollX, scrollY, oldScrollX, oldScrollY ->
+            Log.d("스크롤", "$scrollY, $oldScrollY")
+
+            binding.homeFloatingBtn.setOnClickListener {
+                binding.homeScroll.scrollTo(0,0)
+            }
+
+            if(scrollY > binding.homeHorizontalListLayout.top){ //화면이 내려갈 때
+                binding.homeFloatingBtn.visibility = View.VISIBLE
+
+            } else{ //화면이 올라갈 때
+                binding.homeFloatingBtn.visibility = View.INVISIBLE
+                binding.homeFloatingBtn.setOnClickListener {
+                    binding.homeScroll.scrollTo(0,0)
+                }
+            }
+        }
     }
 
 
@@ -199,5 +328,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         autoScrollStop()
         autoScrollStop2()
     }
+
 
 }

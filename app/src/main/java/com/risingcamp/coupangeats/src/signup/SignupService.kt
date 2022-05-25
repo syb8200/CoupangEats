@@ -1,6 +1,7 @@
 package com.risingcamp.coupangeats.src.signup
 
 import com.risingcamp.coupangeats.config.ApplicationClass
+import com.risingcamp.coupangeats.src.signup.models.GetUsersPhone.GetUsersPhoneResponse
 import com.risingcamp.coupangeats.src.signup.models.getUsersEmail.GetUsersEmailResponse
 import com.risingcamp.coupangeats.src.signup.models.postSignup.PostSignupRequest
 import com.risingcamp.coupangeats.src.signup.models.postSignup.SignupResponse
@@ -43,7 +44,23 @@ class SignupService(val signupInterface: SignupInterface) {
             }
 
         })
+    }
 
+    fun tryGetUsersPhone(phone : String){
+        val signupRetrofitInterface = ApplicationClass.sRetrofit.create(SignupRetrofitInterface::class.java)
+        signupRetrofitInterface.getUsersPhone(phone).enqueue(object : Callback<GetUsersPhoneResponse> {
+            override fun onResponse(
+                call: Call<GetUsersPhoneResponse>,
+                response: Response<GetUsersPhoneResponse>
+            ) {
+                signupInterface.onGetUsersPhoneSuccess(response.body() as GetUsersPhoneResponse)
+            }
+
+            override fun onFailure(call: Call<GetUsersPhoneResponse>, t: Throwable) {
+                signupInterface.onGetUsersPhoneFailure(t.message ?: "통신 오류")
+            }
+
+        })
     }
 
 

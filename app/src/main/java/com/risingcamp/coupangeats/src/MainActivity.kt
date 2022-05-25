@@ -1,14 +1,8 @@
 package com.risingcamp.coupangeats.src
 
-import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.view.View
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatTextView
-import androidx.fragment.app.ListFragment
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.risingcamp.coupangeats.R
 import com.risingcamp.coupangeats.config.ApplicationClass.Companion.X_ACCESS_TOKEN
@@ -26,7 +20,6 @@ import com.risingcamp.coupangeats.src.signup.SignupActivity
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     var check : String? = null
-    lateinit var SheetView : View
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

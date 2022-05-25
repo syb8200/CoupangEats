@@ -16,13 +16,16 @@ import com.risingcamp.coupangeats.config.ApplicationClass.Companion.sSharedPrefe
 import com.risingcamp.coupangeats.config.BaseActivity
 import com.risingcamp.coupangeats.databinding.ActivitySignupBinding
 import com.risingcamp.coupangeats.src.login.LoginActivity
+import com.risingcamp.coupangeats.src.signup.models.GetUsersPhone.GetUsersPhoneResponse
 import com.risingcamp.coupangeats.src.signup.models.getUsersEmail.GetUsersEmailResponse
 import com.risingcamp.coupangeats.src.signup.models.postSignup.PostSignupRequest
 import com.risingcamp.coupangeats.src.signup.models.postSignup.SignupResponse
 
 class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding::inflate), SignupInterface {
 
-    var isUserExit : Boolean = true
+    var isUserExist : Boolean? = null
+    var isUserExist_phone : Boolean? = null
+    var userEmail : String? = null
 
     var check_all = false
     var check_1 = false
@@ -55,6 +58,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
     }
 
     fun setEmailEdt(){
+
         binding.signupEmailEdt.setOnFocusChangeListener { view, gainFocus ->
             binding.signupEmailLine.visibility = View.VISIBLE
 
@@ -68,22 +72,38 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
                     binding.signupEmailWrongHint.visibility = View.VISIBLE
                 } else{
                     hideKeyboard()
-                    /*
+
+                    var emailEdt = binding.signupEmailEdt.text.toString()
+                    SignupService(this).tryGetUsersEmail(emailEdt)
+
                     if(isUserExist == true){
+                        //중복O
                         binding.signupEmailLine.setBackgroundColor(Color.parseColor("#DE263F"))
                         binding.signupAlreadyHaveEmail.visibility = View.VISIBLE
                         binding.signupLogin.visibility = View.VISIBLE
                         binding.signupFindPwd.visibility = View.VISIBLE
-                    }
-                     */
 
-                    if(binding.signupEmailEdt.text!!.contains("@")){
-                        binding.signupEmailComplete.visibility = View.VISIBLE
-                        binding.signupEmailWrongHint.visibility = View.GONE
-                        binding.signupEmailLine.visibility = View.GONE
+                        binding.signupLogin.setOnClickListener {
+                            val intent = Intent(this, LoginActivity::class.java)
+                            startActivity(intent)
+                        }
                     } else{
-                        binding.signupEmailLine.setBackgroundColor(Color.parseColor("#DE263F"))
-                        binding.signupEmailWrongHint.visibility = View.VISIBLE
+                        //중복X
+                        if(binding.signupEmailEdt.text!!.contains("@")){
+                            binding.signupEmailWrongHint.visibility = View.GONE
+                            binding.signupEmailLine.visibility = View.GONE
+                            binding.signupAlreadyHaveEmail.visibility = View.GONE
+                            binding.signupLogin.visibility = View.GONE
+                            binding.signupFindPwd.visibility = View.GONE
+                            binding.signupEmailComplete.visibility = View.VISIBLE
+                        } else{
+                            binding.signupAlreadyHaveEmail.visibility = View.GONE
+                            binding.signupLogin.visibility = View.GONE
+                            binding.signupFindPwd.visibility = View.GONE
+                            binding.signupEmailLine.setBackgroundColor(Color.parseColor("#DE263F"))
+                            binding.signupEmailWrongHint.visibility = View.VISIBLE
+                        }
+
                     }
                 }
             }
@@ -126,21 +146,35 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
                         binding.signupPwdHintTxt3.setTextColor(Color.parseColor("#DE263F"))
 
                         if(binding.signupPwdEdt.text!=binding.signupEmailEdt.text && binding.signupPwdEdt.length()!=0){
+                            binding.signupPwdHintTxt1.visibility = View.VISIBLE
+                            binding.signupPwdHintImg1.visibility = View.VISIBLE
+
                             binding.signupPwdHintImg2.setImageResource(R.drawable.ic_signup_email_complete)
                             binding.signupPwdHintImg2.imageTintList = ColorStateList.valueOf(Color.parseColor("#107E25"))
+                            binding.signupPwdHintImg2.visibility = View.VISIBLE
                             binding.signupPwdHintTxt2.setTextColor(Color.parseColor("#107E25"))
+                            binding.signupPwdHintTxt2.visibility = View.VISIBLE
 
                             binding.signupPwdHintImg3.setImageResource(R.drawable.ic_signup_email_complete)
                             binding.signupPwdHintImg3.imageTintList = ColorStateList.valueOf(Color.parseColor("#107E25"))
+                            binding.signupPwdHintImg3.visibility = View.VISIBLE
                             binding.signupPwdHintTxt3.setTextColor(Color.parseColor("#107E25"))
+                            binding.signupPwdHintTxt3.visibility = View.VISIBLE
                         } else{
+                            binding.signupPwdHintTxt1.visibility = View.VISIBLE
+                            binding.signupPwdHintImg1.visibility = View.VISIBLE
+
                             binding.signupPwdHintImg2.setImageResource(R.drawable.ic_signup_pwd_hint_1)
                             binding.signupPwdHintImg2.imageTintList = ColorStateList.valueOf(Color.parseColor("#DE263F"))
+                            binding.signupPwdHintImg2.visibility = View.VISIBLE
                             binding.signupPwdHintTxt2.setTextColor(Color.parseColor("#DE263F"))
+                            binding.signupPwdHintTxt2.visibility = View.VISIBLE
 
                             binding.signupPwdHintImg3.setImageResource(R.drawable.ic_signup_pwd_hint_1)
                             binding.signupPwdHintImg3.imageTintList = ColorStateList.valueOf(Color.parseColor("#DE263F"))
+                            binding.signupPwdHintImg3.visibility = View.VISIBLE
                             binding.signupPwdHintTxt3.setTextColor(Color.parseColor("#DE263F"))
+                            binding.signupPwdHintTxt3.visibility = View.VISIBLE
                         }
 
                         if(binding.signupPwdEdt.text!!.length >= 8 && binding.signupPwdEdt.text!!.length <= 20 && binding.signupPwdEdt.text != binding.signupEmailEdt.text){
@@ -163,6 +197,9 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
                 binding.signupPwdHintLayout3.visibility = View.VISIBLE
 
                 if(binding.signupPwdEdt.text!=binding.signupEmailEdt.text && binding.signupPwdEdt.length()!=0){
+                    binding.signupPwdHintImg1.imageTintList = ColorStateList.valueOf(Color.parseColor("#DE263F"))
+                    binding.signupPwdHintTxt1.setTextColor(Color.parseColor("#DE263F"))
+
                     binding.signupPwdHintImg2.setImageResource(R.drawable.ic_signup_email_complete)
                     binding.signupPwdHintImg2.imageTintList = ColorStateList.valueOf(Color.parseColor("#107E25"))
                     binding.signupPwdHintTxt2.setTextColor(Color.parseColor("#107E25"))
@@ -171,6 +208,9 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
                     binding.signupPwdHintImg3.imageTintList = ColorStateList.valueOf(Color.parseColor("#107E25"))
                     binding.signupPwdHintTxt3.setTextColor(Color.parseColor("#107E25"))
                 } else{
+                    binding.signupPwdHintImg1.imageTintList = ColorStateList.valueOf(Color.parseColor("#DE263F"))
+                    binding.signupPwdHintTxt1.setTextColor(Color.parseColor("#DE263F"))
+
                     binding.signupPwdHintImg2.setImageResource(R.drawable.ic_signup_pwd_hint_1)
                     binding.signupPwdHintImg2.imageTintList = ColorStateList.valueOf(Color.parseColor("#DE263F"))
                     binding.signupPwdHintTxt2.setTextColor(Color.parseColor("#DE263F"))
@@ -219,12 +259,31 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
             if(getFocus){
                 binding.signupPhoneComplete.visibility = View.GONE
             } else{
+
                 hideKeyboard()
+
                 if(binding.signupPhoneEdt.length()!=0 && binding.signupPhoneEdt.text!!.startsWith("010") && binding.signupPhoneEdt.length()==11){
-                    binding.signupPhoneLine.visibility = View.GONE
-                    binding.signupPhoneWrongHint.visibility = View.GONE
-                    binding.signupPhoneComplete.visibility = View.VISIBLE
-                } else{
+
+                    var phoneEdt = binding.signupPhoneEdt.text.toString()
+                    SignupService(this).tryGetUsersPhone(phoneEdt)
+
+                    if(isUserExist_phone==true){
+                        binding.signupPhoneLine.visibility = View.VISIBLE
+                        binding.signupPhoneLine.setBackgroundColor(Color.parseColor("#DE263F"))
+                        binding.signupAlreadyHavePhoneEmail.text = userEmail
+                        binding.signupAlreadyHavePhoneEmail.visibility = View.VISIBLE
+                        binding.signupAlreadyHavePhone.visibility = View.VISIBLE
+                        binding.signupAuthPhone.visibility = View.VISIBLE
+                    } else{
+                        binding.signupPhoneLine.visibility = View.GONE
+                        binding.signupPhoneWrongHint.visibility = View.GONE
+                        binding.signupAlreadyHavePhoneEmail.visibility = View.GONE
+                        binding.signupAlreadyHavePhone.visibility = View.GONE
+                        binding.signupAuthPhone.visibility = View.GONE
+                        binding.signupPhoneComplete.visibility = View.VISIBLE
+                    }
+
+                } else{ //아무것도 안적혀있거나, 010으로 시작하지 않거나, 길이가 11자가 아니거나
                     binding.signupPhoneLine.setBackgroundColor(Color.parseColor("#DE263F"))
                     binding.signupPhoneWrongHint.visibility = View.VISIBLE
                 }
@@ -525,17 +584,26 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
         sSharedPreferences.edit().putString(X_ACCESS_TOKEN, response.result.jwt).apply()
         Log.d("jwt", "$jwt")
     }
-
     override fun onPostSignupFailure(message: String) {
         Log.d("오류", "오류: $message")
     }
 
 
     override fun onGetUsersEmailSuccess(emailResponse: GetUsersEmailResponse) {
-
+        isUserExist = emailResponse.result.userExist
+        Log.d("유재존재여부", "존재여부: $isUserExist")
+    }
+    override fun onGetUsersEmailFailure(message: String) {
+        Log.d("오류", "오류: $message")
     }
 
-    override fun onGetUsersEmailFailure(message: String) {
 
+    override fun onGetUsersPhoneSuccess(phoneResponse: GetUsersPhoneResponse) {
+        isUserExist_phone = phoneResponse.result.userExist
+        userEmail = phoneResponse.result.userEmail
+        Log.d("유저존재여부", "존재여부: $isUserExist_phone / 유저이메일: $userEmail")
+    }
+    override fun onGetUsersPhoneFailure(message: String) {
+        Log.d("오류", "오류: $message")
     }
 }

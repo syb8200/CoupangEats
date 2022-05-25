@@ -29,6 +29,7 @@
 
     <color name="cp_home_indicator">#73212B35</color>
     <color name="cp_home_floating_btn">#A6FFFFFF</color>
+    <color name="cp_home_res_option_checked">#0091FE</color>
 
     <color name="cp_item_home_res_pack">#212B35</color>
 
