@@ -1,29 +1,28 @@
 package com.risingcamp.coupangeats.src.home
 
-import android.app.Activity
-import android.content.ClipData
 import android.os.*
 import android.util.Log
 import android.view.*
+import android.view.animation.AnimationUtils
+import android.view.animation.LinearInterpolator
+import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 import com.risingcamp.coupangeats.R
 import com.risingcamp.coupangeats.config.BaseFragment
-import com.risingcamp.coupangeats.databinding.ActivityMainBinding
 import com.risingcamp.coupangeats.databinding.FragmentHomeBinding
 import com.risingcamp.coupangeats.src.MainActivity
 import com.risingcamp.coupangeats.src.search.SearchFragment
 
 data class categoryList(val categoryImg:Int, val categoryTxt:String)
 
-class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home) {
+class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home){
 
     lateinit var adapter : TopBannerAdapter
     lateinit var adapter2 : MidBannerAdapter
@@ -36,6 +35,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     var currentPosition = 0
     var currentPosition2 = 0
 
+    var frag = MainActivity()
+
     var option_recommend : Boolean? = null
     var option_cheetah : Boolean? = null
     var option_delivery : Boolean? = null
@@ -44,19 +45,21 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     var option_coupon : Boolean? = null
     var option_drink : Boolean? = null
 
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setTopBanner()
         setPage()
+        setTopCategory()
         setCategory()
         setHorizontalResList()
         setMidBanner()
-        setVerticalResList()
-        setEndlessList()
+        setResListOption()
+        setResList()
         setFabBtn()
+
+        binding.homeResOptionScroll.translationZ = 1.0f
 
     }
 
@@ -149,6 +152,48 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun setTopCategory(){
+        val topCategoryArrayList = arrayListOf(
+            categoryList(R.drawable.ic_cp_logo, "포장"),
+            categoryList(R.drawable.ic_cp_logo, "신규 맛집"),
+            categoryList(R.drawable.ic_cp_logo, "1인분"),
+            categoryList(R.drawable.ic_cp_logo, "한식"),
+            categoryList(R.drawable.ic_cp_logo, "치킨"),
+            categoryList(R.drawable.ic_cp_logo, "분식"),
+            categoryList(R.drawable.ic_cp_logo, "돈까스"),
+            categoryList(R.drawable.ic_cp_logo, "족발/보쌈"),
+            categoryList(R.drawable.ic_cp_logo, "찜/탕"),
+            categoryList(R.drawable.ic_cp_logo, "구이"),
+
+            categoryList(R.drawable.ic_cp_logo, "피자"),
+            categoryList(R.drawable.ic_cp_logo, "중식"),
+            categoryList(R.drawable.ic_cp_logo, "일식"),
+            categoryList(R.drawable.ic_cp_logo, "회/해물"),
+            categoryList(R.drawable.ic_cp_logo, "양식"),
+            categoryList(R.drawable.ic_cp_logo, "커피/차"),
+            categoryList(R.drawable.ic_cp_logo, "디저트"),
+            categoryList(R.drawable.ic_cp_logo, "간식"),
+            categoryList(R.drawable.ic_cp_logo, "아시안"),
+            categoryList(R.drawable.ic_cp_logo, "샌드위치"),
+
+            categoryList(R.drawable.ic_cp_logo, "샐러드"),
+            categoryList(R.drawable.ic_cp_logo, "버거"),
+            categoryList(R.drawable.ic_cp_logo, "멕시칸"),
+            categoryList(R.drawable.ic_cp_logo, "도시락"),
+            categoryList(R.drawable.ic_cp_logo, "죽"),
+            categoryList(R.drawable.ic_cp_logo, "프랜차이즈")
+        )
+        binding.homeTopCategoryList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.homeTopCategoryList.setHasFixedSize(true)
+        binding.homeTopCategoryList.adapter = TopCategoryAdapter(topCategoryArrayList)
+
+        binding.homeTopCategory.visibility = View.INVISIBLE
+        setScrollListener()
+
+    }
+
+
     fun setCategory(){
         val categoryArrayList = arrayListOf(
             categoryList(R.drawable.ic_cp_logo, "포장"),
@@ -198,14 +243,16 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         binding.homeHorizontalList.adapter = HorizonalResListAdapter(horizontalResArrayList)
     }
 
-    fun setVerticalResList(){
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun setResListOption(){
+
+        setScrollListener()
 
         //상단 옵션
         binding.homeResOptionAllMenu.setOnClickListener {
         }
 
         binding.homeResOptionRefresh.setOnClickListener {
-
         }
 
         binding.homeResOptionRecommend.setOnClickListener {
@@ -229,7 +276,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         }
 
         binding.homeResOptionCheetah.setOnClickListener {
-
         }
 
         binding.homeResOptionDeliveryFee.setOnClickListener {
@@ -238,8 +284,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
             bottomSheet.setCanceledOnTouchOutside(true)
             bottomSheet.create()
             bottomSheet.show()
-
-
         }
 
         binding.homeResOptionMinPrice.setOnClickListener {
@@ -251,20 +295,42 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         }
 
         binding.homeResOptionPack.setOnClickListener {
-
         }
 
         binding.homeResOptionCoupon.setOnClickListener {
-
         }
 
         binding.homeResOptionDrink.setOnClickListener {
-
         }
+    }
+
+    fun setResList(){
+
+        val resListArrayList = arrayListOf(
+            ResList(R.drawable.ic_cp_logo,R.drawable.ic_cp_logo,R.drawable.ic_cp_logo, "가나다", R.drawable.ic_cp_logo, "15", "25",
+                4.1, 300, 1.9, 3000, "포장가능"),
+            ResList(R.drawable.ic_cp_logo,R.drawable.ic_cp_logo,R.drawable.ic_cp_logo, "가나다", R.drawable.ic_cp_logo, "15", "25",
+                4.1, 300, 1.9, 3000, "포장가능"),
+            ResList(R.drawable.ic_cp_logo,R.drawable.ic_cp_logo,R.drawable.ic_cp_logo, "가나다", R.drawable.ic_cp_logo, "15", "25",
+                4.1, 300, 1.9, 3000, "포장가능"),
+            ResList(R.drawable.ic_cp_logo,R.drawable.ic_cp_logo,R.drawable.ic_cp_logo, "가나다", R.drawable.ic_cp_logo, "15", "25",
+                4.1, 300, 1.9, 3000, "포장가능"),
+            ResList(R.drawable.ic_cp_logo,R.drawable.ic_cp_logo,R.drawable.ic_cp_logo, "가나다", R.drawable.ic_cp_logo, "15", "25",
+                4.1, 300, 1.9, 3000, "포장가능"),
+            ResList(R.drawable.ic_cp_logo,R.drawable.ic_cp_logo,R.drawable.ic_cp_logo, "가나다", R.drawable.ic_cp_logo, "15", "25",
+                4.1, 300, 1.9, 3000, "포장가능")
+        )
+        binding.homeResList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.homeResList.setHasFixedSize(true)
+        binding.homeResList.adapter = ResListAdapter(resListArrayList)
 
     }
 
+
+
+    /*
     fun setEndlessList(){
+
         binding.homeResList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -284,36 +350,63 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
             }
         })
     }
-
-    fun setData(){
-        dtoList = intent
-    }
-
+     */
 
 
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun setFabBtn(){
         binding.homeFloatingBtn.visibility = View.INVISIBLE
+        setScrollListener()
 
-        binding.homeScroll.setOnScrollChangeListener { view, scrollX, scrollY, oldScrollX, oldScrollY ->
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun setScrollListener(){
+        binding.homeScroll.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             Log.d("스크롤", "$scrollY, $oldScrollY")
 
+            //topCategory
+            if(scrollY > binding.homeCategoryScroll.bottom){
+                binding.homeTopCategory.visibility = View.VISIBLE
+            } else{
+                binding.homeTopCategory.visibility = View.INVISIBLE
+            }
+
+
+            //verticalScrollOption
+            if(scrollY + (binding.homeTopCategory.bottom - binding.homeTopCategory.top) > binding.homeResOptionScroll.top){
+                //val anim = AnimationUtils.loadAnimation(context, R.anim.home_option_anime)
+                //binding.homeResOptionScroll.startAnimation(anim)
+
+                binding.homeResOptionScroll.translationY = (scrollY-binding.homeResOptionScroll.top).toFloat()
+
+
+                binding.homeTopCategory.visibility = View.INVISIBLE
+            } else{
+                binding.homeResOptionScroll.translationY = 0F
+            }
+
+            //fab
             binding.homeFloatingBtn.setOnClickListener {
                 binding.homeScroll.scrollTo(0,0)
             }
 
             if(scrollY > binding.homeHorizontalListLayout.top){ //화면이 내려갈 때
                 binding.homeFloatingBtn.visibility = View.VISIBLE
-
-            } else{ //화면이 올라갈 때
+            } else{
                 binding.homeFloatingBtn.visibility = View.INVISIBLE
                 binding.homeFloatingBtn.setOnClickListener {
                     binding.homeScroll.scrollTo(0,0)
                 }
             }
         }
+
     }
+
+
+
+
 
 
 

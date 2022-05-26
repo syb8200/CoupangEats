@@ -17,6 +17,7 @@
     <color name="cp_gray4">#FAFAFA</color>
     <color name="cp_gray5">#888888</color>
     <color name="cp_gray6">#F5F6F8</color>
+    <color name="cp_gray7">#F9F9F9</color>
 
     <color name="cp_login_btn">#00AFFE</color>
     <color name="cp_login_text">#464F58</color>

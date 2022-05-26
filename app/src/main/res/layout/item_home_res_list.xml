@@ -71,10 +71,10 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/item_home_res_cheetah"
             android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:layout_marginLeft="5dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_item_home_res_cheetah"
+            android:background="@color/cp_gray1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_home_res_name"
             app:layout_constraintTop_toTopOf="parent" />

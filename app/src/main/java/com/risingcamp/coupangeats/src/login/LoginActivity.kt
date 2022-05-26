@@ -11,6 +11,7 @@ import android.os.Looper
 import android.os.Message
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import com.risingcamp.coupangeats.R
 import com.risingcamp.coupangeats.config.ApplicationClass
@@ -27,7 +28,9 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
     val Login = 1
     var loginThread : LoginThread? = null
+
     var jwt : String? = null
+    var code : Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,14 +80,6 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
     fun login(){
         binding.loginBtn.setOnClickListener {
-            val email = binding.loginEmailEdt.text.toString()
-            val password = binding.loginPwdEdt.text.toString()
-
-            val postRequest = PostLoginRequest(email = email, password = password)
-            LoginService(this).tryPostLogin(postRequest)
-
-            var shared = ApplicationClass.sSharedPreferences.getString("X-ACCESS-TOKEN",null).toString()
-
 
             if(binding.loginEmailEdt.length()==0 && binding.loginPwdEdt.length()==0){
                 binding.loginFalseHint.text = "아이디를 입력해주세요"
@@ -111,8 +106,17 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
                 }
 
                 if(binding.loginEmailEdt.text!!.contains("@") && binding.loginEmailEdt.text!!.isNotEmpty() && binding.loginPwdEdt.text!!.isNotEmpty()){
+
+                    val email = binding.loginEmailEdt.text.toString()
+                    val password = binding.loginPwdEdt.text.toString()
+
+                    val postRequest = PostLoginRequest(email = email, password = password)
+                    LoginService(this).tryPostLogin(postRequest)
+
+                    //var shared = ApplicationClass.sSharedPreferences.getString("X-ACCESS-TOKEN",null).toString()
+
                     //로그인 api로 정보 일치하는지 확인 후 main으로 이동, 일치하지 않으면 dialog
-                    if(shared == jwt){
+                    if(code == 1000){
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                     } else{
@@ -176,9 +180,10 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
     }
 
 
-
     override fun onPostLoginSuccess(response: LoginResponse) {
         jwt = response.result.jwt
+        code = response.code
+        Log.d("코드", "$code")
     }
 
     override fun onPostLoginFailure(message: String) {
