@@ -30,7 +30,7 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
     var loginThread : LoginThread? = null
 
     var jwt : String? = null
-    var code : Int? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,19 +115,6 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
                     //var shared = ApplicationClass.sSharedPreferences.getString("X-ACCESS-TOKEN",null).toString()
 
-                    //로그인 api로 정보 일치하는지 확인 후 main으로 이동, 일치하지 않으면 dialog
-                    if(code == 1000){
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                    } else{
-                        val builder = AlertDialog.Builder(this)
-                        builder.setMessage("입력하신 아이디 또는 비밀번호가 일치하지 않습니다.")
-                            .setPositiveButton("확인",
-                            DialogInterface.OnClickListener { dialogInterface, id ->
-                            })
-                        builder.show()
-                    }
-
                 }
 
             }
@@ -182,12 +169,25 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
     override fun onPostLoginSuccess(response: LoginResponse) {
         jwt = response.result.jwt
-        code = response.code
-        Log.d("코드", "$code")
+        //code = response.code
+        Log.d("코드", "$response.code")
+
+        //로그인 api로 정보 일치하는지 확인 후 main으로 이동, 일치하지 않으면 dialog
+        if(response.code == 1000){
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        } else{
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("입력하신 아이디 또는 비밀번호가 일치하지 않습니다.")
+                .setPositiveButton("확인",
+                    DialogInterface.OnClickListener { dialogInterface, id ->
+                    })
+            builder.show()
+        }
     }
 
     override fun onPostLoginFailure(message: String) {
-
+        Log.d("오류", "오류: $message")
     }
 
 }

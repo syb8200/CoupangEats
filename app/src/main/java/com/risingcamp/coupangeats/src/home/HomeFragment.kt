@@ -1,28 +1,30 @@
 package com.risingcamp.coupangeats.src.home
 
+import android.content.Intent
 import android.os.*
 import android.util.Log
 import android.view.*
-import android.view.animation.AnimationUtils
-import android.view.animation.LinearInterpolator
-import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 import com.risingcamp.coupangeats.R
+import com.risingcamp.coupangeats.config.ApplicationClass
 import com.risingcamp.coupangeats.config.BaseFragment
 import com.risingcamp.coupangeats.databinding.FragmentHomeBinding
 import com.risingcamp.coupangeats.src.MainActivity
-import com.risingcamp.coupangeats.src.search.SearchFragment
+import com.risingcamp.coupangeats.src.home.location.LocationActivity
+import com.risingcamp.coupangeats.src.home.models.getCategory.GetCategoryResponse
+import com.risingcamp.coupangeats.src.home.models.getLocation.GetLocationResponse
+import com.risingcamp.coupangeats.src.login.LoginActivity
+import com.risingcamp.coupangeats.src.signup.SignupActivity
 
 data class categoryList(val categoryImg:Int, val categoryTxt:String)
 
-class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home){
+class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home),HomeInterface{
 
     lateinit var adapter : TopBannerAdapter
     lateinit var adapter2 : MidBannerAdapter
@@ -35,7 +37,13 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     var currentPosition = 0
     var currentPosition2 = 0
 
+    var listSize : Int? = null
+    var incategoryList = MutableList(26, {""})
+    //var incategoryList = mutableListOf<String>()
+
     var frag = MainActivity()
+
+    var check : String? = null
 
     var option_recommend : Boolean? = null
     var option_cheetah : Boolean? = null
@@ -49,18 +57,61 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        check = ApplicationClass.sSharedPreferences.getString(ApplicationClass.X_ACCESS_TOKEN, null)
+
+        setLocation()
+
         setTopBanner()
         setPage()
+
         setTopCategory()
         setCategory()
+
         setHorizontalResList()
+
         setMidBanner()
+
         setResListOption()
         setResList()
+
         setFabBtn()
 
         binding.homeResOptionScroll.translationZ = 1.0f
+    }
 
+    fun setLocation(){
+
+
+
+
+
+        binding.homeTopLocationLayout.setOnClickListener {
+            if(check == null){
+                val bottomSheet = BottomSheetDialog(requireContext())
+                bottomSheet.setContentView(R.layout.dialog_login_bottomsheet)
+
+                bottomSheet.setCanceledOnTouchOutside(true)
+
+                bottomSheet.create()
+                bottomSheet.show()
+
+                var email_login = bottomSheet.findViewById<TextView>(R.id.login_btm_sheet_email_login)
+                var signup = bottomSheet.findViewById<TextView>(R.id.login_btm_sheet_signup)
+
+                email_login!!.setOnClickListener {
+                    val intent = Intent(context, LoginActivity::class.java)
+                    startActivity(intent)
+                }
+                signup!!.setOnClickListener {
+                    val intent = Intent(context, SignupActivity::class.java)
+                    startActivity(intent)
+                }
+            } else{
+                val intent = Intent(context, LocationActivity::class.java)
+                startActivity(intent)
+
+            }
+        }
     }
 
     fun setTopBanner(){
@@ -154,80 +205,17 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun setTopCategory(){
-        val topCategoryArrayList = arrayListOf(
-            categoryList(R.drawable.ic_cp_logo, "포장"),
-            categoryList(R.drawable.ic_cp_logo, "신규 맛집"),
-            categoryList(R.drawable.ic_cp_logo, "1인분"),
-            categoryList(R.drawable.ic_cp_logo, "한식"),
-            categoryList(R.drawable.ic_cp_logo, "치킨"),
-            categoryList(R.drawable.ic_cp_logo, "분식"),
-            categoryList(R.drawable.ic_cp_logo, "돈까스"),
-            categoryList(R.drawable.ic_cp_logo, "족발/보쌈"),
-            categoryList(R.drawable.ic_cp_logo, "찜/탕"),
-            categoryList(R.drawable.ic_cp_logo, "구이"),
-
-            categoryList(R.drawable.ic_cp_logo, "피자"),
-            categoryList(R.drawable.ic_cp_logo, "중식"),
-            categoryList(R.drawable.ic_cp_logo, "일식"),
-            categoryList(R.drawable.ic_cp_logo, "회/해물"),
-            categoryList(R.drawable.ic_cp_logo, "양식"),
-            categoryList(R.drawable.ic_cp_logo, "커피/차"),
-            categoryList(R.drawable.ic_cp_logo, "디저트"),
-            categoryList(R.drawable.ic_cp_logo, "간식"),
-            categoryList(R.drawable.ic_cp_logo, "아시안"),
-            categoryList(R.drawable.ic_cp_logo, "샌드위치"),
-
-            categoryList(R.drawable.ic_cp_logo, "샐러드"),
-            categoryList(R.drawable.ic_cp_logo, "버거"),
-            categoryList(R.drawable.ic_cp_logo, "멕시칸"),
-            categoryList(R.drawable.ic_cp_logo, "도시락"),
-            categoryList(R.drawable.ic_cp_logo, "죽"),
-            categoryList(R.drawable.ic_cp_logo, "프랜차이즈")
-        )
-        binding.homeTopCategoryList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.homeTopCategoryList.setHasFixedSize(true)
-        binding.homeTopCategoryList.adapter = TopCategoryAdapter(topCategoryArrayList)
+        HomeService(this).tryGetCategory()
+        Log.d("확인", "$incategoryList")
 
         binding.homeTopCategory.visibility = View.INVISIBLE
         setScrollListener()
-
     }
 
 
     fun setCategory(){
-        val categoryArrayList = arrayListOf(
-            categoryList(R.drawable.ic_cp_logo, "포장"),
-            categoryList(R.drawable.ic_cp_logo, "신규 맛집"),
-            categoryList(R.drawable.ic_cp_logo, "1인분"),
-            categoryList(R.drawable.ic_cp_logo, "한식"),
-            categoryList(R.drawable.ic_cp_logo, "치킨"),
-            categoryList(R.drawable.ic_cp_logo, "분식"),
-            categoryList(R.drawable.ic_cp_logo, "돈까스"),
-            categoryList(R.drawable.ic_cp_logo, "족발/보쌈"),
-            categoryList(R.drawable.ic_cp_logo, "찜/탕"),
-            categoryList(R.drawable.ic_cp_logo, "구이"),
-
-            categoryList(R.drawable.ic_cp_logo, "피자"),
-            categoryList(R.drawable.ic_cp_logo, "중식"),
-            categoryList(R.drawable.ic_cp_logo, "일식"),
-            categoryList(R.drawable.ic_cp_logo, "회/해물"),
-            categoryList(R.drawable.ic_cp_logo, "양식"),
-            categoryList(R.drawable.ic_cp_logo, "커피/차"),
-            categoryList(R.drawable.ic_cp_logo, "디저트"),
-            categoryList(R.drawable.ic_cp_logo, "간식"),
-            categoryList(R.drawable.ic_cp_logo, "아시안"),
-            categoryList(R.drawable.ic_cp_logo, "샌드위치"),
-
-            categoryList(R.drawable.ic_cp_logo, "샐러드"),
-            categoryList(R.drawable.ic_cp_logo, "버거"),
-            categoryList(R.drawable.ic_cp_logo, "멕시칸"),
-            categoryList(R.drawable.ic_cp_logo, "도시락"),
-            categoryList(R.drawable.ic_cp_logo, "죽"),
-            categoryList(R.drawable.ic_cp_logo, "프랜차이즈")
-        )
-        binding.homeCategoryScroll.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.homeCategoryScroll.setHasFixedSize(true)
-        binding.homeCategoryScroll.adapter = CategoryAdapter(categoryArrayList)
+        HomeService(this).tryGetCategory()
+        Log.d("확인", "$incategoryList")
     }
 
     fun setHorizontalResList(){
@@ -378,10 +366,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
             if(scrollY + (binding.homeTopCategory.bottom - binding.homeTopCategory.top) > binding.homeResOptionScroll.top){
                 //val anim = AnimationUtils.loadAnimation(context, R.anim.home_option_anime)
                 //binding.homeResOptionScroll.startAnimation(anim)
-
                 binding.homeResOptionScroll.translationY = (scrollY-binding.homeResOptionScroll.top).toFloat()
-
-
                 binding.homeTopCategory.visibility = View.INVISIBLE
             } else{
                 binding.homeResOptionScroll.translationY = 0F
@@ -404,12 +389,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
     }
 
-
-
-
-
-
-
     override fun onResume() {
         super.onResume()
         autoScrollStart(intervalTime)
@@ -420,6 +399,103 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         super.onPause()
         autoScrollStop()
         autoScrollStop2()
+    }
+
+//--------------------------------------------------------------------------------------------------------------------------------
+
+    override fun onGetCategorySuccess(getCategoryResponse: GetCategoryResponse) {
+        listSize = getCategoryResponse.result.size
+        Log.d("리스트크기", "$listSize")
+
+        for(i in 0 until listSize!!){
+            incategoryList[i] = getCategoryResponse.result[i].categoryName
+            //ncategoryList.add(getCategoryResponse.result[i].categoryName)
+            Log.d("배열", "$incategoryList")
+        }
+
+        //topCategory
+        var topCategoryArrayList = arrayListOf(
+            categoryList(R.drawable.ic_category_1, incategoryList[0]),
+            categoryList(R.drawable.ic_category_2, incategoryList[1]),
+            categoryList(R.drawable.ic_category_3, incategoryList[2]),
+            categoryList(R.drawable.ic_category_4, incategoryList[3]),
+            categoryList(R.drawable.ic_category_5, incategoryList[4]),
+            categoryList(R.drawable.ic_category_6, incategoryList[5]),
+            categoryList(R.drawable.ic_category_7, incategoryList[6]),
+            categoryList(R.drawable.ic_category_8, incategoryList[7]),
+            categoryList(R.drawable.ic_category_9, incategoryList[8]),
+            categoryList(R.drawable.ic_category_10, incategoryList[9]),
+
+            categoryList(R.drawable.ic_category_11, incategoryList[10]),
+            categoryList(R.drawable.ic_category_12, incategoryList[11]),
+            categoryList(R.drawable.ic_category_13, incategoryList[12]),
+            categoryList(R.drawable.ic_category_14, incategoryList[13]),
+            categoryList(R.drawable.ic_category_15, incategoryList[14]),
+            categoryList(R.drawable.ic_category_16, incategoryList[15]),
+            categoryList(R.drawable.ic_category_17, incategoryList[16]),
+            categoryList(R.drawable.ic_category_18, incategoryList[17]),
+            categoryList(R.drawable.ic_category_19, incategoryList[18]),
+            categoryList(R.drawable.ic_category_20, incategoryList[19]),
+
+            categoryList(R.drawable.ic_category_21, incategoryList[20]),
+            categoryList(R.drawable.ic_category_22, incategoryList[21]),
+            categoryList(R.drawable.ic_category_23, incategoryList[22]),
+            categoryList(R.drawable.ic_category_24, incategoryList[23]),
+            categoryList(R.drawable.ic_category_25, incategoryList[24]),
+            categoryList(R.drawable.ic_category_26, incategoryList[25])
+        )
+
+        binding.homeTopCategoryList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.homeTopCategoryList.setHasFixedSize(true)
+        binding.homeTopCategoryList.adapter = TopCategoryAdapter(topCategoryArrayList)
+
+
+        //Category
+        val categoryArrayList = arrayListOf(
+            categoryList(R.drawable.ic_category_1, incategoryList[0]),
+            categoryList(R.drawable.ic_category_2, incategoryList[1]),
+            categoryList(R.drawable.ic_category_3, incategoryList[2]),
+            categoryList(R.drawable.ic_category_4, incategoryList[3]),
+            categoryList(R.drawable.ic_category_5, incategoryList[4]),
+            categoryList(R.drawable.ic_category_6, incategoryList[5]),
+            categoryList(R.drawable.ic_category_7, incategoryList[6]),
+            categoryList(R.drawable.ic_category_8, incategoryList[7]),
+            categoryList(R.drawable.ic_category_9, incategoryList[8]),
+            categoryList(R.drawable.ic_category_10, incategoryList[9]),
+
+            categoryList(R.drawable.ic_category_11, incategoryList[10]),
+            categoryList(R.drawable.ic_category_12, incategoryList[11]),
+            categoryList(R.drawable.ic_category_13, incategoryList[12]),
+            categoryList(R.drawable.ic_category_14, incategoryList[13]),
+            categoryList(R.drawable.ic_category_15, incategoryList[14]),
+            categoryList(R.drawable.ic_category_16, incategoryList[15]),
+            categoryList(R.drawable.ic_category_17, incategoryList[16]),
+            categoryList(R.drawable.ic_category_18, incategoryList[17]),
+            categoryList(R.drawable.ic_category_19, incategoryList[18]),
+            categoryList(R.drawable.ic_category_20, incategoryList[19]),
+
+            categoryList(R.drawable.ic_category_21, incategoryList[20]),
+            categoryList(R.drawable.ic_category_22, incategoryList[21]),
+            categoryList(R.drawable.ic_category_23, incategoryList[22]),
+            categoryList(R.drawable.ic_category_24, incategoryList[23]),
+            categoryList(R.drawable.ic_category_25, incategoryList[24]),
+            categoryList(R.drawable.ic_category_26, incategoryList[25])
+        )
+        binding.homeCategoryScroll.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.homeCategoryScroll.setHasFixedSize(true)
+        binding.homeCategoryScroll.adapter = CategoryAdapter(categoryArrayList)
+    }
+
+    override fun onGetCategoryFailure(message: String) {
+        Log.d("오류", "오류: $message")
+    }
+
+    override fun onGetLocationSuccess(getLocationResponse: GetLocationResponse) {
+
+    }
+
+    override fun onGetLocationFailure(message: String) {
+        Log.d("오류", "오류: $message")
     }
 
 

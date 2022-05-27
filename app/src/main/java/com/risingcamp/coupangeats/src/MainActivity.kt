@@ -2,6 +2,7 @@ package com.risingcamp.coupangeats.src
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.risingcamp.coupangeats.R
@@ -12,21 +13,25 @@ import com.risingcamp.coupangeats.databinding.ActivityMainBinding
 import com.risingcamp.coupangeats.src.favorite.FavoriteActivity
 import com.risingcamp.coupangeats.src.home.HomeFragment
 import com.risingcamp.coupangeats.src.login.LoginActivity
+import com.risingcamp.coupangeats.src.models.GetAutoLoginResponse
 import com.risingcamp.coupangeats.src.myeats.MyEatsFragment
 import com.risingcamp.coupangeats.src.orderlist.OrderListFragment
 import com.risingcamp.coupangeats.src.search.SearchFragment
 import com.risingcamp.coupangeats.src.signup.SignupActivity
 
-class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
+class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate),AutoLoginInterface {
 
     var check : String? = null
-
+    var jwt : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         check = sSharedPreferences.getString(X_ACCESS_TOKEN, null)
+        //var check = ApplicationClass.sSharedPreferences.getString("X-ACCESS-TOKEN",null).toString()
+        Log.d("SP", "$check")
+
+        AutoLoginService(this).tryPostAutoLogin()
 
         supportFragmentManager.beginTransaction().replace(R.id.main_frm, HomeFragment()).commitAllowingStateLoss()
 
@@ -52,7 +57,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     return@setOnItemSelectedListener true
                 }
                 R.id.menu_main_btm_nav_orderlist -> {
-                    if(check == null){
+                    if(check != jwt || check==null){
                         checkLogin()
                     } else{
                         supportFragmentManager.beginTransaction()
@@ -63,7 +68,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 }
                 R.id.menu_main_btm_nav_myeats -> {
 
-                    if(check == null){
+                    if(check != jwt || check==null){
                         checkLogin()
                     } else{
                         supportFragmentManager.beginTransaction()
@@ -99,6 +104,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             startActivity(intent)
         }
 
+    }
+
+    override fun onGetAutoLoginSuccess(getAutoLoginResponse: GetAutoLoginResponse) {
+        jwt = getAutoLoginResponse.result.jwt
+        Log.d("오토로그인", "$jwt")
+    }
+
+    override fun onGetAutoLoginFailure(message: String) {
+        Log.d("오류", "오류: $message")
     }
 
 }

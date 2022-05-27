@@ -104,4 +104,7 @@
     <string name="item_home_option_min_price_5">전체</string>
     <string name="item_home_option_min_price_ok">적용하기</string>
 
+    <string name="location_setting_title">주소 설정</string>
+    <string name="location_setting_present">현재 위치로 주소 찾기</string>
+
 </resources>

@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.risingcamp.coupangeats.R
+import com.risingcamp.coupangeats.config.ApplicationClass
 import com.risingcamp.coupangeats.config.ApplicationClass.Companion.X_ACCESS_TOKEN
 import com.risingcamp.coupangeats.config.ApplicationClass.Companion.sSharedPreferences
 import com.risingcamp.coupangeats.config.BaseActivity
@@ -43,6 +44,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
     var check_necessary_sum = 0
 
     var jwt : String? = null
+    var userId : Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -581,8 +583,11 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
 //------------------------------------------------------------------------------------------------------------------------------------------------
     override fun onPostSignupSuccess(response: SignupResponse) {
         jwt = response.result.jwt
+        userId = response.result.userId
+
         sSharedPreferences.edit().putString(X_ACCESS_TOKEN, response.result.jwt).apply()
-        Log.d("jwt", "$jwt")
+        sSharedPreferences.edit().putInt("UserId", response.result.userId).apply()
+        Log.d("토큰", "$jwt, $userId")
     }
     override fun onPostSignupFailure(message: String) {
         Log.d("오류", "오류: $message")
