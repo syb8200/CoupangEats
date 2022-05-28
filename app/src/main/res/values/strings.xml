@@ -107,4 +107,17 @@
     <string name="location_setting_title">주소 설정</string>
     <string name="location_setting_present">현재 위치로 주소 찾기</string>
 
+    <string name="store_list_category_1">추천메뉴</string>
+    <string name="store_list_category_2">세트메뉴</string>
+    <string name="store_list_category_3">피자메뉴</string>
+    <string name="store_list_category_4">비밀메뉴</string>
+
+    <string name="store_delivery_time_txt">도착까지</string>
+    <string name="store_delivery_info">매장•원산지정보</string>
+    <string name="store_delivery_fee_txt">배달비</string>
+    <string name="store_delivery_min_price_txt">최소주문</string>
+
+    <string name="store_pack_time_txt">포장까지</string>
+    <string name="store_pack_address">매장주소</string>
+
 </resources>

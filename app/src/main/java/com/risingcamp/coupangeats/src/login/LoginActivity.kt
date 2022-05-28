@@ -29,7 +29,9 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
     val Login = 1
     var loginThread : LoginThread? = null
 
+    var check : String? = null
     var jwt : String? = null
+    var userId : Int? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -169,14 +171,19 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
     override fun onPostLoginSuccess(response: LoginResponse) {
         jwt = response.result.jwt
+
+        check = ApplicationClass.sSharedPreferences.getString(ApplicationClass.X_ACCESS_TOKEN, null)
+        ApplicationClass.sSharedPreferences.edit().putString(ApplicationClass.X_ACCESS_TOKEN, response.result.jwt).apply()
+        Log.d("토큰", "$jwt, $userId")
+
         //code = response.code
         Log.d("코드", "$response.code")
 
         //로그인 api로 정보 일치하는지 확인 후 main으로 이동, 일치하지 않으면 dialog
-        if(response.code == 1000){
+        if(response.code == 1000 && check == jwt){
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-        } else{
+        } else if(response.code != 1000 || check != jwt){
             val builder = AlertDialog.Builder(this)
             builder.setMessage("입력하신 아이디 또는 비밀번호가 일치하지 않습니다.")
                 .setPositiveButton("확인",

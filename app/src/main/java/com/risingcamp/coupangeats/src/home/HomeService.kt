@@ -9,6 +9,7 @@ import retrofit2.Response
 
 class HomeService(val homeInterface: HomeInterface) {
 
+
     fun tryGetCategory(){
         val homeRetrofitInterface = ApplicationClass.sRetrofit.create(HomeRetrofitInterface::class.java)
         homeRetrofitInterface.getCategory().enqueue(object :
@@ -27,9 +28,9 @@ class HomeService(val homeInterface: HomeInterface) {
         })
     }
 
-    fun tryGetLocation(isSelected : Boolean){
+    fun tryGetLocation(userId : Int, isSelected : Boolean){
         val homeRetrofitInterface = ApplicationClass.sRetrofit.create(HomeRetrofitInterface::class.java)
-        homeRetrofitInterface.getLocation(isSelected).enqueue(object :
+        homeRetrofitInterface.getLocation(userId, isSelected).enqueue(object :
             Callback<GetLocationResponse> {
             override fun onResponse(
                 call: Call<GetLocationResponse>,

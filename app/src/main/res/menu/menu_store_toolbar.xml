@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_store_toolbar_share"
+        android:icon="@drawable/ic_store_share_resize"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:checkable="true"
+        android:title="" />
+
+    <item
+        android:id="@+id/menu_store_toolbar_favorite"
+        android:icon="@drawable/ic_store_favorite_resize"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:checkable="true"
+        android:title="" />
+</menu>

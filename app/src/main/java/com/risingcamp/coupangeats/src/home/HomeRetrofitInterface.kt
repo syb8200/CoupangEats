@@ -14,7 +14,7 @@ interface HomeRetrofitInterface {
 
     @GET("app/users/{userId}/addresses")
     fun getLocation(
-        @Path(value = "userId", encoded = true)
+        @Path("userId", encoded = true) userId : Int,
         @Query("isSelected") isSelected : Boolean
     ): Call<GetLocationResponse>
 }

@@ -44,6 +44,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     var frag = MainActivity()
 
     var check : String? = null
+    var address : String? = null
 
     var option_recommend : Boolean? = null
     var option_cheetah : Boolean? = null
@@ -56,8 +57,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        check = ApplicationClass.sSharedPreferences.getString(ApplicationClass.X_ACCESS_TOKEN, null)
 
         setLocation()
 
@@ -81,8 +80,17 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
     fun setLocation(){
 
+        var userId = ApplicationClass.sSharedPreferences.getInt("UserId", 0)
+        check = ApplicationClass.sSharedPreferences.getString(ApplicationClass.X_ACCESS_TOKEN, null)
 
-
+        if(check!=null){
+            HomeService(this).tryGetLocation(userId, true)
+            binding.homeTopLocationPresent.text = address
+            Log.d("주소", "$address")
+        } else{
+            //현재 좌표값 기반으로 세팅
+            binding.homeTopLocationPresent.text = "주소를 입력하세요"
+        }
 
 
         binding.homeTopLocationLayout.setOnClickListener {
@@ -491,7 +499,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     }
 
     override fun onGetLocationSuccess(getLocationResponse: GetLocationResponse) {
-
+        address = getLocationResponse.result.address_name
     }
 
     override fun onGetLocationFailure(message: String) {
