@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.risingcamp.coupangeats">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".config.ApplicationClass"
         android:allowBackup="true"
@@ -12,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Coupangeats">
 
-        <activity android:name=".src.home.store.StoreActivity"
+        <activity android:name=".src.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +26,7 @@
         <activity android:name=".src.signup.SignupActivity"/>
         <activity android:name=".src.favorite.FavoriteActivity"/>
         <activity android:name=".src.home.location.LocationActivity"/>
+        <activity android:name=".src.home.store.StoreActivity"/>
 
     </application>
 

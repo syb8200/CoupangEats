@@ -1,6 +1,7 @@
 package com.risingcamp.coupangeats.src.home
 
 import com.risingcamp.coupangeats.src.home.models.getCategory.GetCategoryResponse
+import com.risingcamp.coupangeats.src.home.models.getFranRes.GetFranResResponse
 import com.risingcamp.coupangeats.src.home.models.getLocation.GetLocationResponse
 
 interface HomeInterface {
@@ -12,4 +13,8 @@ interface HomeInterface {
     fun onGetLocationSuccess(getLocationResponse: GetLocationResponse)
 
     fun onGetLocationFailure(message: String)
+
+    fun onGetFranResSuccess(getFranResResponse: GetFranResResponse)
+
+    fun onGetFranResFailure(message: String)
 }

@@ -2,6 +2,7 @@ package com.risingcamp.coupangeats.src.home
 
 import com.risingcamp.coupangeats.config.ApplicationClass
 import com.risingcamp.coupangeats.src.home.models.getCategory.GetCategoryResponse
+import com.risingcamp.coupangeats.src.home.models.getFranRes.GetFranResResponse
 import com.risingcamp.coupangeats.src.home.models.getLocation.GetLocationResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,6 +42,24 @@ class HomeService(val homeInterface: HomeInterface) {
 
             override fun onFailure(call: Call<GetLocationResponse>, t: Throwable) {
                 homeInterface.onGetLocationFailure(t.message ?: "통신 오류")
+            }
+
+        })
+    }
+
+    fun tryGetFranRes(){
+        val homeRetrofitInterface = ApplicationClass.sRetrofit.create(HomeRetrofitInterface::class.java)
+        homeRetrofitInterface.getFranRes().enqueue(object :
+            Callback<GetFranResResponse> {
+            override fun onResponse(
+                call: Call<GetFranResResponse>,
+                response: Response<GetFranResResponse>
+            ) {
+                homeInterface.onGetFranResSuccess(response.body() as GetFranResResponse)
+            }
+
+            override fun onFailure(call: Call<GetFranResResponse>, t: Throwable) {
+                homeInterface.onGetFranResFailure(t.message ?: "통신 오류")
             }
 
         })

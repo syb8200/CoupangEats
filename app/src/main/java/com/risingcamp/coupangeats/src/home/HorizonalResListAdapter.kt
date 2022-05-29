@@ -1,5 +1,7 @@
 package com.risingcamp.coupangeats.src.home
 
+import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -7,10 +9,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.risingcamp.coupangeats.R
+import com.risingcamp.coupangeats.src.home.models.getFranRes.Result
+import com.risingcamp.coupangeats.src.home.store.StoreActivity
 import java.text.DecimalFormat
 
-class HorizonalResListAdapter(var list:ArrayList<HorizontalResList>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HorizonalResListAdapter(val context: Context, var list:ArrayList<Result>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val ITEM = 1
     private val FOOTER = 2
@@ -39,14 +44,24 @@ class HorizonalResListAdapter(var list:ArrayList<HorizontalResList>) : RecyclerV
 
                 //내부 데이터를 사용하여 각 아이템 값 설정
                 holder.itemView.apply{
-                    holder.img.setBackgroundResource(item.img)
-                    holder.name.text = item.name
-                    holder.rate.text = item.rate.toString()
-                    holder.comment.text = item.comment.toString()
+
+                    Glide.with(context)
+                        .load(item.resImageUrl)
+                        .into(holder.img)
+
+                    holder.name.text = item.resName
+                    holder.rate.text = item.starPoint.toString()
+                    holder.comment.text = item.reviewCount.toString()
                     holder.distance.text = item.distance.toString()
-                    var delivery = item.delivery
+                    var delivery = item.minDeliveryFee
                     var frmt = DecimalFormat("#,###")
                     holder.delivery.text = frmt.format(delivery).toString()
+
+                    holder.itemView.setOnClickListener {
+                        val intent = Intent(context, StoreActivity::class.java)
+                        intent.run { context.startActivity(this) }
+                    }
+
                 }
             }
 
@@ -71,13 +86,13 @@ class HorizonalResListAdapter(var list:ArrayList<HorizontalResList>) : RecyclerV
     }
 
 
-    inner class CustomViewHolder(v: View) : RecyclerView.ViewHolder(v){
-        var img = v.findViewById<ImageView>(R.id.item_home_horizontal_list_img)
-        var name = v.findViewById<TextView>(R.id.item_home_horizontal_list_name)
-        var rate = v.findViewById<TextView>(R.id.item_home_horizontal_list_rate)
-        var comment = v.findViewById<TextView>(R.id.item_home_horizontal_list_comment)
-        var distance = v.findViewById<TextView>(R.id.item_home_horizontal_list_distance)
-        var delivery = v.findViewById<TextView>(R.id.item_home_horizontal_list_delivery)
+    inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+        var img = itemView.findViewById<ImageView>(R.id.item_home_horizontal_list_img)
+        var name = itemView.findViewById<TextView>(R.id.item_home_horizontal_list_name)
+        var rate = itemView.findViewById<TextView>(R.id.item_home_horizontal_list_rate)
+        var comment = itemView.findViewById<TextView>(R.id.item_home_horizontal_list_comment)
+        var distance = itemView.findViewById<TextView>(R.id.item_home_horizontal_list_distance)
+        var delivery = itemView.findViewById<TextView>(R.id.item_home_horizontal_list_delivery)
 
     }
 

@@ -200,7 +200,7 @@
                     android:id="@+id/home_horizontal_list_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="리스트 이름"
+                    android:text="인기 프랜차이즈"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -233,6 +233,75 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_horizontal_list_layout" />
 
+
+            <View
+                android:id="@+id/home_mid_line_2"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/cp_gray7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_horizontal_list" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/home_horizontal_list_layout_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingTop="20dp"
+                android:paddingBottom="12dp"
+                android:paddingHorizontal="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_mid_line_2">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/home_horizontal_list_title_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="새로 들어왔어요!"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/home_horizontal_list_detail_2"
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_home_list_detail"
+                    app:layout_constraintBottom_toBottomOf="@+id/home_horizontal_list_title_2"
+                    app:layout_constraintEnd_toEndOf="@+id/home_horizontal_list_title_2"
+                    app:layout_constraintTop_toTopOf="@+id/home_horizontal_list_title_2" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/home_horizontal_list_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_horizontal_list_layout_2" />
+
+
+
+
+
+
+
+
+
+
+
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/home_mid_banner_vp"
                 android:layout_width="match_parent"
@@ -241,7 +310,7 @@
                 android:background="@color/cp_gray1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_horizontal_list" />
+                app:layout_constraintTop_toBottomOf="@+id/home_horizontal_list_2" />
 
             <View
                 android:id="@+id/home_mid_banner_indicator"
