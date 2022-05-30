@@ -18,9 +18,11 @@ import com.risingcamp.coupangeats.databinding.FragmentHomeBinding
 import com.risingcamp.coupangeats.src.MainActivity
 import com.risingcamp.coupangeats.src.home.location.LocationActivity
 import com.risingcamp.coupangeats.src.home.models.getCategory.GetCategoryResponse
-import com.risingcamp.coupangeats.src.home.models.getFranRes.Result
+import com.risingcamp.coupangeats.src.home.models.getFranRes.FranResult
 import com.risingcamp.coupangeats.src.home.models.getFranRes.GetFranResResponse
 import com.risingcamp.coupangeats.src.home.models.getLocation.GetLocationResponse
+import com.risingcamp.coupangeats.src.home.models.getNewRes.GetNewResResponse
+import com.risingcamp.coupangeats.src.home.models.getNewRes.Result
 import com.risingcamp.coupangeats.src.login.LoginActivity
 import com.risingcamp.coupangeats.src.signup.SignupActivity
 
@@ -47,15 +49,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
     var check : String? = null
 
-    var hz_name_1 : String? = null
-    var hz_rate_1 : Double? = null
-    var hz_review_1 : Int? = null
-    var hz_distance_1 : Double? = null
-    var hz_delivery_1 : Int? = null
-    var hz_img_1 : String? = null
-    var hz_time_1 : Int? = null
-    var hz_id_1 : Int? = null
-
     var option_recommend : Boolean? = null
     var option_cheetah : Boolean? = null
     var option_delivery : Boolean? = null
@@ -77,6 +70,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         setCategory()
 
         setHorizontalResList()
+        setHorizontalResList2()
 
         setMidBanner()
 
@@ -88,8 +82,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         binding.homeResOptionScroll.translationZ = 1.0f
     }
 
+    //위치 설정
     fun setLocation(){
-
         var userId = ApplicationClass.sSharedPreferences.getInt("UserId", 0)
         HomeService(this).tryGetLocation(userId, true)
 
@@ -122,6 +116,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         }
     }
 
+    //배너
     fun setTopBanner(){
         var models = arrayListOf(R.drawable.ic_cp_logo,R.drawable.ic_cp_logo, R.drawable.ic_cp_logo, R.drawable.ic_cp_logo, R.drawable.ic_cp_logo)
         var count = models.size
@@ -211,6 +206,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         }
     }
 
+    //카테고리
     @RequiresApi(Build.VERSION_CODES.M)
     fun setTopCategory(){
         HomeService(this).tryGetCategory()
@@ -225,11 +221,16 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         Log.d("확인", "$incategoryList")
     }
 
-
+    //가로 스크롤 (프렌차이즈+새로운)
     fun setHorizontalResList(){
         HomeService(this).tryGetFranRes()
     }
 
+    fun setHorizontalResList2(){
+        HomeService(this).tryGetNewRes()
+    }
+
+    //세로 스크롤 옵션
     @RequiresApi(Build.VERSION_CODES.M)
     fun setResListOption(){
 
@@ -291,8 +292,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         }
     }
 
+    //세로 스크롤
     fun setResList(){
-
         val resListArrayList = arrayListOf(
             ResList(R.drawable.ic_cp_logo,R.drawable.ic_cp_logo,R.drawable.ic_cp_logo, "가나다", R.drawable.ic_cp_logo, "15", "25",
                 4.1, 300, 1.9, 3000, "포장가능"),
@@ -312,8 +313,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         binding.homeResList.adapter = ResListAdapter(resListArrayList)
 
     }
-
-
 
     /*
     fun setEndlessList(){
@@ -339,8 +338,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     }
      */
 
-
-
+    //FAB버튼
     @RequiresApi(Build.VERSION_CODES.M)
     fun setFabBtn(){
         binding.homeFloatingBtn.visibility = View.INVISIBLE
@@ -348,6 +346,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
     }
 
+    //스크롤 리스너
     @RequiresApi(Build.VERSION_CODES.M)
     fun setScrollListener(){
         binding.homeScroll.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
@@ -359,7 +358,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
             } else{
                 binding.homeTopCategory.visibility = View.INVISIBLE
             }
-
 
             //verticalScrollOption
             if(scrollY + (binding.homeTopCategory.bottom - binding.homeTopCategory.top) > binding.homeResOptionScroll.top){
@@ -408,7 +406,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
         for(i in 0 until listSize!!){
             incategoryList[i] = getCategoryResponse.result[i].categoryName
-            //ncategoryList.add(getCategoryResponse.result[i].categoryName)
             Log.d("배열", "$incategoryList")
         }
 
@@ -492,11 +489,9 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         Log.d("위치", "$code, $address")
         check = ApplicationClass.sSharedPreferences.getString(ApplicationClass.X_ACCESS_TOKEN, null)
 
-
         if(code==1000 && check!=null){
             binding.homeTopLocationPresent.visibility = View.VISIBLE
             binding.homeTopLocationPresent.text = address
-
         } else if(code==2001 || check==null){
             //현재 좌표값 기반으로 세팅
             binding.homeTopLocationPresent.text = "주소를 입력하세요"
@@ -505,6 +500,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     override fun onGetLocationFailure(message: String) {
         Log.d("오류", "오류: $message")
     }
+
 
     override fun onGetFranResSuccess(getFranResResponse: GetFranResResponse) {
         var hz_name_1 = getFranResResponse.result[0].resName
@@ -528,24 +524,40 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         Log.d("가로 리스트", "$hz_name_1, $hz_rate_1, $hz_review_1, $hz_distance_1, $hz_delivery_1, $hz_img_1, $hz_time_1, $hz_id_1")
         Log.d("가로 리스트", "$hz_name_2, $hz_rate_2, $hz_review_2, $hz_distance_2, $hz_delivery_2, $hz_img_2, $hz_time_2, $hz_id_2")
 
-        val horizontalResArrayList = arrayListOf<Result>(
-            Result(hz_delivery_1!!,hz_distance_1!!, hz_delivery_1!!, hz_img_1!!, hz_name_1!!, hz_id_1!!, hz_review_1!!, hz_rate_1!! ),
-            Result(hz_delivery_2!!,hz_distance_2!!, hz_delivery_2!!, hz_img_2!!, hz_name_2!!, hz_id_2!!, hz_review_2!!, hz_rate_2!! )
-
-            //HorizontalResList(R.drawable.ic_cp_logo,"와이낫 떡볶이 구리점", 4.9, 352, 1.9, 3000),
-            //HorizontalResList(R.drawable.ic_cp_logo,"응급실국물떡볶이 다산점", 5.0, 365, 0.2, 3000),
-            //HorizontalResList(R.drawable.ic_cp_logo,"학교종이땡떙땡", 4.8, 656, 0.2, 3000),
-            //HorizontalResList(R.drawable.ic_cp_logo,"걸작떡볶이치킨 남양주", 4.7, 274, 0.9, 3000),
-            //HorizontalResList(R.drawable.ic_cp_logo,"와이낫 떡볶이 구리점", 4.9, 352, 1.9, 3000)
+        val horizontalResArrayList = arrayListOf<FranResult>(
+            FranResult(hz_delivery_1!!,hz_distance_1!!, hz_delivery_1!!, hz_img_1!!, hz_name_1!!, hz_id_1!!, hz_review_1!!, hz_rate_1!! ),
+            FranResult(hz_delivery_2!!,hz_distance_2!!, hz_delivery_2!!, hz_img_2!!, hz_name_2!!, hz_id_2!!, hz_review_2!!, hz_rate_2!! )
         )
         binding.homeHorizontalList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.homeHorizontalList.setHasFixedSize(true)
-        binding.homeHorizontalList.adapter = HorizonalResListAdapter(requireContext(), horizontalResArrayList)
-
-
+        binding.homeHorizontalList.adapter = HorizontalResListAdapter(requireContext(), horizontalResArrayList)
+    }
+    override fun onGetFranResFailure(message: String) {
+        Log.d("오류", "오류: $message")
     }
 
-    override fun onGetFranResFailure(message: String) {
+
+    override fun onGetNewResSuccess(getNewResResponse: GetNewResResponse) {
+        var hz_new_name_1 = getNewResResponse.result[0].resName
+        var hz_new_rate_1 = getNewResResponse.result[0].starPoint
+        var hz_new_review_1 = getNewResResponse.result[0].reviewCount
+        var hz_new_distance_1 = getNewResResponse.result[0].distance
+        var hz_new_delivery_1 = getNewResResponse.result[0].minDeliveryFee
+        var hz_new_img_1 = getNewResResponse.result[0].resImageUrl
+        var hz_new_time_1 = getNewResResponse.result[0].deliveryTime
+        var hz_new_id_1 = getNewResResponse.result[0].restaurantId
+
+        Log.d("가로 리스트2", "$hz_new_name_1, $hz_new_rate_1, $hz_new_review_1, $hz_new_distance_1, $hz_new_delivery_1, $hz_new_img_1, $hz_new_time_1, $hz_new_id_1")
+
+        val horizontalResArrayList2 = arrayListOf<Result>(
+            Result(hz_new_delivery_1!!,hz_new_distance_1!!, hz_new_delivery_1!!, hz_new_img_1!!, hz_new_name_1!!, hz_new_id_1!!, hz_new_review_1!!, hz_new_rate_1!! )
+        )
+        binding.homeHorizontalList2.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.homeHorizontalList2.setHasFixedSize(true)
+        binding.homeHorizontalList2.adapter = HorizontalResList2Adapter(requireContext(), horizontalResArrayList2)
+
+    }
+    override fun onGetNewResFailure(message: String) {
         Log.d("오류", "오류: $message")
     }
 

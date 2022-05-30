@@ -36,4 +36,7 @@
     <color name="cp_tab_item">#151134</color>
     <color name="cp_store_rating_stars">#FEC400</color>
 
+    <color name="cp_store_menu_des">#939EA9</color>
+    <color name="cp_store_menu_allergy">#535A83</color>
+
 </resources>

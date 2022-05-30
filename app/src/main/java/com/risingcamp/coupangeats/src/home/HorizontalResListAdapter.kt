@@ -11,11 +11,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.risingcamp.coupangeats.R
-import com.risingcamp.coupangeats.src.home.models.getFranRes.Result
+import com.risingcamp.coupangeats.src.home.models.getFranRes.FranResult
 import com.risingcamp.coupangeats.src.home.store.StoreActivity
 import java.text.DecimalFormat
 
-class HorizonalResListAdapter(val context: Context, var list:ArrayList<Result>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HorizontalResListAdapter(val context: Context, var list:ArrayList<FranResult>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val ITEM = 1
     private val FOOTER = 2

@@ -1,4 +1,4 @@
-package com.risingcamp.coupangeats.src.home.models.getFranRes
+package com.risingcamp.coupangeats.src.home.models.getNewRes
 
 data class Result(
     val deliveryTime: Int,

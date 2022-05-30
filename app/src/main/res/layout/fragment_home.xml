@@ -233,7 +233,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_horizontal_list_layout" />
 
-
             <View
                 android:id="@+id/home_mid_line_2"
                 android:layout_width="match_parent"
@@ -291,16 +290,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_horizontal_list_layout_2" />
-
-
-
-
-
-
-
-
-
-
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/home_mid_banner_vp"
@@ -439,6 +428,7 @@
                         android:textSize="14sp"
                         android:textStyle="normal"
                         android:textColor="@color/black"
+                        android:visibility="gone"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/home_res_option_line"/>
@@ -451,6 +441,7 @@
                         android:textColor="@color/cp_home_res_option_checked"
                         android:textSize="14sp"
                         android:textStyle="bold"
+                        android:visibility="gone"
                         app:layout_constraintHorizontal_bias="0.86"
                         app:layout_constraintBottom_toBottomOf="@+id/home_res_option_refresh"
                         app:layout_constraintEnd_toEndOf="@+id/home_res_option_refresh"
@@ -469,7 +460,7 @@
                         android:drawablePadding="4dp"
                         android:paddingVertical="7dp"
                         android:paddingHorizontal="10dp"
-                        android:text="@string/home_res_option_1"
+                        android:text="@string/item_home_option_recommend_4"
                         android:textSize="14sp"
                         android:textStyle="normal"
                         android:textColor="@color/black"

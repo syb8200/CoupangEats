@@ -120,4 +120,8 @@
     <string name="store_pack_time_txt">포장까지</string>
     <string name="store_pack_address">매장주소</string>
 
+    <string name="store_menu_allergy">알레르기/영양성분 정보 보기</string>
+    <string name="store_menu_price">가격</string>
+    <string name="store_menu_count">수량</string>
+
 </resources>
