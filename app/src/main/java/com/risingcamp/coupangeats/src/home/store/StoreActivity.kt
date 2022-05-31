@@ -3,6 +3,7 @@ package com.risingcamp.coupangeats.src.home.store
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
+import android.opengl.Visibility
 import android.os.*
 import android.util.Log
 import android.view.Menu
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
+import androidx.annotation.VisibleForTesting
 import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,8 +33,8 @@ class StoreActivity: BaseActivity<ActivityStoreBinding>(ActivityStoreBinding::in
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setSupportActionBar(binding.storeToolbar)	//툴바 사용 설정
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true) // 뒤로가기 보이게
+        //setSupportActionBar(binding.storeToolbar)	//툴바 사용 설정
+        //supportActionBar!!.setDisplayHomeAsUpEnabled(true) // 뒤로가기 보이게
 
         setStatusBarTransparent()
         binding.storeToolbar.setPadding(0, statusBarHeight(), 0, 0)
@@ -149,8 +151,15 @@ class StoreActivity: BaseActivity<ActivityStoreBinding>(ActivityStoreBinding::in
 
         binding.storeNestedScroll.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             var tb = binding.storeMidTabLayout.top
+            var toolbar = binding.storeToolbar2.top
+            Log.d("스크롤", "$scrollY, $tb, $toolbar")
 
-            Log.d("스크롤", "$scrollY, $tb")
+            if(scrollY + (binding.storeMidTabLayout.bottom - binding.storeCollapsing.top) > binding.storeNestedScroll.top){
+                binding.storeToolbar2.visibility = View.VISIBLE
+            } else{
+                binding.storeToolbar2.visibility = View.GONE
+            }
+
 
             if(scrollY==0 || scrollY < binding.storeLine1.top){
                 binding.storeMidTabLayout.setScrollPosition(0, 0f, true)

@@ -6,10 +6,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.risingcamp.coupangeats.R
+import com.risingcamp.coupangeats.src.home.models.getResList.ResListResult
 import java.text.DecimalFormat
 
-class ResListAdapter(var list: ArrayList<ResList>) : RecyclerView.Adapter<ResListAdapter.AdapterViewHolder>() {
+class ResListAdapter(var list: List<ResListResult>) : RecyclerView.Adapter<ResListAdapter.AdapterViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -21,33 +23,43 @@ class ResListAdapter(var list: ArrayList<ResList>) : RecyclerView.Adapter<ResLis
     override fun onBindViewHolder(holder: ResListAdapter.AdapterViewHolder, position: Int) {
         val item = list[position]
         holder.itemView.apply{
-            holder.img_1.setBackgroundResource(item.img1)
-            holder.img_2.setBackgroundResource(item.img2)
-            holder.img_3.setBackgroundResource(item.img3)
-            holder.name.text = item.name
-            holder.cheetah.setBackgroundResource(item.cheetah)
-            holder.time_1.text = item.time_1
-            holder.time_2.text = item.time_2
+            //이미지
+            Glide.with(context)
+                .load(item.resImageUrlList[0])
+                .into(holder.img_1)
 
-            //var rate = item.rate
-            //var frmt = DecimalFormat("#.#")
-            //holder.rate.text = frmt.format(rate)
-            holder.rate.text = item.rate.toString()
+            Glide.with(context)
+                .load(item.resImageUrlList[1])
+                .into(holder.img_2)
 
-            var comment = item.comment
+            Glide.with(context)
+                .load(item.resImageUrlList[2])
+                .into(holder.img_3)
+            //이름
+            holder.name.text = item.resName
+            //치타
+            var cheetah = item.isCheetah
+            if(cheetah==1){
+                holder.cheetah.setImageResource(R.drawable.ic_item_home_res_cheetah)
+            } else{
+                holder.cheetah.visibility = View.INVISIBLE
+            }
+            //시간
+            holder.time_1.text = item.deliveryTime.toString()
+            holder.time_2.text = (item.deliveryTime+5).toString()
+            //holder.time_2.text = item.time_2
+            //별점
+            holder.starPoint.text = item.starPoint.toString()
+            //리뷰수
+            var review = item.reviewCount
             var frmt2 = DecimalFormat("#,###")
-            holder.comment.text = frmt2.format(comment)
-
-            //var distance = item.distance
-            //var frmt3 = DecimalFormat("#.#")
-            //holder.distance.text = frmt3.format(distance)
+            holder.review.text = frmt2.format(review)
+            //거리
             holder.distance.text = item.distance.toString()
-
-            var delivery = item.delivery
+            //배달비
+            var delivery = item.minDeliveryFee
             var frmt4 = DecimalFormat("#,###")
             holder.delivery.text = frmt4.format(delivery)
-
-            holder.pack.text = item.pack
         }
     }
 
@@ -65,8 +77,8 @@ class ResListAdapter(var list: ArrayList<ResList>) : RecyclerView.Adapter<ResLis
         var time_1 = v.findViewById<TextView>(R.id.item_home_res_time_1)
         var time_2 = v.findViewById<TextView>(R.id.item_home_res_time_2)
 
-        var rate = v.findViewById<TextView>(R.id.item_home_res_rate)
-        var comment = v.findViewById<TextView>(R.id.item_home_res_comment)
+        var starPoint = v.findViewById<TextView>(R.id.item_home_res_rate)
+        var review = v.findViewById<TextView>(R.id.item_home_res_comment)
         var distance = v.findViewById<TextView>(R.id.item_home_res_distance)
         var delivery = v.findViewById<TextView>(R.id.item_home_res_delivery_price)
         var pack = v.findViewById<TextView>(R.id.item_home_res_pack)

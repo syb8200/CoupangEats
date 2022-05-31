@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.*
 import android.util.Log
 import android.view.*
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +14,6 @@ import com.risingcamp.coupangeats.R
 import com.risingcamp.coupangeats.config.ApplicationClass
 import com.risingcamp.coupangeats.config.BaseFragment
 import com.risingcamp.coupangeats.databinding.FragmentHomeBinding
-import com.risingcamp.coupangeats.src.MainActivity
 import com.risingcamp.coupangeats.src.home.location.LocationActivity
 import com.risingcamp.coupangeats.src.home.models.getCategory.GetCategoryResponse
 import com.risingcamp.coupangeats.src.home.models.getFranRes.FranResult
@@ -23,6 +21,10 @@ import com.risingcamp.coupangeats.src.home.models.getFranRes.GetFranResResponse
 import com.risingcamp.coupangeats.src.home.models.getLocation.GetLocationResponse
 import com.risingcamp.coupangeats.src.home.models.getNewRes.GetNewResResponse
 import com.risingcamp.coupangeats.src.home.models.getNewRes.Result
+import com.risingcamp.coupangeats.src.home.models.getResList.GetResListResponse
+import com.risingcamp.coupangeats.src.home.models.getResList.ResListResult
+import com.risingcamp.coupangeats.src.home.models.getTopBanner.GetTopBannerResponse
+import com.risingcamp.coupangeats.src.home.models.getTopBanner.TopBannerResult
 import com.risingcamp.coupangeats.src.login.LoginActivity
 import com.risingcamp.coupangeats.src.signup.SignupActivity
 
@@ -42,20 +44,13 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     var currentPosition2 = 0
 
     var listSize : Int? = null
-    var incategoryList = MutableList(26, {""})
-    //var incategoryList = mutableListOf<String>()
 
-    var frag = MainActivity()
+    var incategoryList = mutableListOf<String>()
+
+    var top_banner_id : Int? = null
+    var top_banner_img : String? = null
 
     var check : String? = null
-
-    var option_recommend : Boolean? = null
-    var option_cheetah : Boolean? = null
-    var option_delivery : Boolean? = null
-    var option_min_price : Boolean? = null
-    var option_pack : Boolean? = null
-    var option_coupon : Boolean? = null
-    var option_drink : Boolean? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -118,26 +113,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
     //배너
     fun setTopBanner(){
-        var models = arrayListOf(R.drawable.ic_cp_logo,R.drawable.ic_cp_logo, R.drawable.ic_cp_logo, R.drawable.ic_cp_logo, R.drawable.ic_cp_logo)
-        var count = models.size
-        adapter = TopBannerAdapter(models, requireContext())
-        binding.homeTopBannerVp.adapter = adapter
-
-        //페이지가 바꼈을때 호출
-        binding.homeTopBannerVp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-            }
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                binding.homeTopBannerIndicatorNum.text = ((position%5)+1).toString()
-                currentPosition = position
-                binding.homeTopBannerIndicatorTotal.text = count.toString()
-            }
-            override fun onPageScrollStateChanged(state: Int) {
-                super.onPageScrollStateChanged(state)
-            }
-        })
+        HomeService(this).tryGetTopBanner()
     }
 
     fun setMidBanner(){
@@ -249,18 +225,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
             bottomSheet.setCanceledOnTouchOutside(true)
             bottomSheet.create()
             bottomSheet.show()
-
-            var recommend_close = bottomSheet.findViewById<ImageView>(R.id.item_home_option_recommend_close)
-            var recommend_1 = bottomSheet.findViewById<TextView>(R.id.item_home_option_recommend_1)
-            var recommend_1_check = bottomSheet.findViewById<ImageView>(R.id.item_home_option_recommend_1_check)
-            var recommend_2 = bottomSheet.findViewById<TextView>(R.id.item_home_option_recommend_2)
-            var recommend_2_check = bottomSheet.findViewById<ImageView>(R.id.item_home_option_recommend_2_check)
-            var recommend_3 = bottomSheet.findViewById<TextView>(R.id.item_home_option_recommend_3)
-            var recommend_3_check = bottomSheet.findViewById<ImageView>(R.id.item_home_option_recommend_3_check)
-            var recommend_4 = bottomSheet.findViewById<TextView>(R.id.item_home_option_recommend_4)
-            var recommend_4_check = bottomSheet.findViewById<ImageView>(R.id.item_home_option_recommend_4_check)
-            var recommend_5 = bottomSheet.findViewById<TextView>(R.id.item_home_option_recommend_5)
-            var recommend_5_check = bottomSheet.findViewById<ImageView>(R.id.item_home_option_recommend_5_check)
         }
 
         binding.homeResOptionCheetah.setOnClickListener {
@@ -294,24 +258,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
     //세로 스크롤
     fun setResList(){
-        val resListArrayList = arrayListOf(
-            ResList(R.drawable.ic_cp_logo,R.drawable.ic_cp_logo,R.drawable.ic_cp_logo, "가나다", R.drawable.ic_cp_logo, "15", "25",
-                4.1, 300, 1.9, 3000, "포장가능"),
-            ResList(R.drawable.ic_cp_logo,R.drawable.ic_cp_logo,R.drawable.ic_cp_logo, "가나다", R.drawable.ic_cp_logo, "15", "25",
-                4.1, 300, 1.9, 3000, "포장가능"),
-            ResList(R.drawable.ic_cp_logo,R.drawable.ic_cp_logo,R.drawable.ic_cp_logo, "가나다", R.drawable.ic_cp_logo, "15", "25",
-                4.1, 300, 1.9, 3000, "포장가능"),
-            ResList(R.drawable.ic_cp_logo,R.drawable.ic_cp_logo,R.drawable.ic_cp_logo, "가나다", R.drawable.ic_cp_logo, "15", "25",
-                4.1, 300, 1.9, 3000, "포장가능"),
-            ResList(R.drawable.ic_cp_logo,R.drawable.ic_cp_logo,R.drawable.ic_cp_logo, "가나다", R.drawable.ic_cp_logo, "15", "25",
-                4.1, 300, 1.9, 3000, "포장가능"),
-            ResList(R.drawable.ic_cp_logo,R.drawable.ic_cp_logo,R.drawable.ic_cp_logo, "가나다", R.drawable.ic_cp_logo, "15", "25",
-                4.1, 300, 1.9, 3000, "포장가능")
-        )
-        binding.homeResList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.homeResList.setHasFixedSize(true)
-        binding.homeResList.adapter = ResListAdapter(resListArrayList)
-
+        HomeService(this).tryGetResList(2)
     }
 
     /*
@@ -405,9 +352,9 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         Log.d("리스트크기", "$listSize")
 
         for(i in 0 until listSize!!){
-            incategoryList[i] = getCategoryResponse.result[i].categoryName
-            Log.d("배열", "$incategoryList")
+            incategoryList.add(getCategoryResponse.result[i].categoryName)
         }
+        Log.d("배열", "$incategoryList")
 
         //topCategory
         var topCategoryArrayList = arrayListOf(
@@ -421,7 +368,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
             categoryList(R.drawable.ic_category_8, incategoryList[7]),
             categoryList(R.drawable.ic_category_9, incategoryList[8]),
             categoryList(R.drawable.ic_category_10, incategoryList[9]),
-
             categoryList(R.drawable.ic_category_11, incategoryList[10]),
             categoryList(R.drawable.ic_category_12, incategoryList[11]),
             categoryList(R.drawable.ic_category_13, incategoryList[12]),
@@ -432,7 +378,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
             categoryList(R.drawable.ic_category_18, incategoryList[17]),
             categoryList(R.drawable.ic_category_19, incategoryList[18]),
             categoryList(R.drawable.ic_category_20, incategoryList[19]),
-
             categoryList(R.drawable.ic_category_21, incategoryList[20]),
             categoryList(R.drawable.ic_category_22, incategoryList[21]),
             categoryList(R.drawable.ic_category_23, incategoryList[22]),
@@ -456,7 +401,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
             categoryList(R.drawable.ic_category_8, incategoryList[7]),
             categoryList(R.drawable.ic_category_9, incategoryList[8]),
             categoryList(R.drawable.ic_category_10, incategoryList[9]),
-
             categoryList(R.drawable.ic_category_11, incategoryList[10]),
             categoryList(R.drawable.ic_category_12, incategoryList[11]),
             categoryList(R.drawable.ic_category_13, incategoryList[12]),
@@ -467,7 +411,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
             categoryList(R.drawable.ic_category_18, incategoryList[17]),
             categoryList(R.drawable.ic_category_19, incategoryList[18]),
             categoryList(R.drawable.ic_category_20, incategoryList[19]),
-
             categoryList(R.drawable.ic_category_21, incategoryList[20]),
             categoryList(R.drawable.ic_category_22, incategoryList[21]),
             categoryList(R.drawable.ic_category_23, incategoryList[22]),
@@ -503,34 +446,11 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
 
     override fun onGetFranResSuccess(getFranResResponse: GetFranResResponse) {
-        var hz_name_1 = getFranResResponse.result[0].resName
-        var hz_rate_1 = getFranResResponse.result[0].starPoint
-        var hz_review_1 = getFranResResponse.result[0].reviewCount
-        var hz_distance_1 = getFranResResponse.result[0].distance
-        var hz_delivery_1 = getFranResResponse.result[0].minDeliveryFee
-        var hz_img_1 = getFranResResponse.result[0].resImageUrl
-        var hz_time_1 = getFranResResponse.result[0].deliveryTime
-        var hz_id_1 = getFranResResponse.result[0].restaurantId
-
-        var hz_name_2 = getFranResResponse.result[1].resName
-        var hz_rate_2 = getFranResResponse.result[1].starPoint
-        var hz_review_2 = getFranResResponse.result[1].reviewCount
-        var hz_distance_2 = getFranResResponse.result[1].distance
-        var hz_delivery_2 = getFranResResponse.result[1].minDeliveryFee
-        var hz_img_2 = getFranResResponse.result[1].resImageUrl
-        var hz_time_2 = getFranResResponse.result[1].deliveryTime
-        var hz_id_2 = getFranResResponse.result[1].restaurantId
-
-        Log.d("가로 리스트", "$hz_name_1, $hz_rate_1, $hz_review_1, $hz_distance_1, $hz_delivery_1, $hz_img_1, $hz_time_1, $hz_id_1")
-        Log.d("가로 리스트", "$hz_name_2, $hz_rate_2, $hz_review_2, $hz_distance_2, $hz_delivery_2, $hz_img_2, $hz_time_2, $hz_id_2")
-
-        val horizontalResArrayList = arrayListOf<FranResult>(
-            FranResult(hz_delivery_1!!,hz_distance_1!!, hz_delivery_1!!, hz_img_1!!, hz_name_1!!, hz_id_1!!, hz_review_1!!, hz_rate_1!! ),
-            FranResult(hz_delivery_2!!,hz_distance_2!!, hz_delivery_2!!, hz_img_2!!, hz_name_2!!, hz_id_2!!, hz_review_2!!, hz_rate_2!! )
-        )
+        val franResList = getFranResResponse.result
+        Log.d("가로 리스트", "$franResList")
         binding.homeHorizontalList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.homeHorizontalList.setHasFixedSize(true)
-        binding.homeHorizontalList.adapter = HorizontalResListAdapter(requireContext(), horizontalResArrayList)
+        binding.homeHorizontalList.adapter = HorizontalResListAdapter(requireContext(), franResList)
     }
     override fun onGetFranResFailure(message: String) {
         Log.d("오류", "오류: $message")
@@ -538,26 +458,71 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
 
     override fun onGetNewResSuccess(getNewResResponse: GetNewResResponse) {
-        var hz_new_name_1 = getNewResResponse.result[0].resName
-        var hz_new_rate_1 = getNewResResponse.result[0].starPoint
-        var hz_new_review_1 = getNewResResponse.result[0].reviewCount
-        var hz_new_distance_1 = getNewResResponse.result[0].distance
-        var hz_new_delivery_1 = getNewResResponse.result[0].minDeliveryFee
-        var hz_new_img_1 = getNewResResponse.result[0].resImageUrl
-        var hz_new_time_1 = getNewResResponse.result[0].deliveryTime
-        var hz_new_id_1 = getNewResResponse.result[0].restaurantId
-
-        Log.d("가로 리스트2", "$hz_new_name_1, $hz_new_rate_1, $hz_new_review_1, $hz_new_distance_1, $hz_new_delivery_1, $hz_new_img_1, $hz_new_time_1, $hz_new_id_1")
-
-        val horizontalResArrayList2 = arrayListOf<Result>(
-            Result(hz_new_delivery_1!!,hz_new_distance_1!!, hz_new_delivery_1!!, hz_new_img_1!!, hz_new_name_1!!, hz_new_id_1!!, hz_new_review_1!!, hz_new_rate_1!! )
-        )
+        var newResList = getNewResResponse.result
+        Log.d("가로 리스트2", "$newResList")
         binding.homeHorizontalList2.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.homeHorizontalList2.setHasFixedSize(true)
-        binding.homeHorizontalList2.adapter = HorizontalResList2Adapter(requireContext(), horizontalResArrayList2)
-
+        binding.homeHorizontalList2.adapter = HorizontalResList2Adapter(requireContext(), newResList)
     }
     override fun onGetNewResFailure(message: String) {
+        Log.d("오류", "오류: $message")
+    }
+
+
+    override fun onGetTopBannerSuccess(getTopBannerResponse: GetTopBannerResponse) {
+        top_banner_id = getTopBannerResponse.result[0].eventId
+        top_banner_img = getTopBannerResponse.result[0].eventImageUrl
+        top_banner_id = getTopBannerResponse.result[1].eventId
+        top_banner_img = getTopBannerResponse.result[1].eventImageUrl
+        top_banner_id = getTopBannerResponse.result[2].eventId
+        top_banner_img = getTopBannerResponse.result[2].eventImageUrl
+        top_banner_id = getTopBannerResponse.result[3].eventId
+        top_banner_img = getTopBannerResponse.result[3].eventImageUrl
+        top_banner_id = getTopBannerResponse.result[4].eventId
+        top_banner_img = getTopBannerResponse.result[4].eventImageUrl
+        Log.d("배너", "$top_banner_id, $top_banner_img")
+
+        var models = arrayListOf<TopBannerResult>(
+            TopBannerResult(top_banner_id!!, top_banner_img!!),
+            TopBannerResult(top_banner_id!!, top_banner_img!!),
+            TopBannerResult(top_banner_id!!, top_banner_img!!),
+            TopBannerResult(top_banner_id!!, top_banner_img!!),
+            TopBannerResult(top_banner_id!!, top_banner_img!!)
+        )
+        var count = models.size
+        adapter = TopBannerAdapter(models, requireContext())
+        binding.homeTopBannerVp.adapter = adapter
+
+
+        //페이지가 바꼈을때 호출
+        binding.homeTopBannerVp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            }
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.homeTopBannerIndicatorNum.text = ((position%5)+1).toString()
+                currentPosition = position
+                binding.homeTopBannerIndicatorTotal.text = count.toString()
+            }
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+            }
+        })
+    }
+    override fun onGetTopBannerFailure(message: String) {
+        Log.d("오류", "오류: $message")
+    }
+
+
+    override fun onGetResListSuccess(getResListResponse: GetResListResponse) {
+        var resList = getResListResponse.result
+        Log.d("음식점", "$resList")
+        binding.homeResList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.homeResList.setHasFixedSize(true)
+        binding.homeResList.adapter = ResListAdapter(resList)
+    }
+    override fun onGetResListFailure(message: String) {
         Log.d("오류", "오류: $message")
     }
 

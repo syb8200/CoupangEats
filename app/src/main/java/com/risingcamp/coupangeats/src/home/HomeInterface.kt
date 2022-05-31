@@ -4,6 +4,8 @@ import com.risingcamp.coupangeats.src.home.models.getCategory.GetCategoryRespons
 import com.risingcamp.coupangeats.src.home.models.getFranRes.GetFranResResponse
 import com.risingcamp.coupangeats.src.home.models.getLocation.GetLocationResponse
 import com.risingcamp.coupangeats.src.home.models.getNewRes.GetNewResResponse
+import com.risingcamp.coupangeats.src.home.models.getResList.GetResListResponse
+import com.risingcamp.coupangeats.src.home.models.getTopBanner.GetTopBannerResponse
 
 interface HomeInterface {
 
@@ -22,4 +24,12 @@ interface HomeInterface {
     fun onGetNewResSuccess(getNewResResponse: GetNewResResponse)
 
     fun onGetNewResFailure(message: String)
+
+    fun onGetTopBannerSuccess(getTopBannerResponse: GetTopBannerResponse)
+
+    fun onGetTopBannerFailure(message: String)
+
+    fun onGetResListSuccess(getResListResponse: GetResListResponse)
+
+    fun onGetResListFailure(message: String)
 }

@@ -5,6 +5,8 @@ import com.risingcamp.coupangeats.src.home.models.getCategory.GetCategoryRespons
 import com.risingcamp.coupangeats.src.home.models.getFranRes.GetFranResResponse
 import com.risingcamp.coupangeats.src.home.models.getLocation.GetLocationResponse
 import com.risingcamp.coupangeats.src.home.models.getNewRes.GetNewResResponse
+import com.risingcamp.coupangeats.src.home.models.getResList.GetResListResponse
+import com.risingcamp.coupangeats.src.home.models.getTopBanner.GetTopBannerResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -79,6 +81,42 @@ class HomeService(val homeInterface: HomeInterface) {
 
             override fun onFailure(call: Call<GetNewResResponse>, t: Throwable) {
                 homeInterface.onGetNewResFailure(t.message ?: "통신 오류")
+            }
+
+        })
+    }
+
+    fun tryGetTopBanner(){
+        val homeRetrofitInterface = ApplicationClass.sRetrofit.create(HomeRetrofitInterface::class.java)
+        homeRetrofitInterface.getTopBanner().enqueue(object :
+            Callback<GetTopBannerResponse> {
+            override fun onResponse(
+                call: Call<GetTopBannerResponse>,
+                response: Response<GetTopBannerResponse>
+            ) {
+                homeInterface.onGetTopBannerSuccess(response.body() as GetTopBannerResponse)
+            }
+
+            override fun onFailure(call: Call<GetTopBannerResponse>, t: Throwable) {
+                homeInterface.onGetTopBannerFailure(t.message ?: "통신 오류")
+            }
+
+        })
+    }
+
+    fun tryGetResList(categoryId : Int){
+        val homeRetrofitInterface = ApplicationClass.sRetrofit.create(HomeRetrofitInterface::class.java)
+        homeRetrofitInterface.getResList(categoryId).enqueue(object :
+            Callback<GetResListResponse> {
+            override fun onResponse(
+                call: Call<GetResListResponse>,
+                response: Response<GetResListResponse>
+            ) {
+                homeInterface.onGetResListSuccess(response.body() as GetResListResponse)
+            }
+
+            override fun onFailure(call: Call<GetResListResponse>, t: Throwable) {
+                homeInterface.onGetResListFailure(t.message ?: "통신 오류")
             }
 
         })

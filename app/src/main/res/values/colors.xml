@@ -28,7 +28,8 @@
     <color name="cp_signup_complete_btn">#0075E9</color>
     <color name="cp_signup_complete_hint">#107E25</color>
 
-    <color name="cp_home_indicator">#CC212B35</color>
+    <color name="cp_home_banner_indicator">#80212B35</color>
+    <color name="cp_home_event_indicator">#CC212B35</color>
     <color name="cp_home_floating_btn">#A6FFFFFF</color>
     <color name="cp_home_res_option_checked">#0091FE</color>
 
@@ -38,5 +39,6 @@
 
     <color name="cp_store_menu_des">#939EA9</color>
     <color name="cp_store_menu_allergy">#535A83</color>
+    <color name="cp_store_menu_plus_btn">#ADB6BE</color>
 
 </resources>

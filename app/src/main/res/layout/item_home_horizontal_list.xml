@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:paddingHorizontal="0dp"
-    android:layout_marginHorizontal="10dp"
+    android:layout_marginHorizontal="8dp"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -11,6 +11,7 @@
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_gravity="center"
+        android:scaleType="centerCrop"
         android:background="@color/cp_gray1"/>
 
     <androidx.appcompat.widget.AppCompatTextView

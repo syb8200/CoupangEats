@@ -4,6 +4,8 @@ import com.risingcamp.coupangeats.src.home.models.getCategory.GetCategoryRespons
 import com.risingcamp.coupangeats.src.home.models.getFranRes.GetFranResResponse
 import com.risingcamp.coupangeats.src.home.models.getLocation.GetLocationResponse
 import com.risingcamp.coupangeats.src.home.models.getNewRes.GetNewResResponse
+import com.risingcamp.coupangeats.src.home.models.getResList.GetResListResponse
+import com.risingcamp.coupangeats.src.home.models.getTopBanner.GetTopBannerResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -25,4 +27,12 @@ interface HomeRetrofitInterface {
 
     @GET("app/restaurants/new")
     fun getNewRes() : Call<GetNewResResponse>
+
+    @GET("app/events/top")
+    fun getTopBanner() : Call<GetTopBannerResponse>
+
+    @GET("app/restaurants")
+    fun getResList(
+        @Query("categoryId") categoryId : Int
+    ) : Call<GetResListResponse>
 }

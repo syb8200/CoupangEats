@@ -10,8 +10,10 @@
     android:background="@color/white">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/store_app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/store_collapsing"
@@ -37,11 +39,11 @@
 
                 <View
                     android:id="@+id/store_menu_img_indicator"
-                    android:layout_width="45dp"
+                    android:layout_width="42dp"
                     android:layout_height="22dp"
                     android:layout_marginRight="25dp"
                     android:layout_marginBottom="15dp"
-                    android:background="@drawable/home_banner_indicator"
+                    android:background="@drawable/home_event_indicator"
                     app:layout_constraintBottom_toTopOf="@+id/store_big_name_bg"
                     app:layout_constraintEnd_toEndOf="@+id/store_top_vp" />
 
@@ -61,8 +63,8 @@
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:textSize="10sp"
+                        android:textStyle="normal" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -70,7 +72,7 @@
                         android:layout_marginHorizontal="3dp"
                         android:text="/"
                         android:textColor="@color/white"
-                        android:textSize="12sp"
+                        android:textSize="10sp"
                         android:textStyle="normal" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -79,7 +81,7 @@
                         android:layout_height="wrap_content"
                         android:text="3"
                         android:textColor="@color/white"
-                        android:textSize="12sp"
+                        android:textSize="10sp"
                         android:textStyle="normal" />
 
                 </LinearLayout>
@@ -555,20 +557,105 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- pin: 스크롤 시 고정 -->
-            <androidx.appcompat.widget.Toolbar
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/store_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="?attr/actionBarSize"
                 android:fitsSystemWindows="true"
-                app:layout_collapseMode="pin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:menu="@menu/menu_store_toolbar" />
+                app:layout_collapseMode="pin">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/store_toolbar_back"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/ic_store_back"
+                    android:tint="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/store_toolbar_share"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_store_share"
+                    android:tint="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/menu_store_toolbar_favorite"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/menu_store_toolbar_favorite"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/ic_store_favorite"
+                    android:tint="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         <!-- 뷰페이저와 연결할 탭 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/store_toolbar_2"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:layout_marginTop="24dp"
+            android:fitsSystemWindows="true"
+            android:visibility="gone"
+            app:layout_collapseMode="pin">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/store_toolbar_back_2"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_store_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/store_toolbar_name_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="음식점 이름"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/store_toolbar_back_2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/store_toolbar_share_2"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_store_share"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/menu_store_toolbar_favorite_2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/menu_store_toolbar_favorite_2"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_store_favorite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -682,7 +769,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:paddingHorizontal="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/store_list_category_1" />
@@ -715,7 +801,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:paddingHorizontal="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/store_list_category_2" />
@@ -748,7 +833,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:paddingHorizontal="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/store_list_category_3" />
@@ -782,7 +866,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="40dp"
-                android:paddingHorizontal="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -15,7 +15,7 @@ import com.risingcamp.coupangeats.src.home.models.getFranRes.FranResult
 import com.risingcamp.coupangeats.src.home.store.StoreActivity
 import java.text.DecimalFormat
 
-class HorizontalResListAdapter(val context: Context, var list:ArrayList<FranResult>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HorizontalResListAdapter(val context: Context, var list:List<FranResult>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val ITEM = 1
     private val FOOTER = 2

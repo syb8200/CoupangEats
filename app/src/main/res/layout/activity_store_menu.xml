@@ -37,11 +37,11 @@
 
                 <View
                     android:id="@+id/store_menu_img_indicator"
-                    android:layout_width="45dp"
+                    android:layout_width="42dp"
                     android:layout_height="22dp"
                     android:layout_marginRight="25dp"
-                    android:layout_marginBottom="15dp"
-                    android:background="@drawable/home_banner_indicator"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/home_event_indicator"
                     app:layout_constraintBottom_toBottomOf="@+id/store_top_vp"
                     app:layout_constraintEnd_toEndOf="@+id/store_top_vp" />
 
@@ -61,8 +61,8 @@
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:textSize="10sp"
+                        android:textStyle="normal" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
                         android:layout_marginHorizontal="3dp"
                         android:text="/"
                         android:textColor="@color/white"
-                        android:textSize="12sp"
+                        android:textSize="10sp"
                         android:textStyle="normal" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -79,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textColor="@color/white"
-                        android:textSize="12sp"
+                        android:textSize="10sp"
                         android:textStyle="normal" />
 
                 </LinearLayout>
@@ -140,7 +140,7 @@
                 android:id="@+id/store_menu_des"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginHorizontal="20dp"
                 android:text="메뉴 설명"
                 android:textColor="@color/cp_store_menu_des"
@@ -152,14 +152,14 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/store_menu_allergy"
-                android:layout_width="175dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/store_delivery_detail"
                 android:gravity="center"
                 android:paddingVertical="4dp"
-                android:paddingHorizontal="3dp"
+                android:paddingHorizontal="10dp"
                 android:text="@string/store_menu_allergy"
                 android:textColor="@color/cp_store_menu_allergy"
                 android:textSize="12sp"
@@ -230,6 +230,99 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/store_menu_price_txt" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/store_menu_plus_btn"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:background="@drawable/store_menu_count_plus_btn"
+                android:text="+"
+                android:textColor="@color/cp_store_menu_plus_btn"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/store_menu_price" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/store_menu_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginRight="10dp"
+                android:text="1"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/store_menu_plus_btn"
+                app:layout_constraintTop_toBottomOf="@+id/store_menu_price" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/store_menu_minus_btn"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/store_menu_count_minus_btn"
+                android:gravity="center"
+                android:text="-"
+                android:textColor="@color/cp_store_menu_plus_btn"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toStartOf="@+id/store_menu_count"
+                app:layout_constraintTop_toBottomOf="@+id/store_menu_price" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/store_menu_option_title_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:background="@color/cp_gray6"
+                android:paddingVertical="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/store_menu_minus_btn">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/store_menu_option_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="옵션 이름"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/store_menu_option_essential"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:text="필수 선택"
+                    android:textColor="@color/cp_signup_wrong"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/store_menu_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingHorizontal="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/store_menu_option_title_layout" />
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
