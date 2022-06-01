@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.risingcamp.coupangeats.R
-import com.risingcamp.coupangeats.src.home.store.storemenu.StoreMenu
+import com.risingcamp.coupangeats.src.home.store.storemenu.StoreMenuActivity
 import java.text.DecimalFormat
 
 class StoreListAdapter(var list: ArrayList<StoreList>) : RecyclerView.Adapter<StoreListAdapter.AdapterViewHolder>() {
@@ -30,7 +30,7 @@ class StoreListAdapter(var list: ArrayList<StoreList>) : RecyclerView.Adapter<St
             holder.des.text = item.menu_des
 
             holder.itemView.setOnClickListener {
-                val intent = Intent(context, StoreMenu::class.java)
+                val intent = Intent(context, StoreMenuActivity::class.java)
                 intent.run { context.startActivity(this) }
             }
 

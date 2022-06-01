@@ -4,6 +4,7 @@ import com.risingcamp.coupangeats.config.ApplicationClass
 import com.risingcamp.coupangeats.src.home.models.getCategory.GetCategoryResponse
 import com.risingcamp.coupangeats.src.home.models.getFranRes.GetFranResResponse
 import com.risingcamp.coupangeats.src.home.models.getLocation.GetLocationResponse
+import com.risingcamp.coupangeats.src.home.models.getMidBanner.GetMidBannerResponse
 import com.risingcamp.coupangeats.src.home.models.getNewRes.GetNewResResponse
 import com.risingcamp.coupangeats.src.home.models.getResList.GetResListResponse
 import com.risingcamp.coupangeats.src.home.models.getTopBanner.GetTopBannerResponse
@@ -99,6 +100,24 @@ class HomeService(val homeInterface: HomeInterface) {
 
             override fun onFailure(call: Call<GetTopBannerResponse>, t: Throwable) {
                 homeInterface.onGetTopBannerFailure(t.message ?: "통신 오류")
+            }
+
+        })
+    }
+
+    fun tryGetMidBanner(){
+        val homeRetrofitInterface = ApplicationClass.sRetrofit.create(HomeRetrofitInterface::class.java)
+        homeRetrofitInterface.getMidBanner().enqueue(object :
+            Callback<GetMidBannerResponse> {
+            override fun onResponse(
+                call: Call<GetMidBannerResponse>,
+                response: Response<GetMidBannerResponse>
+            ) {
+                homeInterface.onGetMidBannerSuccess(response.body() as GetMidBannerResponse)
+            }
+
+            override fun onFailure(call: Call<GetMidBannerResponse>, t: Throwable) {
+                homeInterface.onGetMidBannerFailure(t.message ?: "통신 오류")
             }
 
         })

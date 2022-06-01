@@ -19,6 +19,8 @@ import com.risingcamp.coupangeats.src.home.models.getCategory.GetCategoryRespons
 import com.risingcamp.coupangeats.src.home.models.getFranRes.FranResult
 import com.risingcamp.coupangeats.src.home.models.getFranRes.GetFranResResponse
 import com.risingcamp.coupangeats.src.home.models.getLocation.GetLocationResponse
+import com.risingcamp.coupangeats.src.home.models.getMidBanner.GetMidBannerResponse
+import com.risingcamp.coupangeats.src.home.models.getMidBanner.MidBannerResult
 import com.risingcamp.coupangeats.src.home.models.getNewRes.GetNewResResponse
 import com.risingcamp.coupangeats.src.home.models.getNewRes.Result
 import com.risingcamp.coupangeats.src.home.models.getResList.GetResListResponse
@@ -47,8 +49,21 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
     var incategoryList = mutableListOf<String>()
 
-    var top_banner_id : Int? = null
-    var top_banner_img : String? = null
+    var top_banner_id_1 : Int? = null
+    var top_banner_img_1 : String? = null
+    var top_banner_id_2 : Int? = null
+    var top_banner_img_2 : String? = null
+    var top_banner_id_3 : Int? = null
+    var top_banner_img_3 : String? = null
+    var top_banner_id_4 : Int? = null
+    var top_banner_img_4 : String? = null
+    var top_banner_id_5 : Int? = null
+    var top_banner_img_5 : String? = null
+
+    var mid_banner_id_1 : Int? = null
+    var mid_banner_img_1 : String? = null
+    var mid_banner_id_2 : Int? = null
+    var mid_banner_img_2 : String? = null
 
     var check : String? = null
 
@@ -117,27 +132,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     }
 
     fun setMidBanner(){
-        var models = arrayListOf(R.drawable.ic_cp_logo, R.drawable.ic_signup_email_complete)
-        var count = models.size
-        adapter2 = MidBannerAdapter(models, requireContext())
-        binding.homeMidBannerVp.adapter = adapter2
-
-        //페이지가 바꼈을때 호출
-        binding.homeMidBannerVp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-            }
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                binding.homeMidBannerIndicatorNum.text = ((position%2)+1).toString()
-                currentPosition2 = position
-                binding.homeMidBannerIndicatorTotal.text = count.toString()
-            }
-            override fun onPageScrollStateChanged(state: Int) {
-                super.onPageScrollStateChanged(state)
-            }
-        })
-
+        HomeService(this).tryGetMidBanner()
     }
 
     //배너 관련
@@ -470,29 +465,29 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
 
     override fun onGetTopBannerSuccess(getTopBannerResponse: GetTopBannerResponse) {
-        top_banner_id = getTopBannerResponse.result[0].eventId
-        top_banner_img = getTopBannerResponse.result[0].eventImageUrl
-        top_banner_id = getTopBannerResponse.result[1].eventId
-        top_banner_img = getTopBannerResponse.result[1].eventImageUrl
-        top_banner_id = getTopBannerResponse.result[2].eventId
-        top_banner_img = getTopBannerResponse.result[2].eventImageUrl
-        top_banner_id = getTopBannerResponse.result[3].eventId
-        top_banner_img = getTopBannerResponse.result[3].eventImageUrl
-        top_banner_id = getTopBannerResponse.result[4].eventId
-        top_banner_img = getTopBannerResponse.result[4].eventImageUrl
-        Log.d("배너", "$top_banner_id, $top_banner_img")
+        top_banner_id_1 = getTopBannerResponse.result[0].eventId
+        top_banner_img_1 = getTopBannerResponse.result[0].eventImageUrl
+        top_banner_id_2 = getTopBannerResponse.result[1].eventId
+        top_banner_img_2 = getTopBannerResponse.result[1].eventImageUrl
+        top_banner_id_3 = getTopBannerResponse.result[2].eventId
+        top_banner_img_3 = getTopBannerResponse.result[2].eventImageUrl
+        top_banner_id_4 = getTopBannerResponse.result[3].eventId
+        top_banner_img_4 = getTopBannerResponse.result[3].eventImageUrl
+        top_banner_id_5 = getTopBannerResponse.result[4].eventId
+        top_banner_img_5 = getTopBannerResponse.result[4].eventImageUrl
+
+        Log.d("상단 배너", "$top_banner_id_1, $top_banner_img_1, $top_banner_id_2, $top_banner_img_2, $top_banner_id_3, $top_banner_img_3, $top_banner_id_4, $top_banner_img_4, $top_banner_id_5, $top_banner_img_5")
 
         var models = arrayListOf<TopBannerResult>(
-            TopBannerResult(top_banner_id!!, top_banner_img!!),
-            TopBannerResult(top_banner_id!!, top_banner_img!!),
-            TopBannerResult(top_banner_id!!, top_banner_img!!),
-            TopBannerResult(top_banner_id!!, top_banner_img!!),
-            TopBannerResult(top_banner_id!!, top_banner_img!!)
+            TopBannerResult(top_banner_id_1!!, top_banner_img_1!!),
+            TopBannerResult(top_banner_id_2!!, top_banner_img_2!!),
+            TopBannerResult(top_banner_id_3!!, top_banner_img_3!!),
+            TopBannerResult(top_banner_id_4!!, top_banner_img_4!!),
+            TopBannerResult(top_banner_id_5!!, top_banner_img_5!!)
         )
         var count = models.size
         adapter = TopBannerAdapter(models, requireContext())
         binding.homeTopBannerVp.adapter = adapter
-
 
         //페이지가 바꼈을때 호출
         binding.homeTopBannerVp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -511,6 +506,41 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         })
     }
     override fun onGetTopBannerFailure(message: String) {
+        Log.d("오류", "오류: $message")
+    }
+
+
+    override fun onGetMidBannerSuccess(getMidBannerResponse: GetMidBannerResponse) {
+        mid_banner_id_1 = getMidBannerResponse.result[0].eventId
+        mid_banner_img_1 = getMidBannerResponse.result[0].eventImageUrl
+        mid_banner_id_2 = getMidBannerResponse.result[1].eventId
+        mid_banner_img_2 = getMidBannerResponse.result[1].eventImageUrl
+
+        var models = arrayListOf<MidBannerResult>(
+            MidBannerResult(mid_banner_id_1!!, mid_banner_img_1!!),
+            MidBannerResult(mid_banner_id_2!!, mid_banner_img_2!!)
+        )
+        var count = models.size
+        adapter2 = MidBannerAdapter(models, requireContext())
+        binding.homeMidBannerVp.adapter = adapter2
+
+        //페이지가 바꼈을때 호출
+        binding.homeMidBannerVp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            }
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.homeMidBannerIndicatorNum.text = ((position%2)+1).toString()
+                currentPosition2 = position
+                binding.homeMidBannerIndicatorTotal.text = count.toString()
+            }
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+            }
+        })
+    }
+    override fun onGetMidBannerFailure(message: String) {
         Log.d("오류", "오류: $message")
     }
 

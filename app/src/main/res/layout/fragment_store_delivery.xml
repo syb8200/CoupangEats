@@ -7,7 +7,7 @@
     android:background="@color/white">
 
     <LinearLayout
-        android:id="@+id/store_delivery_time"
+        android:id="@+id/frg_store_delivery_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -42,7 +42,7 @@
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/store_delivery_time_start"
+            android:id="@+id/frg_store_delivery_time_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
@@ -61,7 +61,7 @@
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/store_delivery_time_end"
+            android:id="@+id/frg_store_delivery_time_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00"
@@ -107,7 +107,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/store_delivery_fee_layout"
+        android:id="@+id/frg_store_delivery_fee_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -116,7 +116,7 @@
         android:paddingHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/store_delivery_time">
+        app:layout_constraintTop_toBottomOf="@+id/frg_store_delivery_time">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -127,7 +127,7 @@
             android:textStyle="normal" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/store_delivery_fee_price"
+            android:id="@+id/frg_store_delivery_fee_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="48dp"
@@ -168,7 +168,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/store_delivery_min_price_layout"
+        android:id="@+id/frg_store_delivery_min_price_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -179,7 +179,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/store_delivery_fee_layout">
+        app:layout_constraintTop_toBottomOf="@+id/frg_store_delivery_fee_layout">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -190,7 +190,7 @@
             android:textStyle="normal" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/store_delivery_min_price"
+            android:id="@+id/frg_store_order_min_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="35dp"
@@ -208,8 +208,5 @@
             android:textStyle="normal" />
 
     </LinearLayout>
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

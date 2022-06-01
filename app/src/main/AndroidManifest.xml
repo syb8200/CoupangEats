@@ -27,7 +27,7 @@
         <activity android:name=".src.favorite.FavoriteActivity"/>
         <activity android:name=".src.home.location.LocationActivity"/>
         <activity android:name=".src.home.store.StoreActivity"/>
-        <activity android:name=".src.home.store.storemenu.StoreMenu"/>
+        <activity android:name=".src.home.store.storemenu.StoreMenuActivity"/>
 
     </application>
 

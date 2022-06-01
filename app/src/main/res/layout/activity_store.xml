@@ -131,6 +131,7 @@
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/store_cheetah"
                                 android:layout_width="70dp"
                                 android:layout_height="wrap_content"
                                 android:adjustViewBounds="true"
@@ -143,6 +144,7 @@
                                 android:src="@drawable/ic_home_list_rate"/>
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/store_star_point"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="5.0"
@@ -159,6 +161,7 @@
                                 android:textSize="13sp"/>
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/store_review_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="000"
@@ -239,7 +242,7 @@
                         android:id="@+id/store_delivery_tab_time_start"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="00"
+                        android:text="99"
                         android:textColor="@color/black"
                         android:textSize="15sp"
                         android:textStyle="normal" />
@@ -257,7 +260,7 @@
                         android:id="@+id/store_delivery_tab_time_end"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="00"
+                        android:text="99"
                         android:textColor="@color/black"
                         android:textSize="15sp"
                         android:textStyle="normal" />

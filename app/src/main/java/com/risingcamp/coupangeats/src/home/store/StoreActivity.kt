@@ -3,31 +3,37 @@ package com.risingcamp.coupangeats.src.home.store
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
-import android.opengl.Visibility
 import android.os.*
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
-import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
-import androidx.annotation.VisibleForTesting
 import androidx.core.view.WindowCompat
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.risingcamp.coupangeats.R
 import com.risingcamp.coupangeats.config.BaseActivity
 import com.risingcamp.coupangeats.databinding.ActivityStoreBinding
+import com.risingcamp.coupangeats.src.home.store.models.getStoreCategory.GetStoreCategoryResponse
+import com.risingcamp.coupangeats.src.home.store.models.getStoreMain.GetStoreMainResponse
 
-class StoreActivity: BaseActivity<ActivityStoreBinding>(ActivityStoreBinding::inflate) {
+class StoreActivity: BaseActivity<ActivityStoreBinding>(ActivityStoreBinding::inflate),StoreInterface {
 
     lateinit var adapter : MenuImgAdapter
     var currentPosition = 0
     private val intervalTime = 5000.toLong()
+
+    var delivery_start : String? = null
+    var delivery_end : String? = null
+    var pack_start : String? = null
+    var pack_end : String? = null
+
+    var delivery_fee : String? = null
+    var order_price : String? = null
+
+    var deliveryFragment = DeliveryFragment()
+    var packFragment = PackFragment()
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +41,11 @@ class StoreActivity: BaseActivity<ActivityStoreBinding>(ActivityStoreBinding::in
 
         //setSupportActionBar(binding.storeToolbar)	//툴바 사용 설정
         //supportActionBar!!.setDisplayHomeAsUpEnabled(true) // 뒤로가기 보이게
+
+        var restaurantId = intent.getIntExtra("restaurantId", 0)
+        Log.d("레스토랑아이디", "$restaurantId")
+
+        StoreService(this).tryGetStoreMain(restaurantId)
 
         setStatusBarTransparent()
         binding.storeToolbar.setPadding(0, statusBarHeight(), 0, 0)
@@ -53,69 +64,13 @@ class StoreActivity: BaseActivity<ActivityStoreBinding>(ActivityStoreBinding::in
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_store_toolbar, menu)
-
-
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item!!.itemId){
-            R.id.menu_store_toolbar_share -> {
-            }
-            R.id.menu_store_toolbar_share -> {
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
     //상단 탭
     fun setTabLayout(){
-        supportFragmentManager.beginTransaction().replace(R.id.store_frm, DeliveryFragment()).commitAllowingStateLoss()
-
         binding.storeDeliveryTabTimeStart.setTextColor(Color.parseColor("#00AFFE"))
         binding.storeDeliveryTabSlash.setTextColor(Color.parseColor("#00AFFE"))
         binding.storeDeliveryTabTimeEnd.setTextColor(Color.parseColor("#00AFFE"))
         binding.storeDeliveryTabMin.setTextColor(Color.parseColor("#00AFFE"))
-
-        binding.storeTopTabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
-            //탭 선택할때 이벤트
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                val transaction = supportFragmentManager.beginTransaction()
-                when(tab?.text){
-                    "배달" -> {
-                        transaction.replace(R.id.store_frm, DeliveryFragment()).commitAllowingStateLoss()
-                        binding.storeDeliveryTabTimeStart.setTextColor(Color.parseColor("#00AFFE"))
-                        binding.storeDeliveryTabSlash.setTextColor(Color.parseColor("#00AFFE"))
-                        binding.storeDeliveryTabTimeEnd.setTextColor(Color.parseColor("#00AFFE"))
-                        binding.storeDeliveryTabMin.setTextColor(Color.parseColor("#00AFFE"))
-                    }
-                    "포장" -> {
-                        transaction.replace(R.id.store_frm, PackFragment()).commitAllowingStateLoss()
-                        binding.storePackTabTimeStart.setTextColor(Color.parseColor("#00AFFE"))
-                        binding.storePackTabSlash.setTextColor(Color.parseColor("#00AFFE"))
-                        binding.storePackTabTimeEnd.setTextColor(Color.parseColor("#00AFFE"))
-                        binding.storePackTabMin.setTextColor(Color.parseColor("#00AFFE"))
-                    }
-                }
-            }
-            //다른 탭 버튼 눌러 선택된 탭 버튼 해제될 때 이벤트
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                binding.storeDeliveryTabTimeStart.setTextColor(Color.parseColor("#000000"))
-                binding.storeDeliveryTabSlash.setTextColor(Color.parseColor("#000000"))
-                binding.storeDeliveryTabTimeEnd.setTextColor(Color.parseColor("#000000"))
-                binding.storeDeliveryTabMin.setTextColor(Color.parseColor("#000000"))
-
-                binding.storePackTabTimeStart.setTextColor(Color.parseColor("#000000"))
-                binding.storePackTabSlash.setTextColor(Color.parseColor("#000000"))
-                binding.storePackTabTimeEnd.setTextColor(Color.parseColor("#000000"))
-                binding.storePackTabMin.setTextColor(Color.parseColor("#000000"))
-            }
-            //선택된 탭 버튼을 다시 선택할 때 이벤트
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-        })
     }
 
     fun setMenuTabLayout(){
@@ -314,6 +269,109 @@ class StoreActivity: BaseActivity<ActivityStoreBinding>(ActivityStoreBinding::in
     override fun onDestroy() {
         super.onDestroy()
         setStatusBarOrigin()
+    }
+
+//--------------------------------------------------------------------------------------------------------------------------------
+
+    override fun onGetStoreMainSuccess(getStoreMainResponse: GetStoreMainResponse) {
+
+        binding.storeBigName.text = getStoreMainResponse.result.resName
+        binding.storeToolbarName2.text = getStoreMainResponse.result.resName
+
+        var cheetah = getStoreMainResponse.result.isCheetah
+        if(cheetah == 1){
+            binding.storeCheetah.visibility = View.VISIBLE
+        } else{
+            binding.storeCheetah.visibility = View.GONE
+        }
+
+        binding.storeStarPoint.text = getStoreMainResponse.result.starPoint.toString()
+        binding.storeReviewCount.text = getStoreMainResponse.result.reviewCount.toString()
+
+        delivery_start = getStoreMainResponse.result.deliveryTime.toString()
+        binding.storeDeliveryTabTimeStart.text = delivery_start
+        delivery_end = (getStoreMainResponse.result.deliveryTime+5).toString()
+        binding.storeDeliveryTabTimeEnd.text = delivery_end
+
+        pack_start = (getStoreMainResponse.result.deliveryTime-10).toString()
+        binding.storePackTabTimeStart.text = pack_start
+        pack_end = getStoreMainResponse.result.deliveryTime.toString()
+        binding.storePackTabTimeEnd.text = pack_end
+
+        delivery_fee = getStoreMainResponse.result.minDeliveryFee.toString()
+        order_price = getStoreMainResponse.result.minOrderPrice.toString()
+
+        //탭 리스너
+        binding.storeTopTabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+            //탭 선택할때 이벤트
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                val transaction = supportFragmentManager.beginTransaction()
+                when(tab?.text){
+                    "배달" -> {
+                        transaction.replace(R.id.store_frm, deliveryFragment).commitAllowingStateLoss()
+                        binding.storeDeliveryTabTimeStart.setTextColor(Color.parseColor("#00AFFE"))
+                        binding.storeDeliveryTabSlash.setTextColor(Color.parseColor("#00AFFE"))
+                        binding.storeDeliveryTabTimeEnd.setTextColor(Color.parseColor("#00AFFE"))
+                        binding.storeDeliveryTabMin.setTextColor(Color.parseColor("#00AFFE"))
+
+                        Log.d("액티비티", "$delivery_start, $delivery_end")
+                    }
+                    "포장" -> {
+                        transaction.replace(R.id.store_frm, packFragment).commitAllowingStateLoss()
+                        binding.storePackTabTimeStart.setTextColor(Color.parseColor("#00AFFE"))
+                        binding.storePackTabSlash.setTextColor(Color.parseColor("#00AFFE"))
+                        binding.storePackTabTimeEnd.setTextColor(Color.parseColor("#00AFFE"))
+                        binding.storePackTabMin.setTextColor(Color.parseColor("#00AFFE"))
+                    }
+                }
+            }
+            //다른 탭 버튼 눌러 선택된 탭 버튼 해제될 때 이벤트
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                binding.storeDeliveryTabTimeStart.setTextColor(Color.parseColor("#000000"))
+                binding.storeDeliveryTabSlash.setTextColor(Color.parseColor("#000000"))
+                binding.storeDeliveryTabTimeEnd.setTextColor(Color.parseColor("#000000"))
+                binding.storeDeliveryTabMin.setTextColor(Color.parseColor("#000000"))
+
+                binding.storePackTabTimeStart.setTextColor(Color.parseColor("#000000"))
+                binding.storePackTabSlash.setTextColor(Color.parseColor("#000000"))
+                binding.storePackTabTimeEnd.setTextColor(Color.parseColor("#000000"))
+                binding.storePackTabMin.setTextColor(Color.parseColor("#000000"))
+            }
+            //선택된 탭 버튼을 다시 선택할 때 이벤트
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
+
+        var bundle = Bundle()
+        bundle.putString("deliveryStart", delivery_start)
+        bundle.putString("deliveryEnd", delivery_end)
+
+        bundle.putString("deliveryFee", delivery_fee)
+        bundle.putString("orderPrice", order_price)
+
+        Log.d("번들", "$delivery_start, $delivery_end")
+
+        bundle.putString("packStart", pack_start)
+        bundle.putString("packEnd", pack_end)
+        Log.d("번들2", "$pack_start, $pack_end")
+
+        deliveryFragment.arguments = bundle
+        packFragment.arguments = bundle
+
+        supportFragmentManager.beginTransaction().replace(R.id.store_frm, deliveryFragment).commitAllowingStateLoss()
+    }
+
+    override fun onGetStoreMainFailure(message: String) {
+        Log.d("오류", "오류: $message")
+    }
+
+
+    override fun onGetStoreCategorySuccess(getStoreCategoryResponse: GetStoreCategoryResponse) {
+        
+    }
+
+    override fun onGetStoreCategoryFailure(message: String) {
+        Log.d("오류", "오류: $message")
     }
 
 

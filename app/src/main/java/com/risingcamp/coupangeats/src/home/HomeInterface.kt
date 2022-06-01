@@ -3,6 +3,7 @@ package com.risingcamp.coupangeats.src.home
 import com.risingcamp.coupangeats.src.home.models.getCategory.GetCategoryResponse
 import com.risingcamp.coupangeats.src.home.models.getFranRes.GetFranResResponse
 import com.risingcamp.coupangeats.src.home.models.getLocation.GetLocationResponse
+import com.risingcamp.coupangeats.src.home.models.getMidBanner.GetMidBannerResponse
 import com.risingcamp.coupangeats.src.home.models.getNewRes.GetNewResResponse
 import com.risingcamp.coupangeats.src.home.models.getResList.GetResListResponse
 import com.risingcamp.coupangeats.src.home.models.getTopBanner.GetTopBannerResponse
@@ -32,4 +33,8 @@ interface HomeInterface {
     fun onGetResListSuccess(getResListResponse: GetResListResponse)
 
     fun onGetResListFailure(message: String)
+
+    fun onGetMidBannerSuccess(getMidBannerResponse: GetMidBannerResponse)
+
+    fun onGetMidBannerFailure(message: String)
 }

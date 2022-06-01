@@ -3,6 +3,7 @@ package com.risingcamp.coupangeats.src.home
 import com.risingcamp.coupangeats.src.home.models.getCategory.GetCategoryResponse
 import com.risingcamp.coupangeats.src.home.models.getFranRes.GetFranResResponse
 import com.risingcamp.coupangeats.src.home.models.getLocation.GetLocationResponse
+import com.risingcamp.coupangeats.src.home.models.getMidBanner.GetMidBannerResponse
 import com.risingcamp.coupangeats.src.home.models.getNewRes.GetNewResResponse
 import com.risingcamp.coupangeats.src.home.models.getResList.GetResListResponse
 import com.risingcamp.coupangeats.src.home.models.getTopBanner.GetTopBannerResponse
@@ -30,6 +31,9 @@ interface HomeRetrofitInterface {
 
     @GET("app/events/top")
     fun getTopBanner() : Call<GetTopBannerResponse>
+
+    @GET("app/events/middle")
+    fun getMidBanner() : Call<GetMidBannerResponse>
 
     @GET("app/restaurants")
     fun getResList(

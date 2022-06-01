@@ -59,6 +59,13 @@ class HorizontalResListAdapter(val context: Context, var list:List<FranResult>) 
 
                     holder.itemView.setOnClickListener {
                         val intent = Intent(context, StoreActivity::class.java)
+
+                        var check_id = item.restaurantId
+                        Log.d("체크아이디", "$check_id")
+
+                        intent.putExtra("restaurantId", check_id)
+                        //context.startActivity(intent)
+
                         intent.run { context.startActivity(this) }
                     }
 

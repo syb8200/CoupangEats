@@ -7,7 +7,7 @@
     android:background="@color/white">
 
     <LinearLayout
-        android:id="@+id/store_delivery_time"
+        android:id="@+id/frg_store_pack_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
-            android:text="@string/store_delivery_time_txt"
+            android:text="@string/store_pack_time_txt"
             android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -42,7 +42,7 @@
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/store_delivery_time_start"
+            android:id="@+id/frg_store_pack_time_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
@@ -61,7 +61,7 @@
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/store_delivery_time_end"
+            android:id="@+id/frg_store_pack_time_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00"
@@ -80,7 +80,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/store_delivery_info"
+        android:id="@+id/frg_store_pack_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -107,17 +107,17 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/store_pack_map"
+        android:id="@+id/frg_store_pack_map"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/img_store_map"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/store_delivery_info" />
+        app:layout_constraintTop_toBottomOf="@+id/frg_store_pack_info" />
 
     <LinearLayout
-        android:id="@+id/store_delivery_fee_layout"
+        android:id="@+id/frg_store_pack_fee_layout"
         android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -127,9 +127,9 @@
         android:paddingHorizontal="20dp"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/store_pack_map"
+        app:layout_constraintEnd_toStartOf="@+id/frg_store_pack_map"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/store_delivery_time">
+        app:layout_constraintTop_toBottomOf="@+id/frg_store_pack_time">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -140,7 +140,7 @@
             android:textStyle="normal" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/store_delivery_fee_price"
+            android:id="@+id/frg_store_pack_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
