@@ -2,6 +2,8 @@ package com.risingcamp.coupangeats.src.home.store
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.*
 import android.util.Log
@@ -13,16 +15,27 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.risingcamp.coupangeats.R
+import com.risingcamp.coupangeats.config.ApplicationClass
 import com.risingcamp.coupangeats.config.BaseActivity
 import com.risingcamp.coupangeats.databinding.ActivityStoreBinding
+import com.risingcamp.coupangeats.src.MainActivity
+import com.risingcamp.coupangeats.src.home.store.models.getStoreAllMenu.GetStoreAllMenuResponse
+import com.risingcamp.coupangeats.src.home.store.models.getStoreAllMenu.Result
 import com.risingcamp.coupangeats.src.home.store.models.getStoreCategory.GetStoreCategoryResponse
 import com.risingcamp.coupangeats.src.home.store.models.getStoreMain.GetStoreMainResponse
+import org.jetbrains.anko.share
+import java.util.*
 
 class StoreActivity: BaseActivity<ActivityStoreBinding>(ActivityStoreBinding::inflate),StoreInterface {
 
     lateinit var adapter : MenuImgAdapter
     var currentPosition = 0
     private val intervalTime = 5000.toLong()
+
+    var sharedPreference : Int? = null
+
+    var restaurantId : Int? = null
+    var restaurantId2 : Int? = null
 
     var delivery_start : String? = null
     var delivery_end : String? = null
@@ -35,35 +48,53 @@ class StoreActivity: BaseActivity<ActivityStoreBinding>(ActivityStoreBinding::in
     var deliveryFragment = DeliveryFragment()
     var packFragment = PackFragment()
 
+    var menuList1 = mutableListOf<Result>()
+    var menuList2 = mutableListOf<Result>()
+    var menuList3 = mutableListOf<Result>()
+    var menuList4 = mutableListOf<Result>()
+    var menuList5 = mutableListOf<Result>()
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        sharedPreference = ApplicationClass.sSharedPreferences.getInt("FirstRestaurantId", 0)
+        //restaurantId = intent.getIntExtra("restaurantId", 0)
+        Log.d("레스토랑아이디", "$sharedPreference")
+
+        StoreService(this).tryGetStoreMain(sharedPreference!!)
+
         //setSupportActionBar(binding.storeToolbar)	//툴바 사용 설정
         //supportActionBar!!.setDisplayHomeAsUpEnabled(true) // 뒤로가기 보이게
-
-        var restaurantId = intent.getIntExtra("restaurantId", 0)
-        Log.d("레스토랑아이디", "$restaurantId")
-
-        StoreService(this).tryGetStoreMain(restaurantId)
-
         setStatusBarTransparent()
         binding.storeToolbar.setPadding(0, statusBarHeight(), 0, 0)
 
-        setMenuImg()
+        setBackBtn()
+
         setPage()
 
         setTabLayout()
         setMenuTabLayout()
         setScrollListener()
 
-        setStoreList1()
-        setStoreList2()
-        setStoreList3()
-        setStoreList4()
-
+        setMenuList()
     }
 
+    fun setBackBtn(){
+        binding.storeToolbarBack.setOnClickListener {
+            ApplicationClass.sSharedPreferences.edit().remove("FirstRestaurantId").apply()
+
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.storeToolbarBack2.setOnClickListener {
+            ApplicationClass.sSharedPreferences.edit().remove("FirstRestaurantId").apply()
+
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+    }
 
     //상단 탭
     fun setTabLayout(){
@@ -73,37 +104,14 @@ class StoreActivity: BaseActivity<ActivityStoreBinding>(ActivityStoreBinding::in
         binding.storeDeliveryTabMin.setTextColor(Color.parseColor("#00AFFE"))
     }
 
+    //메뉴 탭
     fun setMenuTabLayout(){
-        binding.storeMidTabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when(tab?.text){
-                    "추천메뉴" -> {
-                        binding.storeNestedScroll.scrollTo(0, 0)
-                    }
-                    "세트메뉴" -> {
-                        binding.storeNestedScroll.scrollTo(0, binding.storeLine1.bottom)
-                    }
-                    "피자메뉴" -> {
-                        binding.storeNestedScroll.scrollTo(0, binding.storeLine2.bottom)
-                    }
-                    "비밀메뉴" -> {
-                        binding.storeNestedScroll.scrollTo(0, binding.storeLine3.bottom)
-                    }
-                }
-            }
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-        })
-
+        StoreService(this).tryGetStoreCategory(sharedPreference!!)
     }
 
-
-
+    //스크롤리스너
     @RequiresApi(Build.VERSION_CODES.M)
     fun setScrollListener(){
-
         binding.storeNestedScroll.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             var tb = binding.storeMidTabLayout.top
             var toolbar = binding.storeToolbar2.top
@@ -114,7 +122,6 @@ class StoreActivity: BaseActivity<ActivityStoreBinding>(ActivityStoreBinding::in
             } else{
                 binding.storeToolbar2.visibility = View.GONE
             }
-
 
             if(scrollY==0 || scrollY < binding.storeLine1.top){
                 binding.storeMidTabLayout.setScrollPosition(0, 0f, true)
@@ -128,34 +135,10 @@ class StoreActivity: BaseActivity<ActivityStoreBinding>(ActivityStoreBinding::in
             if(scrollY > binding.storeLine3.top){
                 binding.storeMidTabLayout.setScrollPosition(3, 0f, true)
             }
-
         }
-
     }
 
-    fun setMenuImg(){
-        var models = arrayListOf(R.drawable.ic_cp_logo,R.drawable.ic_cp_logo, R.drawable.ic_cp_logo)
-        var count = models.size
-        adapter = MenuImgAdapter(models, this)
-        binding.storeTopVp.adapter = adapter
-
-        //페이지가 바꼈을때 호출
-        binding.storeTopVp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-            }
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                binding.storeMenuImtIndicatorNum.text = ((position%3)+1).toString()
-                currentPosition = position
-            }
-            override fun onPageScrollStateChanged(state: Int) {
-                super.onPageScrollStateChanged(state)
-            }
-        })
-
-    }
-
+    //상단 이미지 관련
     fun setPage() {
         binding.storeTopVp.setCurrentItem((Int.MAX_VALUE / 2)-3, true)
     }
@@ -178,54 +161,10 @@ class StoreActivity: BaseActivity<ActivityStoreBinding>(ActivityStoreBinding::in
         }
     }
 
-    fun setStoreList1(){
-        val storeList1 = arrayListOf(
-            StoreList("깐풍기요리치킨+펩시1.25",20000,"5/1~6/30 멕시카나 메뉴 6종 주문시 펩시 1.25 무료 사이즈업", R.drawable.ic_cp_logo),
-            StoreList("깐풍기요리치킨+펩시1.25",20000,"5/1~6/30 멕시카나 메뉴 6종 주문시 펩시 1.25 무료 사이즈업", R.drawable.ic_cp_logo),
-            StoreList("깐풍기요리치킨+펩시1.25",20000,"5/1~6/30 멕시카나 메뉴 6종 주문시 펩시 1.25 무료 사이즈업", R.drawable.ic_cp_logo),
-            StoreList("깐풍기요리치킨+펩시1.25",20000,"5/1~6/30 멕시카나 메뉴 6종 주문시 펩시 1.25 무료 사이즈업", R.drawable.ic_cp_logo)
-        )
-        binding.storeList1.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.storeList1.setHasFixedSize(true)
-        binding.storeList1.adapter = StoreListAdapter(storeList1)
+    //메뉴리스트
+    fun setMenuList(){
+        StoreService(this).tryGetStoreAllMenu(sharedPreference!!)
     }
-
-    fun setStoreList2(){
-        val storeList2 = arrayListOf(
-            StoreList("깐풍기요리치킨+펩시1.25",20000,"5/1~6/30 멕시카나 메뉴 6종 주문시 펩시 1.25 무료 사이즈업", R.drawable.ic_cp_logo),
-            StoreList("깐풍기요리치킨+펩시1.25",20000,"5/1~6/30 멕시카나 메뉴 6종 주문시 펩시 1.25 무료 사이즈업", R.drawable.ic_cp_logo),
-            StoreList("깐풍기요리치킨+펩시1.25",20000,"5/1~6/30 멕시카나 메뉴 6종 주문시 펩시 1.25 무료 사이즈업", R.drawable.ic_cp_logo),
-            StoreList("깐풍기요리치킨+펩시1.25",20000,"5/1~6/30 멕시카나 메뉴 6종 주문시 펩시 1.25 무료 사이즈업", R.drawable.ic_cp_logo)
-        )
-        binding.storeList2.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.storeList2.setHasFixedSize(true)
-        binding.storeList2.adapter = StoreListAdapter(storeList2)
-    }
-
-    fun setStoreList3(){
-        val storeList3 = arrayListOf(
-            StoreList("깐풍기요리치킨+펩시1.25",20000,"5/1~6/30 멕시카나 메뉴 6종 주문시 펩시 1.25 무료 사이즈업", R.drawable.ic_cp_logo),
-            StoreList("깐풍기요리치킨+펩시1.25",20000,"5/1~6/30 멕시카나 메뉴 6종 주문시 펩시 1.25 무료 사이즈업", R.drawable.ic_cp_logo),
-            StoreList("깐풍기요리치킨+펩시1.25",20000,"5/1~6/30 멕시카나 메뉴 6종 주문시 펩시 1.25 무료 사이즈업", R.drawable.ic_cp_logo),
-            StoreList("깐풍기요리치킨+펩시1.25",20000,"5/1~6/30 멕시카나 메뉴 6종 주문시 펩시 1.25 무료 사이즈업", R.drawable.ic_cp_logo)
-        )
-        binding.storeList3.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.storeList3.setHasFixedSize(true)
-        binding.storeList3.adapter = StoreListAdapter(storeList3)
-    }
-
-    fun setStoreList4(){
-        val storeList4 = arrayListOf(
-            StoreList("깐풍기요리치킨+펩시1.25",20000,"5/1~6/30 멕시카나 메뉴 6종 주문시 펩시 1.25 무료 사이즈업", R.drawable.ic_cp_logo),
-            StoreList("깐풍기요리치킨+펩시1.25",20000,"5/1~6/30 멕시카나 메뉴 6종 주문시 펩시 1.25 무료 사이즈업", R.drawable.ic_cp_logo),
-            StoreList("깐풍기요리치킨+펩시1.25",20000,"5/1~6/30 멕시카나 메뉴 6종 주문시 펩시 1.25 무료 사이즈업", R.drawable.ic_cp_logo),
-            StoreList("깐풍기요리치킨+펩시1.25",20000,"5/1~6/30 멕시카나 메뉴 6종 주문시 펩시 1.25 무료 사이즈업", R.drawable.ic_cp_logo)
-        )
-        binding.storeList4.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.storeList4.setHasFixedSize(true)
-        binding.storeList4.adapter = StoreListAdapter(storeList4)
-    }
-
 
 
 // 상태바 (Status Bar) 투명색 + 상태바와 UI 겹쳐보이는 것 방지 하기 위해 Padding 적용
@@ -272,8 +211,12 @@ class StoreActivity: BaseActivity<ActivityStoreBinding>(ActivityStoreBinding::in
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------
-
     override fun onGetStoreMainSuccess(getStoreMainResponse: GetStoreMainResponse) {
+
+        restaurantId2 = getStoreMainResponse.result.restaurantId
+        //intent.putExtra("restaurantId2", restaurantId2)
+        ApplicationClass.sSharedPreferences.edit().putInt("RestaurantId", restaurantId2!!).apply()
+
 
         binding.storeBigName.text = getStoreMainResponse.result.resName
         binding.storeToolbarName2.text = getStoreMainResponse.result.resName
@@ -300,6 +243,31 @@ class StoreActivity: BaseActivity<ActivityStoreBinding>(ActivityStoreBinding::in
 
         delivery_fee = getStoreMainResponse.result.minDeliveryFee.toString()
         order_price = getStoreMainResponse.result.minOrderPrice.toString()
+
+        var img_1 = getStoreMainResponse.result.resImageUrlList[0]
+        var img_2 = getStoreMainResponse.result.resImageUrlList[1]
+        var img_3 = getStoreMainResponse.result.resImageUrlList[2]
+
+        //배너 세팅
+        var models = arrayListOf(img_1, img_2, img_3)
+        var count = models.size
+        adapter = MenuImgAdapter(models, this)
+        binding.storeTopVp.adapter = adapter
+
+        //페이지가 바꼈을때 호출
+        binding.storeTopVp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            }
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.storeMenuImtIndicatorNum.text = ((position%3)+1).toString()
+                currentPosition = position
+            }
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+            }
+        })
 
         //탭 리스너
         binding.storeTopTabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
@@ -360,17 +328,132 @@ class StoreActivity: BaseActivity<ActivityStoreBinding>(ActivityStoreBinding::in
 
         supportFragmentManager.beginTransaction().replace(R.id.store_frm, deliveryFragment).commitAllowingStateLoss()
     }
-
     override fun onGetStoreMainFailure(message: String) {
         Log.d("오류", "오류: $message")
     }
 
 
     override fun onGetStoreCategorySuccess(getStoreCategoryResponse: GetStoreCategoryResponse) {
-        
+        var CategorySize = getStoreCategoryResponse.result.size
+        Log.d("사이즈", "$CategorySize")
+
+        for(i in 0 until CategorySize){
+            binding.storeMidTabLayout.addTab(binding.storeMidTabLayout.newTab().setText(getStoreCategoryResponse.result[i].kindName))
+        }
+
+        if(getStoreCategoryResponse.result[0].kindName.isNotEmpty()){
+            binding.storeListCategory1.text = getStoreCategoryResponse.result[0].kindName
+        } else{
+            binding.storeListCategory1.visibility = View.GONE
+            binding.storeList1.visibility = View.GONE
+        }
+
+        if(getStoreCategoryResponse.result[1].kindName.isNotEmpty()){
+            binding.storeListCategory2.text = getStoreCategoryResponse.result[1].kindName
+        } else{
+            binding.storeListCategory2.visibility = View.GONE
+            binding.storeList2.visibility = View.GONE
+        }
+
+        if(getStoreCategoryResponse.result[2].kindName.isNotEmpty()){
+            binding.storeListCategory3.text = getStoreCategoryResponse.result[2].kindName
+        } else{
+            binding.storeListCategory3.visibility = View.GONE
+            binding.storeList3.visibility = View.GONE
+        }
+
+        if(getStoreCategoryResponse.result[3].kindName.isNotEmpty()){
+            binding.storeListCategory4.text = getStoreCategoryResponse.result[3].kindName
+        } else{
+            binding.storeListCategory4.visibility = View.GONE
+            binding.storeList4.visibility = View.GONE
+        }
+
+        if(getStoreCategoryResponse.result[4].kindName.isNotEmpty()){
+            binding.storeListCategory5.text = getStoreCategoryResponse.result[4].kindName
+        } else{
+            binding.storeListCategory5.visibility = View.GONE
+            binding.storeList5.visibility = View.GONE
+        }
+
+
+        binding.storeMidTabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+            //탭 선택할때 이벤트
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when(tab?.position){
+                    0 -> { binding.storeNestedScroll.scrollTo(0, 0) }
+                    1 -> { binding.storeNestedScroll.scrollTo(0, binding.storeLine1.bottom) }
+                    2 -> { binding.storeNestedScroll.scrollTo(0, binding.storeLine2.bottom) }
+                    3 -> { binding.storeNestedScroll.scrollTo(0, binding.storeLine3.bottom) }
+                    4 -> { binding.storeNestedScroll.scrollTo(0, binding.storeLine4.bottom) }
+                }
+            }
+            //다른 탭 버튼 눌러 선택된 탭 버튼 해제될 때 이벤트
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+            //선택된 탭 버튼을 다시 선택할 때 이벤트
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
+    }
+    override fun onGetStoreCategoryFailure(message: String) {
+        Log.d("오류", "오류: $message")
     }
 
-    override fun onGetStoreCategoryFailure(message: String) {
+
+    override fun onGetStoreAllMenuSuccess(getStoreAllMenuResponse: GetStoreAllMenuResponse) {
+        var menuListSize = getStoreAllMenuResponse.result.size
+
+        for(i in 0 until menuListSize){
+            if(getStoreAllMenuResponse.result[i].kindId == 1){
+                menuList1.add(getStoreAllMenuResponse.result[i])
+
+            } else if(getStoreAllMenuResponse.result[i].kindId == 2){
+                menuList2.add(getStoreAllMenuResponse.result[i])
+
+            } else if(getStoreAllMenuResponse.result[i].kindId == 3){
+                menuList3.add(getStoreAllMenuResponse.result[i])
+
+            } else if(getStoreAllMenuResponse.result[i].kindId == 4){
+                menuList4.add(getStoreAllMenuResponse.result[i])
+
+            } else if(getStoreAllMenuResponse.result[i].kindId == 5){
+                menuList5.add(getStoreAllMenuResponse.result[i])
+            }
+        }
+
+        //리스트1
+        Log.d("메뉴리스트1", "$menuList1")
+        binding.storeList1.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.storeList1.setHasFixedSize(true)
+        binding.storeList1.adapter = StoreListAdapter(menuList1)
+
+        //리스트2
+        Log.d("메뉴리스트2", "$menuList2")
+        binding.storeList2.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.storeList2.setHasFixedSize(true)
+        binding.storeList2.adapter = StoreListAdapter(menuList2)
+
+        //리스트3
+        Log.d("메뉴리스트3", "$menuList3")
+        binding.storeList3.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.storeList3.setHasFixedSize(true)
+        binding.storeList3.adapter = StoreListAdapter(menuList3)
+
+        //리스트4
+        Log.d("메뉴리스트4", "$menuList4")
+        binding.storeList4.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.storeList4.setHasFixedSize(true)
+        binding.storeList4.adapter = StoreListAdapter(menuList4)
+
+        //리스트5
+        Log.d("메뉴리스트5", "$menuList5")
+        binding.storeList5.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.storeList5.setHasFixedSize(true)
+        binding.storeList5.adapter = StoreListAdapter(menuList5)
+
+    }
+    override fun onGetStoreAllMenuFailure(message: String) {
         Log.d("오류", "오류: $message")
     }
 

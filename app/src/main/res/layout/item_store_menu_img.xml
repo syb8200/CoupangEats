@@ -8,6 +8,7 @@
         android:id="@+id/item_store_menu_img"
         android:layout_width="match_parent"
         android:layout_height="225dp"
+        android:scaleType="centerCrop"
         android:background="@color/cp_gray1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

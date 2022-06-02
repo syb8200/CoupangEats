@@ -1,4 +1,4 @@
-package com.risingcamp.coupangeats.src.home.store
+package com.risingcamp.coupangeats.src.home.store.storemenu
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,16 +8,15 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.risingcamp.coupangeats.R
-import com.risingcamp.coupangeats.src.home.TopBannerAdapter
 
-class MenuImgAdapter(var models: ArrayList<String>, var context: Context) : RecyclerView.Adapter<MenuImgAdapter.AdapterViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuImgAdapter.AdapterViewHolder {
+class StoreMenuImgAdapter(var models: ArrayList<String>, var context: Context) : RecyclerView.Adapter<StoreMenuImgAdapter.AdapterViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreMenuImgAdapter.AdapterViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_store_menu_img, parent, false)
         return AdapterViewHolder(v)
     }
 
-    override fun onBindViewHolder(holder: MenuImgAdapter.AdapterViewHolder, position: Int) {
-        val item = models[position%3]
+    override fun onBindViewHolder(holder: StoreMenuImgAdapter.AdapterViewHolder, position: Int) {
+        val item = models[position%2]
         //무한스크롤
         Glide.with(context)
             .load(item)

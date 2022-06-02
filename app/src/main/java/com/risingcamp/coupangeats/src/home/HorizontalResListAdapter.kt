@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.risingcamp.coupangeats.R
+import com.risingcamp.coupangeats.config.ApplicationClass
 import com.risingcamp.coupangeats.src.home.models.getFranRes.FranResult
 import com.risingcamp.coupangeats.src.home.store.StoreActivity
 import java.text.DecimalFormat
@@ -60,10 +61,12 @@ class HorizontalResListAdapter(val context: Context, var list:List<FranResult>) 
                     holder.itemView.setOnClickListener {
                         val intent = Intent(context, StoreActivity::class.java)
 
-                        var check_id = item.restaurantId
-                        Log.d("체크아이디", "$check_id")
+                        var restaurant_id = item.restaurantId
+                        Log.d("체크아이디", "$restaurant_id")
 
-                        intent.putExtra("restaurantId", check_id)
+                        ApplicationClass.sSharedPreferences.edit().putInt("FirstRestaurantId", restaurant_id).apply()
+
+                        //intent.putExtra("restaurantId", check_id)
                         //context.startActivity(intent)
 
                         intent.run { context.startActivity(this) }

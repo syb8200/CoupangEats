@@ -1,82 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingHorizontal="20dp"
     android:layout_marginTop="15dp">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/item_store_detail_list_img"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:background="@color/cp_gray1"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_store_detail_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/item_store_detail_best"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/item_store_detail_list_best"
-        android:gravity="center"
-        android:paddingHorizontal="5dp"
-        android:paddingVertical="3dp"
-        android:text="주문많음"
-        android:textColor="@color/cp_login_btn"
-        android:textSize="11sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/item_store_detail_menu_name"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="메뉴 이름"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:maxLines="2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_store_detail_best" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/item_store_detail_list_img"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:background="@color/cp_gray1"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.01" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/item_store_detail_menu_price_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:text="00000"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_store_detail_menu_name" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_store_detail_best"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_store_detail_list_best"
+            android:gravity="center"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="3dp"
+            android:text="주문많음"
+            android:textColor="@color/cp_login_btn"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/item_store_detail_menu_price_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:text="원"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="normal"
-        app:layout_constraintStart_toEndOf="@+id/item_store_detail_menu_price_1"
-        app:layout_constraintTop_toBottomOf="@+id/item_store_detail_menu_name" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_store_detail_menu_name"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:maxLines="2"
+            android:text="메뉴 이름"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_store_detail_best" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/item_store_detail_menu_des"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
-        android:text="메뉴 설명"
-        android:textSize="14sp"
-        android:textColor="@color/cp_gray5"
-        android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_store_detail_menu_price_1" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_store_detail_menu_price_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="00000"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_store_detail_menu_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_store_detail_menu_price_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="원"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toEndOf="@+id/item_store_detail_menu_price_1"
+            app:layout_constraintTop_toBottomOf="@+id/item_store_detail_menu_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_store_detail_menu_des"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:text="메뉴 설명"
+            android:textColor="@color/cp_gray5"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_store_detail_menu_price_1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
         android:id="@+id/item_store_detail_line"
@@ -86,6 +101,6 @@
         android:background="@color/cp_gray6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_store_detail_menu_des" />
+        app:layout_constraintTop_toBottomOf="@+id/item_store_detail_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

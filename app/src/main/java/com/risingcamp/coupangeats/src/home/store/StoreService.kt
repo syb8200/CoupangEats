@@ -1,6 +1,7 @@
 package com.risingcamp.coupangeats.src.home.store
 
 import com.risingcamp.coupangeats.config.ApplicationClass
+import com.risingcamp.coupangeats.src.home.store.models.getStoreAllMenu.GetStoreAllMenuResponse
 import com.risingcamp.coupangeats.src.home.store.models.getStoreCategory.GetStoreCategoryResponse
 import com.risingcamp.coupangeats.src.home.store.models.getStoreMain.GetStoreMainResponse
 import retrofit2.Call
@@ -40,6 +41,24 @@ class StoreService(val storeInterface: StoreInterface) {
 
             override fun onFailure(call: Call<GetStoreCategoryResponse>, t: Throwable) {
                 storeInterface.onGetStoreCategoryFailure(t.message ?: "통신 오류")
+            }
+
+        })
+    }
+
+    fun tryGetStoreAllMenu(restaurantId : Int){
+        val storeRetrofitInterface = ApplicationClass.sRetrofit.create(StoreRetrofitInterface::class.java)
+        storeRetrofitInterface.getStoreAllMenu(restaurantId).enqueue(object :
+            Callback<GetStoreAllMenuResponse> {
+            override fun onResponse(
+                call: Call<GetStoreAllMenuResponse>,
+                response: Response<GetStoreAllMenuResponse>
+            ) {
+                storeInterface.onGetStoreAllMenuSuccess(response.body() as GetStoreAllMenuResponse)
+            }
+
+            override fun onFailure(call: Call<GetStoreAllMenuResponse>, t: Throwable) {
+                storeInterface.onGetStoreAllMenuFailure(t.message ?: "통신 오류")
             }
 
         })

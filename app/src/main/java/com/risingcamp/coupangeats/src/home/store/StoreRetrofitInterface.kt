@@ -1,5 +1,6 @@
 package com.risingcamp.coupangeats.src.home.store
 
+import com.risingcamp.coupangeats.src.home.store.models.getStoreAllMenu.GetStoreAllMenuResponse
 import com.risingcamp.coupangeats.src.home.store.models.getStoreCategory.GetStoreCategoryResponse
 import com.risingcamp.coupangeats.src.home.store.models.getStoreMain.GetStoreMainResponse
 import retrofit2.Call
@@ -17,4 +18,9 @@ interface StoreRetrofitInterface {
     fun getStoreCategory(
         @Path("restaurantId", encoded = true) restaurantId : Int
     ): Call<GetStoreCategoryResponse>
+
+    @GET("app/restaurants/{restaurantId}/menus")
+    fun getStoreAllMenu(
+        @Path("restaurantId", encoded = true) restaurantId : Int
+    ): Call<GetStoreAllMenuResponse>
 }

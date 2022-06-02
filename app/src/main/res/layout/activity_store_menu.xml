@@ -26,11 +26,24 @@
                 android:layout_height="wrap_content">
 
                 <!-- parallax: 스크롤 시 접힘 -->
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/store_menu_top_imv"
+                    android:layout_width="match_parent"
+                    android:layout_height="225dp"
+                    android:background="@color/white"
+                    android:visibility="invisible"
+                    android:scaleType="centerCrop"
+                    app:layout_collapseMode="parallax"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/store_menu_top_vp"
                     android:layout_width="match_parent"
                     android:layout_height="225dp"
                     android:background="@color/cp_gray1"
+                    android:visibility="invisible"
                     app:layout_collapseMode="parallax"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +55,7 @@
                     android:layout_height="22dp"
                     android:layout_marginRight="25dp"
                     android:layout_marginBottom="10dp"
+                    android:visibility="invisible"
                     android:background="@drawable/home_event_indicator"
                     app:layout_constraintBottom_toBottomOf="@+id/store_menu_top_vp"
                     app:layout_constraintEnd_toEndOf="@+id/store_menu_top_vp" />
@@ -51,13 +65,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="@+id/store_menu_img_indicator"
                     app:layout_constraintEnd_toEndOf="@+id/store_menu_img_indicator"
                     app:layout_constraintStart_toStartOf="@+id/store_menu_img_indicator"
                     app:layout_constraintTop_toTopOf="@+id/store_menu_img_indicator">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/store_menu_imt_indicator_num"
+                        android:id="@+id/store_menu_img_indicator_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -75,16 +90,15 @@
                         android:textStyle="normal" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/store_menu_imt_indicator_total"
+                        android:id="@+id/store_menu_img_indicator_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
+                        android:text="2"
                         android:textColor="@color/white"
                         android:textSize="10sp"
                         android:textStyle="normal" />
 
                 </LinearLayout>
-
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -145,13 +159,15 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/store_menu_toolbar_name_2"
-                android:layout_width="wrap_content"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:text="음식점 이름"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/store_menu_toolbar_back_2"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -211,23 +227,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/store_menu_name" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/store_menu_allergy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/store_delivery_detail"
-                android:gravity="center"
-                android:paddingVertical="4dp"
-                android:paddingHorizontal="10dp"
-                android:text="@string/store_menu_allergy"
-                android:textColor="@color/cp_store_menu_allergy"
-                android:textSize="12sp"
-                android:textStyle="normal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/store_menu_des" />
-
             <View
                 android:id="@+id/store_menu_line_1"
                 android:layout_width="match_parent"
@@ -237,7 +236,7 @@
                 android:background="@color/cp_gray7"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/store_menu_allergy" />
+                app:layout_constraintTop_toBottomOf="@+id/store_menu_des" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/store_menu_price_txt"
@@ -314,7 +313,7 @@
                 android:layout_marginRight="10dp"
                 android:text="1"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="17sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/store_menu_plus_btn"
                 app:layout_constraintTop_toBottomOf="@+id/store_menu_price" />
@@ -364,7 +363,7 @@
                     android:layout_marginRight="20dp"
                     android:text="필수 선택"
                     android:textColor="@color/cp_signup_wrong"
-                    android:textSize="15sp"
+                    android:textSize="14.5sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -394,6 +393,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/store_menu_list">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/store_menu_option_essential2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:text="필수 선택"
+                    android:textColor="@color/cp_signup_wrong"
+                    android:textSize="14.5sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/store_menu_option_title_2"
@@ -427,17 +439,30 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/store_menu_cart_btn"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_marginBottom="48dp"
-        android:layout_gravity="bottom"
-        android:background="@color/cp_login_btn"
-        android:text="배달 카트에 담기"
-        android:textSize="16sp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:gravity="center"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/store_menu_cart_btn"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/cp_login_btn"
+            android:text="배달 카트에 담기"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/white"/>
+
+    </LinearLayout>
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
