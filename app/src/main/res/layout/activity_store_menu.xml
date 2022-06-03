@@ -327,7 +327,7 @@
                 android:background="@drawable/store_menu_count_minus_btn"
                 android:gravity="center"
                 android:text="-"
-                android:textColor="@color/cp_store_menu_plus_btn"
+                android:textColor="@color/cp_gray3"
                 android:textSize="16sp"
                 android:textStyle="normal"
                 app:layout_constraintEnd_toStartOf="@+id/store_menu_count"
@@ -462,7 +462,5 @@
             android:background="@color/white"/>
 
     </LinearLayout>
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

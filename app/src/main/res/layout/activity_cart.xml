@@ -1,0 +1,1017 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cart_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        android:fitsSystemWindows="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/cart_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/ic_cp_login_quit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/cart_toolbar_name"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="카트"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cart_back"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/cart_top_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cart_toolbar"
+        app:tabBackground="@drawable/store_tab_unselected"
+        app:tabIndicatorColor="@color/cp_login_btn"
+        app:tabIndicatorHeight="3dp"
+        app:tabPaddingEnd="70dp"
+        app:tabRippleColor="@color/cp_gray1"
+        app:tabSelectedTextColor="@color/cp_login_btn"
+        app:tabTextAppearance="@style/tabTextSizeBold"
+        app:tabTextColor="@color/black">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="배달" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="포장" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <LinearLayout
+        android:id="@+id/store_delivery_tab_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/cart_top_tab_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.27"
+        app:layout_constraintStart_toStartOf="@+id/cart_top_tab_layout"
+        app:layout_constraintTop_toTopOf="@+id/cart_top_tab_layout">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/store_delivery_tab_time_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="normal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/store_delivery_tab_slash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="normal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/store_delivery_tab_time_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="normal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/store_delivery_tab_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="분"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="normal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/store_pack_tab_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/cart_top_tab_layout"
+        app:layout_constraintEnd_toEndOf="@+id/cart_top_tab_layout"
+        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintStart_toStartOf="@+id/cart_top_tab_layout"
+        app:layout_constraintTop_toTopOf="@+id/cart_top_tab_layout">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/store_pack_tab_time_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="normal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/store_pack_tab_slash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="normal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/store_pack_tab_time_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="normal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/store_pack_tab_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="분"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="normal" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cart_complete_btn_layout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/cp_login_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:id="@+id/cart_complete_btn_txt_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_complete_btn_txt_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="배달주문"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_complete_btn_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="23,300"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_complete_btn_txt_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="원 결제하기"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/cart_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/cart_complete_btn_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cart_top_tab_layout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cart_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/cart_frm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/cart_line_1"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/cp_gray6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_frm" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_store_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:text="피자치킨콜 서울대입구점"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_line_1"/>
+
+            <View
+                android:id="@+id/cart_line_add"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/cp_gray6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_store_name" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_menu_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:text="순살한마리+콤비네이션+콜라+500ml+쿠폰"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_line_add" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_menu_option_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:text="양념치킨"
+                android:textColor="@color/cp_gray5"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_menu_name" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_menu_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:text="23,300원"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_menu_option_name" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/cart_menu_delete_btn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_signup_pwd_hint_1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_line_add" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_menu_count_spinner"
+                android:layout_width="90dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/dialog_login_btm_sheet_email_login"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="15dp"
+                android:text="1"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_menu_delete_btn" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:text="▼"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="@+id/cart_menu_count_spinner"
+                app:layout_constraintEnd_toEndOf="@+id/cart_menu_count_spinner"
+                app:layout_constraintTop_toTopOf="@+id/cart_menu_count_spinner" />
+
+            <View
+                android:id="@+id/cart_line_add_1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="35dp"
+                android:background="@color/cp_gray6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_menu_price" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_add_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="+ 메뉴추가"
+                android:textColor="@color/cp_login_btn"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_line_add_1" />
+
+            <View
+                android:id="@+id/cart_line_2"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/cp_gray6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_add_menu" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_coupon_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="할인쿠폰"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_line_2" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/cart_coupon_status_img"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="22dp"
+                android:src="@drawable/ic_cart_coupon"
+                app:layout_constraintEnd_toStartOf="@+id/cart_coupon_status"
+                app:layout_constraintTop_toBottomOf="@+id/cart_line_2" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_coupon_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="22dp"
+                android:text="쿠폰 적용 가능"
+                android:textColor="@color/cp_store_menu_allergy"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_line_2" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cart_coupon_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/cp_gray6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_coupon_txt">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/cart_select_coupon_available"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:text="사용가능 쿠폰"
+                    android:textColor="@color/cp_store_menu_allergy"
+                    android:textSize="14sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/cart_select_coupon_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="3dp"
+                    android:text="1장  ‣"
+                    android:textColor="@color/cp_login_btn"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/cart_select_coupon_available"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/cart_coupon_select_edt"
+                    android:layout_width="250dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="18dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/login_edt_unselected"
+                    android:hint="쿠폰을 선택해주세요"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="15dp"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cart_select_coupon_available" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/cart_coupon_select_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@drawable/cart_coupon_select_btn"
+                    android:paddingHorizontal="25dp"
+                    android:paddingVertical="13dp"
+                    android:text="선택"
+                    android:textColor="@color/cp_login_btn"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_order_price_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:text="주문금액"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_coupon_layout" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_order_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="3dp"
+                android:text="23,300"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toStartOf="@+id/cart_order_price_won"
+                app:layout_constraintTop_toBottomOf="@+id/cart_coupon_layout" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_order_price_won"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="20dp"
+                android:text="원"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_coupon_layout" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_delivery_fee_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="배달비"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_order_price_txt" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="2dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toStartOf="@+id/cart_delivery_fee"
+                app:layout_constraintTop_toBottomOf="@+id/cart_order_price" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_delivery_fee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="3dp"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toStartOf="@+id/cart_delivery_fee_won"
+                app:layout_constraintTop_toBottomOf="@+id/cart_order_price_won" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_delivery_fee_won"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:text="원"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_order_price_won" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_coupang_cash_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginLeft="20dp"
+                android:text="쿠팡캐시"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_delivery_fee_txt" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_coupang_cash_use_all_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/dialog_login_btm_sheet_email_login"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="7dp"
+                android:text="전액사용"
+                android:textColor="@color/cp_login_text"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toEndOf="@+id/cart_coupang_cash_txt"
+                app:layout_constraintTop_toBottomOf="@+id/cart_delivery_fee_txt" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_coupang_cash_minus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="24dp"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toStartOf="@+id/cart_coupang_cash_edt"
+                app:layout_constraintTop_toBottomOf="@+id/cart_delivery_fee_won" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/cart_coupang_cash_edt"
+                android:layout_width="90dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/cart_coupang_cash_edt"
+                android:gravity="right|center_vertical"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="8dp"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toStartOf="@+id/cart_coupang_cash_won"
+                app:layout_constraintTop_toBottomOf="@+id/cart_delivery_fee" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_coupang_cash_won"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="20dp"
+                android:text="원"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_delivery_fee_won" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_coupang_cash_left_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="잔여:"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toStartOf="@+id/cart_coupang_cash_left"
+                app:layout_constraintTop_toBottomOf="@+id/cart_coupang_cash_won" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_coupang_cash_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="1dp"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/cart_coupang_cash_left_won"
+                app:layout_constraintTop_toBottomOf="@+id/cart_coupang_cash_won" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_coupang_cash_left_won"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                android:text="원"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_coupang_cash_won" />
+
+            <View
+                android:id="@+id/cart_line_3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="25dp"
+                android:background="@color/cp_gray6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_coupang_cash_left_txt" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_total_price_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:layout_marginLeft="20dp"
+                android:text="총 결제금액"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_line_3" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginRight="3dp"
+                android:text="23,300"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/cart_total_price_won"
+                app:layout_constraintTop_toBottomOf="@+id/cart_line_3" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_total_price_won"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginRight="20dp"
+                android:text="원"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_line_3" />
+
+            <View
+                android:id="@+id/cart_line_4"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="18dp"
+                android:background="@color/cp_gray6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_total_price_won" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_request_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:text="요청사항"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_line_4" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/cart_request_detail"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_home_top_location_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_line_4" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_request_to_owner_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="25dp"
+                android:text="가게 사장님에게"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_request_txt" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/cart_request_to_owner_edt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@drawable/dialog_login_btm_sheet_email_login"
+                android:hint="예) 견과류는 빼주세요"
+                android:paddingHorizontal="13dp"
+                android:paddingVertical="15dp"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_request_to_owner_txt" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/cart_request_to_get_fork_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:button="@drawable/store_menu_list_checkbox_btn"
+                android:text="일회용 수저, 포크 받기"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                android:textColor="@color/black"
+                android:paddingHorizontal="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_request_to_owner_edt" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_request_to_get_fork_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="52dp"
+                android:text="일회용품 사용을 줄이기 위해, 선택 시에만 제공됩니다."
+                android:textColor="@color/cp_gray5"
+                android:textSize="12sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_request_to_get_fork_checkbox" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_request_to_delivery_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="25dp"
+                android:text="배달 기사님에게"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_request_to_get_fork_txt" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_request_to_delivery_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@drawable/dialog_login_btm_sheet_email_login"
+                android:drawableRight="@drawable/ic_cart_delivery_detail_resize"
+                android:text="문 앞에 놔주세요 (초인종 O)"
+                android:paddingHorizontal="13dp"
+                android:paddingVertical="15dp"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_request_to_delivery_txt" />
+
+            <View
+                android:id="@+id/cart_line_5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/cp_gray6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_request_to_delivery_tv" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_pay_kind_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:text="결제수단"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_line_5" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_pay_kind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:text="농협은행 ****4568"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_pay_kind_txt" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/cart_pay_kind_detail"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_signup_terms_detail"
+                android:tint="@color/cp_login_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_line_5" />
+
+            <View
+                android:id="@+id/cart_line_6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/cp_gray6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_pay_kind" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_coupay_money_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="쿠페이 머니로 결제 시"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_line_6" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_coupay_money_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/cart_coupang_cash_add"
+                android:drawableLeft="@drawable/ic_cart_coupang_cash_resize"
+                android:drawablePadding="4dp"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="3dp"
+                android:text="최대 130원 쿠팡캐시 적립"
+                android:textColor="@color/cp_store_menu_allergy"
+                android:textSize="12sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toEndOf="@+id/cart_coupay_money_txt"
+                app:layout_constraintTop_toBottomOf="@+id/cart_line_6" />
+
+            <View
+                android:id="@+id/cart_line_7"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/cp_gray6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_coupay_money_txt" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_agree_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="구매조건 확인 및 결제대행 서비스 동의"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_line_7" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_agree_see"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="21dp"
+                android:layout_marginRight="20dp"
+                android:text="보기"
+                android:textColor="@color/cp_gray5"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_line_7" />
+
+            <View
+                android:id="@+id/cart_line_8"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/cp_gray6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cart_agree_txt" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cart_agree_detail_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:gravity="left"
+                android:text="쿠팡은 통신판매중개자로서 통신판매의 당사자가 아니며, 판매자가\n등록한 상품 정보, 상품의 품질 및 거래에 대해서 일체의 챔임을 지지\n않습니다. 회원은 주문 내용을 확인하였고, 결제에 동의합니다."
+                android:textColor="@color/cp_store_menu_des"
+                android:textSize="11sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="@+id/cart_line_8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/cart_line_8" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

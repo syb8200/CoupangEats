@@ -29,6 +29,11 @@ class StoreMenuOption2Adapter(var list: List<OptionInfo>) : RecyclerView.Adapter
                 holder.option_price_layout.visibility = View.VISIBLE
                 holder.option_price.text = item.optionPrice.toString()
             }
+
+            holder.checkbox_btn.setOnClickListener {
+
+            }
+
         }
     }
 

@@ -123,9 +123,9 @@ class HomeService(val homeInterface: HomeInterface) {
         })
     }
 
-    fun tryGetResList(categoryId : Int){
+    fun tryGetResList(){
         val homeRetrofitInterface = ApplicationClass.sRetrofit.create(HomeRetrofitInterface::class.java)
-        homeRetrofitInterface.getResList(categoryId).enqueue(object :
+        homeRetrofitInterface.getResList().enqueue(object :
             Callback<GetResListResponse> {
             override fun onResponse(
                 call: Call<GetResListResponse>,

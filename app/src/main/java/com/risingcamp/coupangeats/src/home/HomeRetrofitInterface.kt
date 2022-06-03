@@ -36,7 +36,5 @@ interface HomeRetrofitInterface {
     fun getMidBanner() : Call<GetMidBannerResponse>
 
     @GET("app/restaurants")
-    fun getResList(
-        @Query("categoryId") categoryId : Int
-    ) : Call<GetResListResponse>
+    fun getResList() : Call<GetResListResponse>
 }

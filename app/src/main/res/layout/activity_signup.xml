@@ -128,13 +128,14 @@
                             android:layout_height="50dp"
                             android:layout_marginRight="2dp"
                             android:background="@drawable/signup_edt"
+                            android:textCursorDrawable="@drawable/edit_text_cursor"
                             android:hint="아이디(이메일)"
                             android:inputType="textEmailAddress"
                             android:paddingVertical="15dp"
                             android:paddingLeft="8dp"
                             android:textColor="@color/black"
                             android:textSize="14sp"
-                            android:textStyle="normal" />
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
@@ -277,11 +278,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@android:color/transparent"
+                            android:textCursorDrawable="@drawable/edit_text_cursor"
                             android:hint="비밀번호"
                             android:singleLine="true"
                             android:textSize="14sp"
                             android:textColor="@color/black"
-                            android:textStyle="normal"
+                            android:textStyle="bold"
                             android:inputType="textPassword"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -501,13 +503,14 @@
                         android:layout_height="50dp"
                         android:layout_marginRight="2dp"
                         android:background="@drawable/signup_edt"
+                        android:textCursorDrawable="@drawable/edit_text_cursor"
                         android:hint="이름"
                         android:inputType="text"
                         android:paddingVertical="15dp"
                         android:paddingLeft="8dp"
                         android:textColor="@color/black"
                         android:textSize="14sp"
-                        android:textStyle="normal" />
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -591,6 +594,7 @@
                         android:layout_height="50dp"
                         android:layout_marginRight="2dp"
                         android:background="@drawable/signup_edt"
+                        android:textCursorDrawable="@drawable/edit_text_cursor"
                         android:hint="휴대폰 번호"
                         android:inputType="number"
                         android:maxLength="11"
@@ -598,7 +602,7 @@
                         android:paddingLeft="8dp"
                         android:textColor="@color/black"
                         android:textSize="14sp"
-                        android:textStyle="normal" />
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 

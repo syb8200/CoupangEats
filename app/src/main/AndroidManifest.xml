@@ -28,6 +28,7 @@
         <activity android:name=".src.home.location.LocationActivity"/>
         <activity android:name=".src.home.store.StoreActivity"/>
         <activity android:name=".src.home.store.storemenu.StoreMenuActivity"/>
+        <activity android:name=".src.home.store.storemenu.cart.CartActivity"/>
 
     </application>
 

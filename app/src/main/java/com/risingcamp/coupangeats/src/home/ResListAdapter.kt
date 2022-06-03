@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.risingcamp.coupangeats.R
 import com.risingcamp.coupangeats.src.home.models.getResList.ResListResult
+import org.jetbrains.anko.find
 import java.text.DecimalFormat
 
 class ResListAdapter(var list: List<ResListResult>) : RecyclerView.Adapter<ResListAdapter.AdapterViewHolder>() {
@@ -24,17 +26,50 @@ class ResListAdapter(var list: List<ResListResult>) : RecyclerView.Adapter<ResLi
         val item = list[position]
         holder.itemView.apply{
             //이미지
-            Glide.with(context)
-                .load(item.resImageUrlList[0])
-                .into(holder.img_1)
 
-            Glide.with(context)
-                .load(item.resImageUrlList[1])
-                .into(holder.img_2)
+            if(item.resImageUrlList.size == 0){
+                holder.img_1.visibility = View.GONE
+                holder.img_2.visibility = View.GONE
+                holder.img_3.visibility = View.GONE
+                holder.img_layout.visibility = View.GONE
+                holder.img_right_layout.visibility = View.GONE
+            }
 
-            Glide.with(context)
-                .load(item.resImageUrlList[2])
-                .into(holder.img_3)
+            if(item.resImageUrlList.size == 1){
+                Glide.with(context)
+                    .load(item.resImageUrlList[0])
+                    .into(holder.img_1)
+
+                holder.img_2.visibility = View.GONE
+                holder.img_3.visibility = View.GONE
+                holder.img_right_layout.visibility = View.GONE
+            }
+
+            if(item.resImageUrlList.size == 2){
+                Glide.with(context)
+                    .load(item.resImageUrlList[0])
+                    .into(holder.img_1)
+
+               holder.img_2.visibility = View.GONE
+               holder.img_3.visibility = View.GONE
+               holder.img_right_layout.visibility = View.GONE
+            }
+
+            if(item.resImageUrlList.size == 3){
+                Glide.with(context)
+                    .load(item.resImageUrlList[0])
+                    .into(holder.img_1)
+
+                Glide.with(context)
+                    .load(item.resImageUrlList[1])
+                    .into(holder.img_2)
+
+                Glide.with(context)
+                    .load(item.resImageUrlList[2])
+                    .into(holder.img_3)
+            }
+
+
             //이름
             holder.name.text = item.resName
             //치타
@@ -71,6 +106,8 @@ class ResListAdapter(var list: List<ResListResult>) : RecyclerView.Adapter<ResLi
         var img_1 = v.findViewById<ImageView>(R.id.item_home_res_img_1)
         var img_2 = v.findViewById<ImageView>(R.id.item_home_res_img_2)
         var img_3 = v.findViewById<ImageView>(R.id.item_home_res_img_3)
+        var img_layout = v.findViewById<LinearLayout>(R.id.item_home_res_img_layout)
+        var img_right_layout = v.findViewById<LinearLayout>(R.id.item_home_res_img_right_layout)
 
         var name = v.findViewById<TextView>(R.id.item_home_res_name)
         var cheetah = v.findViewById<ImageView>(R.id.item_home_res_cheetah)

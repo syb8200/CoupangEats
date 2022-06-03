@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.*
 import android.util.Log
 import android.view.View
@@ -14,12 +15,14 @@ import androidx.core.view.marginBottom
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.risingcamp.coupangeats.R
 import com.risingcamp.coupangeats.config.ApplicationClass
 import com.risingcamp.coupangeats.config.BaseActivity
 import com.risingcamp.coupangeats.databinding.ActivityStoreMenuBinding
 import com.risingcamp.coupangeats.src.home.ResListAdapter
 import com.risingcamp.coupangeats.src.home.store.MenuImgAdapter
 import com.risingcamp.coupangeats.src.home.store.StoreActivity
+import com.risingcamp.coupangeats.src.home.store.storemenu.cart.CartActivity
 import com.risingcamp.coupangeats.src.home.store.storemenu.models.GetStoreMenuOptionResponse
 import java.text.DecimalFormat
 
@@ -42,7 +45,10 @@ class StoreMenuActivity: BaseActivity<ActivityStoreMenuBinding>(ActivityStoreMen
         setStoreMenu()
         setBackBtn()
 
+        setPage()
         setScrollListener()
+
+        setCartBtn()
     }
 
     fun setStoreMenu(){
@@ -89,8 +95,6 @@ class StoreMenuActivity: BaseActivity<ActivityStoreMenuBinding>(ActivityStoreMen
         }
     }
 
-
-
     @RequiresApi(Build.VERSION_CODES.M)
     fun setScrollListener(){
         binding.storeMenuNestedScroll.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
@@ -102,6 +106,14 @@ class StoreMenuActivity: BaseActivity<ActivityStoreMenuBinding>(ActivityStoreMen
             }
         }
     }
+
+    fun setCartBtn(){
+        binding.storeMenuCartBtn.setOnClickListener {
+            val intent = Intent(this, CartActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
 
     // 상태바 (Status Bar) 투명색 + 상태바와 UI 겹쳐보이는 것 방지 하기 위해 Padding 적용
     fun Activity.setStatusBarTransparent(){
@@ -218,12 +230,30 @@ class StoreMenuActivity: BaseActivity<ActivityStoreMenuBinding>(ActivityStoreMen
             count += 1
             binding.storeMenuCount.text = count.toString()
 
+            if(count > 1){
+                binding.storeMenuMinusBtn.setTextColor(Color.parseColor("#ADB6BE"))
+                binding.storeMenuMinusBtn.setBackgroundResource(R.drawable.store_menu_count_plus_btn)
+            }
+
             var price = getGetStoreMenuOptionResponse.result.resMenuInfo.menuPrice * count
             var frmt2 = DecimalFormat("#,###")
             binding.storeMenuPrice.text = frmt2.format(price).toString()
-
         }
-    
+
+        binding.storeMenuMinusBtn.setOnClickListener {
+            count -= 1
+            binding.storeMenuCount.text = count.toString()
+
+            if(count == 1){
+                binding.storeMenuMinusBtn.setTextColor(android.graphics.Color.parseColor("#DFE2E7"))
+                binding.storeMenuMinusBtn.setBackgroundResource(com.risingcamp.coupangeats.R.drawable.store_menu_count_minus_btn)
+                count = 1
+            }
+
+            var price = getGetStoreMenuOptionResponse.result.resMenuInfo.menuPrice / count
+            var frmt2 = DecimalFormat("#,###")
+            binding.storeMenuPrice.text = frmt2.format(price).toString()
+        }
 
         if(getGetStoreMenuOptionResponse.result.resMenuOptionList[0].isEssential == true){
             binding.storeMenuOptionEssential.visibility = View.VISIBLE
@@ -246,7 +276,6 @@ class StoreMenuActivity: BaseActivity<ActivityStoreMenuBinding>(ActivityStoreMen
         binding.storeMenuList2.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.storeMenuList2.setHasFixedSize(true)
         binding.storeMenuList2.adapter = StoreMenuOption2Adapter(menuOptionList2)
-
 
 
 }

@@ -233,6 +233,8 @@ class StoreActivity: BaseActivity<ActivityStoreBinding>(ActivityStoreBinding::in
 
         delivery_start = getStoreMainResponse.result.deliveryTime.toString()
         binding.storeDeliveryTabTimeStart.text = delivery_start
+        ApplicationClass.sSharedPreferences.edit().putString("DeliveryTime", delivery_start).apply()
+
         delivery_end = (getStoreMainResponse.result.deliveryTime+5).toString()
         binding.storeDeliveryTabTimeEnd.text = delivery_end
 
@@ -283,6 +285,7 @@ class StoreActivity: BaseActivity<ActivityStoreBinding>(ActivityStoreBinding::in
                         binding.storeDeliveryTabMin.setTextColor(Color.parseColor("#00AFFE"))
 
                         Log.d("액티비티", "$delivery_start, $delivery_end")
+
                     }
                     "포장" -> {
                         transaction.replace(R.id.store_frm, packFragment).commitAllowingStateLoss()

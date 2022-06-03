@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 import com.risingcamp.coupangeats.R
@@ -253,7 +254,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
     //세로 스크롤
     fun setResList(){
-        HomeService(this).tryGetResList(2)
+        HomeService(this).tryGetResList()
     }
 
     /*
@@ -432,7 +433,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
             binding.homeTopLocationPresent.text = address
         } else if(code==2001 || check==null){
             //현재 좌표값 기반으로 세팅
-            binding.homeTopLocationPresent.text = "주소를 입력하세요"
+            binding.homeTopLocationPresent.text = address
         }
     }
     override fun onGetLocationFailure(message: String) {
@@ -548,7 +549,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     override fun onGetResListSuccess(getResListResponse: GetResListResponse) {
         var resList = getResListResponse.result
         Log.d("음식점", "$resList")
-        binding.homeResList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        binding.homeResList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.homeResList.setHasFixedSize(true)
         binding.homeResList.adapter = ResListAdapter(resList)
     }

@@ -22,9 +22,10 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:scaleType="centerCrop"
-            android:background="@color/cp_gray1" />
+            android:background="@color/white" />
 
         <LinearLayout
+            android:id="@+id/item_home_res_img_right_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
@@ -38,7 +39,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:background="@color/cp_gray1" />
+                android:background="@color/white" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/item_home_res_img_3"
@@ -46,7 +47,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:background="@color/cp_gray1" />
+                android:background="@color/white" />
 
         </LinearLayout>
 
@@ -75,10 +76,10 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/item_home_res_cheetah"
             android:layout_width="80dp"
-            android:layout_height="20dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="5dp"
             android:adjustViewBounds="true"
-            android:background="@color/cp_gray1"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_home_res_name"
             app:layout_constraintTop_toTopOf="parent" />

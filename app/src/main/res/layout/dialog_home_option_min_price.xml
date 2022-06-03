@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:gravity="center"
-        android:text="조절했을 때 반응"
+        android:text="5,000원 이하"
         android:textColor="@color/black"
         android:textSize="25sp"
         android:textStyle="bold"
