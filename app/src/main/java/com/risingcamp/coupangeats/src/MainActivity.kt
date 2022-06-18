@@ -109,6 +109,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     override fun onGetAutoLoginSuccess(getAutoLoginResponse: GetAutoLoginResponse) {
         jwt = getAutoLoginResponse.result.jwt
         Log.d("오토로그인", "$jwt")
+
+        if(jwt == null){
+            Log.d("오토로그인 실패", "$jwt")
+        }
     }
 
     override fun onGetAutoLoginFailure(message: String) {

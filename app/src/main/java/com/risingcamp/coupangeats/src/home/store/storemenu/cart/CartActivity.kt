@@ -1,6 +1,7 @@
 package com.risingcamp.coupangeats.src.home.store.storemenu.cart
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +13,7 @@ import com.risingcamp.coupangeats.R
 import com.risingcamp.coupangeats.config.ApplicationClass
 import com.risingcamp.coupangeats.config.BaseActivity
 import com.risingcamp.coupangeats.databinding.ActivityCartBinding
+import com.risingcamp.coupangeats.src.MainActivity
 
 class CartActivity: BaseActivity<ActivityCartBinding>(ActivityCartBinding::inflate) {
 
@@ -24,6 +26,7 @@ class CartActivity: BaseActivity<ActivityCartBinding>(ActivityCartBinding::infla
 
         setTabLayout()
         setBottomDialog()
+        setOrderBtn()
 
         binding.cartRequestToGetForkCheckbox.setOnClickListener {
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -124,5 +127,11 @@ class CartActivity: BaseActivity<ActivityCartBinding>(ActivityCartBinding::infla
     }
 
 
-
+    fun setOrderBtn(){
+        binding.cartCompleteBtnLayout.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            showCustomToast("주문이 완료되었습니다.")
+        }
+    }
 }

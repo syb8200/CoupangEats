@@ -96,7 +96,12 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     //위치 설정
     fun setLocation(){
         var userId = ApplicationClass.sSharedPreferences.getInt("UserId", 0)
-        HomeService(this).tryGetLocation(userId, true)
+
+        if(check != null) {
+            HomeService(this).tryGetLocation(userId, true)
+        } else{
+            binding.homeTopLocationPresent.text = "서울대학교"
+        }
 
         binding.homeTopLocationLayout.setOnClickListener {
             if(check == null){
@@ -428,13 +433,17 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         Log.d("위치", "$code, $address")
         check = ApplicationClass.sSharedPreferences.getString(ApplicationClass.X_ACCESS_TOKEN, null)
 
-        if(code==1000 && check!=null){
-            binding.homeTopLocationPresent.visibility = View.VISIBLE
-            binding.homeTopLocationPresent.text = address
-        } else if(code==2001 || check==null){
-            //현재 좌표값 기반으로 세팅
-            binding.homeTopLocationPresent.text = address
+        if(check==null){
+            binding.homeTopLocationPresent.text = "서울대학교"
+        } else{
+            if(code==1000 && check!=null){
+                binding.homeTopLocationPresent.visibility = View.VISIBLE
+                binding.homeTopLocationPresent.text = address
+            }
         }
+
+
+
     }
     override fun onGetLocationFailure(message: String) {
         Log.d("오류", "오류: $message")
